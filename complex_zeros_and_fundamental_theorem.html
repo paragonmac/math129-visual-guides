@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complex Zeros & The Fundamental Theorem - Visual Guide</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a0f2e 100%);
+            color: #e0e0e0;
+        }
+        
+        .container {
+            background: #0a0a15;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #9d4edd;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-shadow: 0 0 10px rgba(157, 78, 221, 0.5);
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #b0b0b0;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #13131f;
+            border-radius: 10px;
+            border-left: 5px solid #9d4edd;
+        }
+        
+        .section h2 {
+            color: #9d4edd;
+            margin-top: 0;
+        }
+        
+        canvas {
+            border: 2px solid #9d4edd;
+            border-radius: 8px;
+            display: block;
+            margin: 20px auto;
+            background: #05050a;
+            box-shadow: 0 4px 15px rgba(157, 78, 221, 0.3);
+        }
+        
+        .step-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .step {
+            background: #1a1a2e;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #2a2a4a;
+        }
+        
+        .step h3 {
+            color: #c77dff;
+            margin-top: 0;
+            font-size: 1.1em;
+        }
+        
+        .step ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .step li {
+            margin: 8px 0;
+        }
+        
+        .formula {
+            background: #1e1a3a;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            margin: 10px 0;
+            text-align: center;
+            border: 1px dashed #9d4edd;
+            color: #e0e0e0;
+        }
+        
+        .highlight {
+            background: #3a2a4a;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+            color: #c77dff;
+        }
+        
+        .key-point {
+            background: #1a2e3a;
+            border-left: 4px solid #4cc9f0;
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            color: #e0e0e0;
+        }
+        
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        button {
+            background: #9d4edd;
+            color: #ffffff;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background 0.3s;
+            font-weight: bold;
+        }
+        
+        button:hover {
+            background: #c77dff;
+        }
+        
+        .theorem-box {
+            background: #2e1a3a;
+            border: 3px solid #9d4edd;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 0 20px rgba(157, 78, 221, 0.3);
+        }
+        
+        .theorem-box h3 {
+            color: #c77dff;
+            margin-top: 0;
+            font-size: 1.4em;
+        }
+        
+        .warning-box {
+            background: #3a2e1e;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .comparison-table th {
+            background: #9d4edd;
+            color: #ffffff;
+            padding: 12px;
+            border: 1px solid #2a2a4a;
+            font-weight: bold;
+        }
+        
+        .comparison-table td {
+            padding: 12px;
+            border: 1px solid #2a2a4a;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background: #1a1a2e;
+        }
+        
+        .method-number {
+            display: inline-block;
+            background: #9d4edd;
+            color: #ffffff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .complex-box {
+            background: linear-gradient(135deg, #1a0f2e 0%, #2e1a3a 100%);
+            border: 2px solid #c77dff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .imaginary {
+            color: #4cc9f0;
+            font-weight: bold;
+        }
+        
+        .real {
+            color: #4caf50;
+            font-weight: bold;
+        }
+        
+        .conjugate-pair {
+            background: #2a1a3a;
+            border: 2px dashed #c77dff;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌌 Complex Zeros of Polynomials</h1>
+        <p class="subtitle">The Fundamental Theorem & Complete Factorization</p>
+        
+        <!-- WHY THIS MATTERS -->
+        <div class="section" style="border-left-color: #ff6b6b;">
+            <h2>🤔 Why Go Complex?</h2>
+            
+            <div class="step-container">
+                <div class="step">
+                    <h3>❌ Staying Real Only</h3>
+                    <p><strong>You're limited:</strong></p>
+                    <ul>
+                        <li>Can't factor x² + 1 at all</li>
+                        <li>Some polynomials seem "unfactorable"</li>
+                        <li>Miss half the zeros</li>
+                        <li>Incomplete understanding</li>
+                        <li>Can't fully solve many problems</li>
+                    </ul>
+                    <p style="color: #ff6b6b;">Hitting dead ends!</p>
+                </div>
+                
+                <div class="step">
+                    <h3>✅ Embracing Complex Numbers</h3>
+                    <p><strong>You unlock:</strong></p>
+                    <ul>
+                        <li>✓ EVERY polynomial factors completely</li>
+                        <li>✓ Beautiful conjugate pair patterns</li>
+                        <li>✓ Find ALL zeros (no exceptions)</li>
+                        <li>✓ Understand polynomial structure deeply</li>
+                        <li>✓ Solve advanced engineering problems</li>
+                    </ul>
+                    <p style="color: #4caf50;">Total mathematical power!</p>
+                </div>
+            </div>
+            
+            <div class="key-point">
+                <strong>💡 The Game Changer:</strong> The Fundamental Theorem of Algebra guarantees that EVERY polynomial has at least one complex zero. This means EVERY polynomial can be factored completely into linear factors using complex numbers. No exceptions!
+            </div>
+            
+            <div class="key-point" style="background: #2e1a3a; border-left-color: #9d4edd;">
+                <strong>🎯 Bottom Line:</strong> Real numbers leave you with "unfactorable" quadratics. Complex numbers let you factor EVERYTHING. It's like unlocking the final level of polynomial understanding!
+            </div>
+        </div>
+        
+        <!-- SECTION 1: The Fundamental Theorem -->
+        <div class="section">
+            <h2>🌟 The Fundamental Theorem of Algebra</h2>
+            
+            <div class="theorem-box">
+                <h3>👑 The Most Important Theorem in Algebra</h3>
+                <div class="formula" style="font-size: 1.3em;">
+                    Every polynomial of degree <span style="color: #4cc9f0; font-weight: bold; font-size: 1.2em;">n ≥ 1</span><br>
+                    has <span style="color: #4caf50; font-weight: bold; font-size: 1.2em;">at least one</span> complex zero
+                </div>
+                <p style="margin-top: 15px;"><strong>What this means:</strong> No polynomial is ever "unsolvable." Every polynomial equation has a solution in the complex number system!</p>
+            </div>
+            
+            <div class="theorem-box">
+                <h3>📊 Complete Factorization Theorem</h3>
+                <div class="formula" style="font-size: 1.2em;">
+                    P(x) = <span style="color: #4caf50;">a</span>(<span style="color: #c77dff;">x - c₁</span>)(<span style="color: #c77dff;">x - c₂</span>)···(<span style="color: #c77dff;">x - cₙ</span>)
+                </div>
+                <p style="margin-top: 15px;"><strong>Every degree <span style="color: #4cc9f0; font-weight: bold;">n</span> polynomial can be factored into exactly <span style="color: #4cc9f0; font-weight: bold; font-size: 1.2em;">n</span> linear factors!</strong></p>
+            </div>
+            
+            <canvas id="fundamentalCanvas" width="800" height="750"></canvas>
+            
+            <div class="key-point">
+                <strong>🎯 Why "Fundamental"?</strong> This theorem tells us that polynomials are ALWAYS solvable. It's the foundation of all polynomial theory and guarantees that our search for zeros will always succeed!
+            </div>
+        </div>
+        
+        <!-- SECTION 2: Complex Number Review -->
+        <div class="section">
+            <h2>🔄 Complex Conjugate Pairs</h2>
+            <span class="method-number">The Pattern Master</span>
+            
+            <div class="complex-box">
+                <h3 style="color: #c77dff;">Complex Number Basics</h3>
+                <div class="formula">
+                    z = <span class="real">a</span> + <span class="imaginary">b</span>i
+                </div>
+                <p style="text-align: center;">
+                    <span class="real">a</span> = real part &nbsp;&nbsp;&nbsp;
+                    <span class="imaginary">b</span> = imaginary part &nbsp;&nbsp;&nbsp;
+                    <span class="imaginary">i</span>² = -1
+                </p>
+                
+                <div class="formula" style="margin-top: 20px;">
+                    Conjugate: z̄ = <span class="real">a</span> - <span class="imaginary">b</span>i
+                </div>
+                <p style="text-align: center; font-size: 0.9em;">(Just flip the sign of the imaginary part!)</p>
+            </div>
+            
+            <div class="theorem-box">
+                <h3>🔗 Conjugate Zeros Theorem</h3>
+                <div class="formula" style="font-size: 1.2em;">
+                    If P(x) has <span style="color: #4caf50; font-weight: bold;">REAL coefficients</span> and<br>
+                    <span style="color: #4cc9f0; font-weight: bold; font-size: 1.2em;">a + bi</span> is a zero,<br>
+                    then <span style="color: #ff9800; font-weight: bold; font-size: 1.2em;">a - bi</span> is <span style="color: #f44336; font-weight: bold;">ALSO</span> a zero
+                </div>
+                <p style="margin-top: 15px; text-align: center;"><strong>Complex zeros always come in conjugate pairs!</strong></p>
+            </div>
+            
+            <canvas id="conjugateCanvas" width="800" height="750"></canvas>
+            
+            <div class="controls">
+                <button onclick="previousConjugateStep()">⬅️ Previous Step</button>
+                <button onclick="nextConjugateStep()">Next Step ➡️</button>
+                <button onclick="resetConjugate()">🔄 Reset to Complete</button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 10px;">
+                <span id="conjugateStepIndicator" style="color: #c77dff; font-weight: bold; font-size: 1.1em;">Step 1 of 5</span>
+            </div>
+            
+            <div class="key-point">
+                <strong>💡 Why Conjugates?</strong> When you multiply conjugate pairs, the imaginary parts cancel out, leaving REAL coefficients! This is why complex zeros must come in pairs for polynomials with real coefficients.
+            </div>
+        </div>
+        
+        <!-- SECTION 3: Finding All Zeros -->
+        <div class="section">
+            <h2>🔍 Method 1: Finding ALL Zeros</h2>
+            <span class="method-number">The Complete Hunter</span>
+            
+            <p><strong>Example:</strong> Find all zeros of P(x) = x³ - 3x² + x - 3</p>
+            
+            <canvas id="allZerosCanvas" width="800" height="800"></canvas>
+            
+            <div class="controls">
+                <button onclick="previousAllZerosStep()">⬅️ Previous Step</button>
+                <button onclick="nextAllZerosStep()">Next Step ➡️</button>
+                <button onclick="resetAllZeros()">🔄 Reset to Complete</button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 10px;">
+                <span id="allZerosStepIndicator" style="color: #c77dff; font-weight: bold; font-size: 1.1em;">Step 1 of 6</span>
+            </div>
+            
+            <div class="warning-box">
+                <strong>⚠️ Key Pattern Recognition:</strong>
+                <ul style="margin: 10px 0;">
+                    <li><strong>x² + 1 = 0</strong> → zeros are <span style="color: #4cc9f0; font-weight: bold;">±i</span></li>
+                    <li><strong>x² + 4 = 0</strong> → zeros are <span style="color: #4cc9f0; font-weight: bold;">±2i</span></li>
+                    <li><strong>x² + 9 = 0</strong> → zeros are <span style="color: #4cc9f0; font-weight: bold;">±3i</span></li>
+                    <li><strong>x² + a² = 0</strong> → zeros are <span style="color: #4cc9f0; font-weight: bold; font-size: 1.2em;">±ai</span></li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- SECTION 4: Complete Factorization -->
+        <div class="section">
+            <h2>🎯 Method 2: Complete Linear Factorization</h2>
+            <span class="method-number">The Factor Master</span>
+            
+            <p><strong>Example:</strong> Factor P(x) = x⁴ + 2x² - 8 completely</p>
+            
+            <canvas id="factorCompleteCanvas" width="800" height="800"></canvas>
+            
+            <div class="controls">
+                <button onclick="previousFactorCompleteStep()">⬅️ Previous Step</button>
+                <button onclick="nextFactorCompleteStep()">Next Step ➡️</button>
+                <button onclick="resetFactorComplete()">🔄 Reset to Complete</button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 10px;">
+                <span id="factorCompleteStepIndicator" style="color: #c77dff; font-weight: bold; font-size: 1.1em;">Step 1 of 5</span>
+            </div>
+            
+            <div class="complex-box">
+                <h3 style="color: #c77dff;">Factoring Levels</h3>
+                <div style="text-align: center; margin: 20px 0;">
+                    <div style="background: #1a1a2e; padding: 15px; border-radius: 8px; margin: 10px 0; border: 2px solid #4caf50;">
+                        <strong style="color: #4caf50;">Level 1: Over the Reals</strong><br>
+                        <span style="font-size: 0.9em;">P(x) = (x - √2)(x + √2)(x² + 4)</span><br>
+                        <span style="font-size: 0.8em; color: #b0b0b0;">Stops at irreducible quadratics</span>
+                    </div>
+                    
+                    <div style="margin: 10px 0; color: #9d4edd; font-size: 1.5em;">↓</div>
+                    
+                    <div style="background: #1a1a2e; padding: 15px; border-radius: 8px; margin: 10px 0; border: 2px solid #9d4edd;">
+                        <strong style="color: #c77dff;">Level 2: Over the Complex Numbers</strong><br>
+                        <span style="font-size: 0.9em;">P(x) = (x - √2)(x + √2)(x - 2i)(x + 2i)</span><br>
+                        <span style="font-size: 0.8em; color: #b0b0b0;">ALL linear factors!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SECTION 5: Building Polynomials -->
+        <div class="section">
+            <h2>🏗️ Method 3: Building Polynomials from Zeros</h2>
+            <span class="method-number">The Constructor</span>
+            
+            <p><strong>Example:</strong> Find a degree 3 polynomial with zeros 2 and 1 + i, with integer coefficients</p>
+            
+            <canvas id="buildPolyCanvas" width="800" height="800"></canvas>
+            
+            <div class="controls">
+                <button onclick="previousBuildStep()">⬅️ Previous Step</button>
+                <button onclick="nextBuildStep()">Next Step ➡️</button>
+                <button onclick="resetBuild()">🔄 Reset to Complete</button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 10px;">
+                <span id="buildStepIndicator" style="color: #c77dff; font-weight: bold; font-size: 1.1em;">Step 1 of 6</span>
+            </div>
+            
+            <div class="key-point">
+                <strong>🔑 The Conjugate Rule:</strong> If your polynomial must have REAL coefficients, then complex zeros MUST come in conjugate pairs. If you're given 1 + i as a zero, automatically add 1 - i!
+            </div>
+        </div>
+        
+        <!-- SECTION 6: Quick Reference -->
+        <div class="section">
+            <h2>📚 Quick Reference Guide</h2>
+            
+            <table class="comparison-table">
+                <tr>
+                    <th>Quadratic</th>
+                    <th>Discriminant</th>
+                    <th>Complex Zeros</th>
+                    <th>Factored Form</th>
+                </tr>
+                <tr>
+                    <td>x² + 1</td>
+                    <td>-4 < 0</td>
+                    <td>±i</td>
+                    <td>(x - i)(x + i)</td>
+                </tr>
+                <tr>
+                    <td>x² + 4</td>
+                    <td>-16 < 0</td>
+                    <td>±2i</td>
+                    <td>(x - 2i)(x + 2i)</td>
+                </tr>
+                <tr>
+                    <td>x² + 2x + 2</td>
+                    <td>-4 < 0</td>
+                    <td>-1 ± i</td>
+                    <td>(x - (-1+i))(x - (-1-i))</td>
+                </tr>
+                <tr>
+                    <td>x² - 2x + 5</td>
+                    <td>-16 < 0</td>
+                    <td>1 ± 2i</td>
+                    <td>(x - (1+2i))(x - (1-2i))</td>
+                </tr>
+            </table>
+            
+            <div class="theorem-box">
+                <h3>📐 Conjugate Pair Formula</h3>
+                <div class="formula" style="font-size: 1.1em;">
+                    (x - (<span style="color: #4cc9f0;">a + bi</span>))(x - (<span style="color: #ff9800;">a - bi</span>)) = x² - <span style="color: #4caf50; font-weight: bold;">2a</span>x + (<span style="color: #4caf50; font-weight: bold;">a² + b²</span>)
+                </div>
+                <p style="text-align: center; margin-top: 10px;">Always gives <span style="color: #4caf50; font-weight: bold; font-size: 1.2em;">REAL coefficients</span>!</p>
+            </div>
+        </div>
+        
+        <!-- SECTION 7: Real Applications -->
+        <div class="section" style="border-left-color: #ff9800;">
+            <h2>🌍 When You'll Actually Use This</h2>
+            
+            <div class="step-container">
+                <div class="step">
+                    <h3>📡 Electrical Engineering</h3>
+                    <p><strong>Problem:</strong> Circuit impedance analysis</p>
+                    <p><strong>How:</strong> Complex zeros represent resonance frequencies and phase angles</p>
+                    <div class="formula" style="font-size: 0.9em;">Z(ω) = (ω - (a + bi))(ω - (a - bi))</div>
+                    <p style="font-size: 0.9em; color: #4cc9f0;">Complex zeros = resonance points!</p>
+                </div>
+                
+                <div class="step">
+                    <h3>🎵 Signal Processing</h3>
+                    <p><strong>Problem:</strong> Design audio filters</p>
+                    <p><strong>How:</strong> Complex conjugate pairs create stable filters</p>
+                    <div class="formula" style="font-size: 0.9em;">H(z) with zeros at e^(±iθ)</div>
+                    <p style="font-size: 0.9em; color: #4cc9f0;">Behind every EQ and audio effect!</p>
+                </div>
+                
+                <div class="step">
+                    <h3>🚁 Control Systems</h3>
+                    <p><strong>Problem:</strong> Stabilize aircraft/drones</p>
+                    <p><strong>How:</strong> Complex zeros determine system stability</p>
+                    <div class="formula" style="font-size: 0.9em;">T(s) with zeros in left half-plane</div>
+                    <p style="font-size: 0.9em; color: #4cc9f0;">Literally keeps planes in the air!</p>
+                </div>
+                
+                <div class="step">
+                    <h3>📊 Quantum Mechanics</h3>
+                    <p><strong>Problem:</strong> Energy eigenvalues</p>
+                    <p><strong>How:</strong> Complex zeros in characteristic polynomials</p>
+                    <div class="formula" style="font-size: 0.9em;">det(H - EI) = 0</div>
+                    <p style="font-size: 0.9em; color: #4cc9f0;">Foundation of quantum chemistry!</p>
+                </div>
+            </div>
+            
+            <div class="key-point">
+                <strong>⚡ The Pattern:</strong> Anytime you see oscillations, vibrations, waves, or cycles, complex zeros are lurking. They represent the frequency and damping of oscillating systems!
+            </div>
+        </div>
+        
+        <!-- SECTION 8: Common Mistakes -->
+        <div class="section">
+            <h2>⚠️ Common Mistakes to Avoid</h2>
+            
+            <div class="step-container">
+                <div class="step" style="border-color: #f44336;">
+                    <h3>❌ Mistake #1</h3>
+                    <p><strong>Forgetting conjugate pairs</strong></p>
+                    <p style="color: #ff6b6b;">Given 2 + 3i as a zero, listing only that one!</p>
+                    <p style="color: #4caf50;">✓ Must also include 2 - 3i</p>
+                </div>
+                
+                <div class="step" style="border-color: #f44336;">
+                    <h3>❌ Mistake #2</h3>
+                    <p><strong>Wrong sign in factors</strong></p>
+                    <p style="color: #ff6b6b;">Zero 3i → Factor (x + 3i)</p>
+                    <p style="color: #4caf50;">✓ Zero 3i → Factor (x - 3i)</p>
+                </div>
+                
+                <div class="step" style="border-color: #f44336;">
+                    <h3>❌ Mistake #3</h3>
+                    <p><strong>Simplifying i² incorrectly</strong></p>
+                    <p style="color: #ff6b6b;">i² = i or i² = 1</p>
+                    <p style="color: #4caf50;">✓ i² = -1 (always!)</p>
+                </div>
+                
+                <div class="step" style="border-color: #f44336;">
+                    <h3>❌ Mistake #4</h3>
+                    <p><strong>Counting zeros wrong</strong></p>
+                    <p style="color: #ff6b6b;">Degree 4 → Must have 4 zeros</p>
+                    <p style="color: #4caf50;">✓ Count multiplicity! (x-1)² = 2 zeros at 1</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Global state
+        let conjugateStep = 1;
+        let allZerosStep = 1;
+        let factorCompleteStep = 1;
+        let buildStep = 1;
+        
+        // SECTION 1: Fundamental Theorem
+        const fundamentalCanvas = document.getElementById('fundamentalCanvas');
+        const fundamentalCtx = fundamentalCanvas.getContext('2d');
+        
+        function drawFundamental() {
+            const ctx = fundamentalCtx;
+            ctx.clearRect(0, 0, 800, 750);
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 20px Arial';
+            ctx.fillText('The Power of the Fundamental Theorem', 200, 40);
+            
+            // Draw examples
+            const examples = [
+                {poly: 'x² + 1', degree: 2, zeros: '±i', y: 100},
+                {poly: 'x³ - 1', degree: 3, zeros: '1, (-1±i√3)/2', y: 200},
+                {poly: 'x⁴ + 4', degree: 4, zeros: '1±i, -1±i', y: 300},
+                {poly: 'xⁿ + 1', degree: 'n', zeros: 'n complex zeros', y: 400}
+            ];
+            
+            examples.forEach((ex, i) => {
+                // Polynomial
+                ctx.fillStyle = '#9d4edd';
+                ctx.font = 'bold 18px Arial';
+                ctx.fillText(ex.poly, 100, ex.y);
+                
+                // Degree
+                ctx.fillStyle = '#4cc9f0';
+                ctx.font = '16px Arial';
+                ctx.fillText(`Degree ${ex.degree}`, 250, ex.y);
+                
+                // Arrow
+                ctx.strokeStyle = '#c77dff';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(380, ex.y - 10);
+                ctx.lineTo(430, ex.y - 10);
+                ctx.stroke();
+                
+                // Arrow head
+                ctx.fillStyle = '#c77dff';
+                ctx.beginPath();
+                ctx.moveTo(430, ex.y - 10);
+                ctx.lineTo(420, ex.y - 15);
+                ctx.lineTo(420, ex.y - 5);
+                ctx.closePath();
+                ctx.fill();
+                
+                // Zeros
+                ctx.fillStyle = '#4caf50';
+                ctx.font = '16px Arial';
+                ctx.fillText(`Zeros: ${ex.zeros}`, 450, ex.y);
+            });
+            
+            // Bottom message
+            ctx.strokeStyle = '#9d4edd';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(100, 480, 600, 120);
+            
+            ctx.fillStyle = '#c77dff';
+            ctx.font = 'bold 22px Arial';
+            ctx.fillText('KEY INSIGHT:', 250, 520);
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = '18px Arial';
+            ctx.fillText('Every polynomial of degree n has EXACTLY n zeros', 140, 555);
+            ctx.fillText('(counting multiplicity, using complex numbers)', 160, 585);
+        }
+        
+        // SECTION 2: Conjugate Pairs
+        const conjugateCanvas = document.getElementById('conjugateCanvas');
+        const conjugateCtx = conjugateCanvas.getContext('2d');
+        
+        function drawConjugate(step) {
+            const ctx = conjugateCtx;
+            ctx.clearRect(0, 0, 800, 750);
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('Example: Given 3 - i is a zero, find conjugate and create quadratic', 20, 30);
+            
+            const y = 80;
+            
+            if (step >= 1) {
+                ctx.fillStyle = '#c77dff';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 1: Identify the given complex zero', 20, y);
+                
+                ctx.strokeStyle = '#9d4edd';
+                ctx.lineWidth = 3;
+                ctx.strokeRect(100, y + 20, 200, 60);
+                
+                ctx.fillStyle = '#4cc9f0';
+                ctx.font = 'bold 24px Arial';
+                ctx.fillText('z = 3 - i', 140, y + 60);
+            }
+            
+            if (step >= 2) {
+                ctx.fillStyle = '#c77dff';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 2: Find conjugate (flip sign of imaginary part)', 20, y + 120);
+                
+                ctx.strokeStyle = '#4caf50';
+                ctx.lineWidth = 3;
+                ctx.strokeRect(100, y + 140, 200, 60);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 24px Arial';
+                ctx.fillText('z̄ = 3 + i', 140, y + 180);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '14px Arial';
+                ctx.fillText('(Automatically also a zero!)', 340, y + 175);
+            }
+            
+            if (step >= 3) {
+                ctx.fillStyle = '#c77dff';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 3: Create quadratic factor', 20, y + 250);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '18px Arial';
+                ctx.fillText('(x - (3 - i))(x - (3 + i))', 100, y + 290);
+            }
+            
+            if (step >= 4) {
+                ctx.fillStyle = '#c77dff';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 4: Multiply out using difference of squares pattern', 20, y + 340);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('= [(x - 3) - i][(x - 3) + i]', 100, y + 380);
+                ctx.fillText('= (x - 3)² - (i)²', 100, y + 410);
+                ctx.fillText('= (x - 3)² - (-1)', 100, y + 440);
+                ctx.fillText('= (x - 3)² + 1', 100, y + 470);
+            }
+            
+            if (step >= 5) {
+                ctx.fillStyle = '#c77dff';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 5: Expand to standard form', 20, y + 510);
+                
+                ctx.strokeStyle = '#4caf50';
+                ctx.lineWidth = 3;
+                ctx.strokeRect(100, y + 530, 300, 50);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 22px Arial';
+                ctx.fillText('x² - 6x + 10', 150, y + 565);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '14px Arial';
+                ctx.fillText('← Real coefficients! ✓', 420, y + 560);
+            }
+            
+            // Step indicator
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = '14px Arial';
+            const stepTexts = ['', 'Identify the given complex zero', 'Apply Conjugate Zeros Theorem to find pair', 'Write factors for both zeros', 'Use (a-b)(a+b) = a² - b² pattern', 'Expand to get real coefficients'];
+            ctx.fillText(stepTexts[step], 20, 740);
+        }
+        
+        function nextConjugateStep() {
+            if (conjugateStep < 5) {
+                conjugateStep++;
+                drawConjugate(conjugateStep);
+                updateConjugateIndicator();
+            }
+        }
+        
+        function previousConjugateStep() {
+            if (conjugateStep > 1) {
+                conjugateStep--;
+                drawConjugate(conjugateStep);
+                updateConjugateIndicator();
+            }
+        }
+        
+        function resetConjugate() {
+            conjugateStep = 5;
+            drawConjugate(5);
+            updateConjugateIndicator();
+        }
+        
+        function updateConjugateIndicator() {
+            document.getElementById('conjugateStepIndicator').textContent = `Step ${conjugateStep} of 5`;
+        }
+        
+        // SECTION 3: Finding All Zeros
+        const allZerosCanvas = document.getElementById('allZerosCanvas');
+        const allZerosCtx = allZerosCanvas.getContext('2d');
+        
+        function drawAllZeros(step) {
+            const ctx = allZerosCtx;
+            ctx.clearRect(0, 0, 800, 800);
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('Find all zeros: P(x) = x³ - 3x² + x - 3', 20, 30);
+            
+            const y = 80;
+            
+            if (step >= 1) {
+                ctx.fillStyle = '#c77dff';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 1: Factor by grouping', 20, y);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('x³ - 3x² + x - 3', 50, y + 35);
+                ctx.fillText('= x²(x - 3) + 1(x - 3)', 50, y + 65);
+            }
+            
+            if (step >= 2) {
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 18px Arial';
+                ctx.fillText('= (x - 3)(x² + 1)', 50, y + 95);
+            }
+            
+            if (step >= 3) {
+                ctx.fillStyle = '#c77dff';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 2: Set each factor = 0', 20, y + 150);
+                
+                // First factor
+                ctx.strokeStyle = '#4caf50';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(50, y + 170, 300, 80);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '18px Arial';
+                ctx.fillText('Factor 1: x - 3 = 0', 70, y + 200);
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 20px Arial';
+                ctx.fillText('x = 3', 100, y + 230);
+                ctx.fillStyle = '#b0b0b0';
+                ctx.font = '14px Arial';
+                ctx.fillText('(REAL zero)', 180, y + 230);
+            }
+            
+            if (step >= 4) {
+                // Second factor
+                ctx.strokeStyle = '#4cc9f0';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(50, y + 270, 300, 110);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '18px Arial';
+                ctx.fillText('Factor 2: x² + 1 = 0', 70, y + 300);
+                ctx.fillText('x² = -1', 100, y + 330);
+            }
+            
+            if (step >= 5) {
+                ctx.fillStyle = '#4cc9f0';
+                ctx.font = 'bold 20px Arial';
+                ctx.fillText('x = ±√(-1) = ±i', 100, y + 360);
+                ctx.fillStyle = '#b0b0b0';
+                ctx.font = '14px Arial';
+                ctx.fillText('(COMPLEX zeros)', 280, y + 360);
+            }
+            
+            if (step >= 6) {
+                ctx.fillStyle = '#c77dff';
+                ctx.font = 'bold 18px Arial';
+                ctx.fillText('Step 3: List all zeros', 20, y + 440);
+                
+                ctx.strokeStyle = '#9d4edd';
+                ctx.lineWidth = 4;
+                ctx.strokeRect(150, y + 470, 500, 120);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = 'bold 24px Arial';
+                ctx.fillText('All zeros:', 250, y + 520);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.fillText('x = 3', 200, y + 560);
+                
+                ctx.fillStyle = '#4cc9f0';
+                ctx.fillText('x = i', 340, y + 560);
+                ctx.fillText('x = -i', 450, y + 560);
+            }
+            
+            // Step indicator
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = '14px Arial';
+            const stepTexts = ['', 'Factor the polynomial using grouping', 'Complete the factorization', 'Solve the first factor (linear)', 'Solve the second factor (quadratic)', 'Recognize x² = -1 gives complex zeros', 'List all zeros: 1 real, 2 complex'];
+            ctx.fillText(stepTexts[step], 20, 790);
+        }
+        
+        function nextAllZerosStep() {
+            if (allZerosStep < 6) {
+                allZerosStep++;
+                drawAllZeros(allZerosStep);
+                updateAllZerosIndicator();
+            }
+        }
+        
+        function previousAllZerosStep() {
+            if (allZerosStep > 1) {
+                allZerosStep--;
+                drawAllZeros(allZerosStep);
+                updateAllZerosIndicator();
+            }
+        }
+        
+        function resetAllZeros() {
+            allZerosStep = 6;
+            drawAllZeros(6);
+            updateAllZerosIndicator();
+        }
+        
+        function updateAllZerosIndicator() {
+            document.getElementById('allZerosStepIndicator').textContent = `Step ${allZerosStep} of 6`;
+        }
+        
+        // SECTION 4: Complete Factorization
+        const factorCompleteCanvas = document.getElementById('factorCompleteCanvas');
+        const factorCompleteCtx = factorCompleteCanvas.getContext('2d');
+        
+        function drawFactorComplete(step) {
+            const ctx = factorCompleteCtx;
+            ctx.clearRect(0, 0, 800, 800);
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('Factor completely: P(x) = x⁴ + 2x² - 8', 20, 30);
+            
+            const y = 80;
+            
+            if (step >= 1) {
+                ctx.fillStyle = '#c77dff';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 1: Factor over reals (treat as quadratic in x²)', 20, y);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('Let u = x²:', 50, y + 35);
+                ctx.fillText('u² + 2u - 8 = (u - 2)(u + 4)', 50, y + 65);
+                ctx.fillText('= (x² - 2)(x² + 4)', 50, y + 95);
+            }
+            
+            if (step >= 2) {
+                ctx.fillStyle = '#c77dff';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 2: Factor x² - 2 over reals', 20, y + 150);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 18px Arial';
+                ctx.fillText('x² - 2 = (x - √2)(x + √2)', 50, y + 185);
+            }
+            
+            if (step >= 3) {
+                ctx.fillStyle = '#c77dff';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 3: Real factorization complete', 20, y + 240);
+                
+                ctx.strokeStyle = '#4caf50';
+                ctx.lineWidth = 3;
+                ctx.strokeRect(50, y + 260, 650, 50);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 20px Arial';
+                ctx.fillText('P(x) = (x - √2)(x + √2)(x² + 4)', 100, y + 295);
+                
+                ctx.fillStyle = '#ff9800';
+                ctx.font = '14px Arial';
+                ctx.fillText('← Irreducible over reals', 530, y + 270);
+            }
+            
+            if (step >= 4) {
+                ctx.fillStyle = '#c77dff';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 4: Factor x² + 4 using complex numbers', 20, y + 360);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('x² + 4 = 0', 50, y + 395);
+                ctx.fillText('x² = -4', 50, y + 425);
+                
+                ctx.fillStyle = '#4cc9f0';
+                ctx.font = 'bold 18px Arial';
+                ctx.fillText('x = ±2i', 50, y + 455);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('So: x² + 4 = (x - 2i)(x + 2i)', 50, y + 490);
+            }
+            
+            if (step >= 5) {
+                ctx.fillStyle = '#c77dff';
+                ctx.font = 'bold 18px Arial';
+                ctx.fillText('Step 5: Complete factorization (all linear!)', 20, y + 540);
+                
+                ctx.strokeStyle = '#9d4edd';
+                ctx.lineWidth = 4;
+                ctx.strokeRect(50, y + 560, 700, 50);
+                
+                ctx.fillStyle = '#9d4edd';
+                ctx.font = 'bold 20px Arial';
+                ctx.fillText('P(x) = (x - √2)(x + √2)(x - 2i)(x + 2i)', 80, y + 595);
+            }
+            
+            // Step indicator
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = '14px Arial';
+            const stepTexts = ['', 'Factor using real numbers first', 'Factor x² - 2 into real linear factors', 'This is as far as we can go with reals', 'Now factor x² + 4 using complex numbers', 'Complete! All factors are linear'];
+            ctx.fillText(stepTexts[step], 20, 790);
+        }
+        
+        function nextFactorCompleteStep() {
+            if (factorCompleteStep < 5) {
+                factorCompleteStep++;
+                drawFactorComplete(factorCompleteStep);
+                updateFactorCompleteIndicator();
+            }
+        }
+        
+        function previousFactorCompleteStep() {
+            if (factorCompleteStep > 1) {
+                factorCompleteStep--;
+                drawFactorComplete(factorCompleteStep);
+                updateFactorCompleteIndicator();
+            }
+        }
+        
+        function resetFactorComplete() {
+            factorCompleteStep = 5;
+            drawFactorComplete(5);
+            updateFactorCompleteIndicator();
+        }
+        
+        function updateFactorCompleteIndicator() {
+            document.getElementById('factorCompleteStepIndicator').textContent = `Step ${factorCompleteStep} of 5`;
+        }
+        
+        // SECTION 5: Building Polynomials
+        const buildPolyCanvas = document.getElementById('buildPolyCanvas');
+        const buildPolyCtx = buildPolyCanvas.getContext('2d');
+        
+        function drawBuildPoly(step) {
+            const ctx = buildPolyCtx;
+            ctx.clearRect(0, 0, 800, 800);
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('Build polynomial: degree 3, zeros 2 and 1+i, integer coefficients', 20, 30);
+            
+            const y = 80;
+            
+            if (step >= 1) {
+                ctx.fillStyle = '#c77dff';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 1: List given zeros', 20, y);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = '18px Arial';
+                ctx.fillText('• Zero: 2 (real)', 50, y + 35);
+            }
+            
+            if (step >= 2) {
+                ctx.fillStyle = '#4cc9f0';
+                ctx.font = '18px Arial';
+                ctx.fillText('• Zero: 1 + i (complex)', 50, y + 65);
+                
+                ctx.fillStyle = '#ff9800';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('⚠ Must have conjugate pair for real coefficients!', 50, y + 100);
+                
+                ctx.fillStyle = '#4cc9f0';
+                ctx.font = '18px Arial';
+                ctx.fillText('• Zero: 1 - i (conjugate)', 50, y + 130);
+            }
+            
+            if (step >= 3) {
+                ctx.fillStyle = '#c77dff';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 2: Write factors', 20, y + 180);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('P(x) = a(x - 2)(x - (1+i))(x - (1-i))', 50, y + 215);
+            }
+            
+            if (step >= 4) {
+                ctx.fillStyle = '#c77dff';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 3: Simplify conjugate pair', 20, y + 270);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('(x - (1+i))(x - (1-i))', 50, y + 305);
+                ctx.fillText('= [(x-1) - i][(x-1) + i]', 50, y + 335);
+                ctx.fillText('= (x-1)² - (i)²', 50, y + 365);
+                ctx.fillText('= (x-1)² + 1', 50, y + 395);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 18px Arial';
+                ctx.fillText('= x² - 2x + 2', 50, y + 425);
+            }
+            
+            if (step >= 5) {
+                ctx.fillStyle = '#c77dff';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 4: Substitute back (set a = 1 for simplicity)', 20, y + 480);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '18px Arial';
+                ctx.fillText('P(x) = (x - 2)(x² - 2x + 2)', 50, y + 515);
+            }
+            
+            if (step >= 6) {
+                ctx.fillStyle = '#c77dff';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 5: Expand', 20, y + 565);
+                
+                ctx.strokeStyle = '#4caf50';
+                ctx.lineWidth = 3;
+                ctx.strokeRect(50, y + 585, 450, 50);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 22px Arial';
+                ctx.fillText('P(x) = x³ - 4x² + 6x - 4', 100, y + 620);
+            }
+            
+            // Step indicator
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = '14px Arial';
+            const stepTexts = ['', 'Start with given zeros', 'Add conjugate pair for real coefficients', 'Write factors for all three zeros', 'Multiply conjugate pair to get real quadratic', 'Combine all factors', 'Expand to standard form'];
+            ctx.fillText(stepTexts[step], 20, 790);
+        }
+        
+        function nextBuildStep() {
+            if (buildStep < 6) {
+                buildStep++;
+                drawBuildPoly(buildStep);
+                updateBuildIndicator();
+            }
+        }
+        
+        function previousBuildStep() {
+            if (buildStep > 1) {
+                buildStep--;
+                drawBuildPoly(buildStep);
+                updateBuildIndicator();
+            }
+        }
+        
+        function resetBuild() {
+            buildStep = 6;
+            drawBuildPoly(6);
+            updateBuildIndicator();
+        }
+        
+        function updateBuildIndicator() {
+            document.getElementById('buildStepIndicator').textContent = `Step ${buildStep} of 6`;
+        }
+        
+        // Initialize all canvases
+        drawFundamental();
+        drawConjugate(1);
+        updateConjugateIndicator();
+        drawAllZeros(1);
+        updateAllZerosIndicator();
+        drawFactorComplete(1);
+        updateFactorCompleteIndicator();
+        drawBuildPoly(1);
+        updateBuildIndicator();
+    </script>
+</body>
+</html>

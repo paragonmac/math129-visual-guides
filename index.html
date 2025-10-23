@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math 129 - Interactive Visual Guides</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px 20px;
+            background: rgba(15, 15, 35, 0.8);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            background: linear-gradient(45deg, #ffd700, #ffed4e, #4dd0e1, #9d4edd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.3em;
+            color: #b0b0b0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 15px 25px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: #b0b0b0;
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .topic-card {
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.9), rgba(22, 33, 62, 0.9));
+            border-radius: 15px;
+            padding: 30px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .topic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #ffd700, #4dd0e1, #9d4edd, #ff6b6b);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .topic-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .topic-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .topic-icon {
+            font-size: 2.5em;
+            margin-right: 15px;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.3));
+        }
+
+        .topic-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .topic-description {
+            color: #c0c0c0;
+            margin-bottom: 20px;
+            font-size: 1.05em;
+        }
+
+        .topic-features {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .topic-features li {
+            color: #4dd0e1;
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .topic-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .topic-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9em;
+            color: #888;
+        }
+
+        .difficulty {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .difficulty-star {
+            color: #ffd700;
+        }
+
+        .difficulty-star.empty {
+            color: #333;
+        }
+
+        .launch-btn {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #0f0f23;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .launch-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(15, 15, 35, 0.6);
+            border-radius: 15px;
+            margin-top: 50px;
+        }
+
+        .footer h3 {
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+
+        .footer p {
+            color: #b0b0b0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .quick-nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .quick-nav-btn {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            color: #ffd700;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .quick-nav-btn:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5em;
+            }
+            
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats {
+                gap: 20px;
+            }
+            
+            .topic-card {
+                padding: 20px;
+            }
+        }
+
+        .animated {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header animated">
+            <h1>🎓 Math 129 Visual Guides</h1>
+            <p>Interactive step-by-step visual guides for mastering polynomial functions, zeros, and advanced algebraic concepts. Each guide features dynamic animations, real-world applications, and comprehensive examples.</p>
+            
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">7</div>
+                    <div class="stat-label">Interactive Guides</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Visual Examples</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Step-by-Step</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quick-nav">
+            <a href="#foundations" class="quick-nav-btn">📐 Foundations</a>
+            <a href="#advanced" class="quick-nav-btn">🚀 Advanced Topics</a>
+            <a href="#applications" class="quick-nav-btn">🌍 Applications</a>
+            <a href="#problem-solving" class="quick-nav-btn">🎯 Problem Solving</a>
+        </div>
+
+        <div class="topics-grid">
+            <!-- Quadratic Functions -->
+            <div class="topic-card animated" onclick="window.location.href='quadratic_functions_vertex_form.html'" id="foundations">
+                <div class="topic-header">
+                    <div class="topic-icon">📐</div>
+                    <div class="topic-title">Quadratic Functions & Vertex Form</div>
+                </div>
+                <div class="topic-description">
+                    Master completing the square and transforming quadratics to vertex form. Learn to instantly identify maximum/minimum values and optimize real-world problems.
+                </div>
+                <ul class="topic-features">
+                    <li>Step-by-step completing the square</li>
+                    <li>Standard form ↔ Vertex form conversion</li>
+                    <li>Interactive parabola animations</li>
+                    <li>Real-world optimization examples</li>
+                </ul>
+                <div class="topic-meta">
+                    <div class="difficulty">
+                        <span>Difficulty: </span>
+                        <span class="difficulty-star">★</span>
+                        <span class="difficulty-star">★</span>
+                        <span class="difficulty-star empty">★</span>
+                        <span class="difficulty-star empty">★</span>
+                        <span class="difficulty-star empty">★</span>
+                    </div>
+                    <button class="launch-btn">Launch Guide</button>
+                </div>
+            </div>
+
+            <!-- Polynomial Functions -->
+            <div class="topic-card animated" onclick="window.location.href='polynomial_functions_and_graphing.html'">
+                <div class="topic-header">
+                    <div class="topic-icon">📈</div>
+                    <div class="topic-title">Polynomial Functions & Graphing</div>
+                </div>
+                <div class="topic-description">
+                    Understand polynomial behavior, end behavior, zeros, multiplicity, and graph sketching. Master the art of predicting graph shapes from equations.
+                </div>
+                <ul class="topic-features">
+                    <li>End behavior analysis</li>
+                    <li>Zero multiplicity and graph crossing</li>
+                    <li>Complete graph sketching workflow</li>
+                    <li>Intermediate Value Theorem applications</li>
+                </ul>
+                <div class="topic-meta">
+                    <div class="difficulty">
+                        <span>Difficulty: </span>
+                        <span class="difficulty-star">★</span>
+                        <span class="difficulty-star">★</span>
+                        <span class="difficulty-star">★</span>
+                        <span class="difficulty-star empty">★</span>
+                        <span class="difficulty-star empty">★</span>
+                    </div>
+                    <button class="launch-btn">Launch Guide</button>
+                </div>
+            </div>
+
+            <!-- Polynomial Division -->
+            <div class="topic-card animated" onclick="window.location.href='polynomial_division_long_and_synthetic.html'" id="advanced">
+                <div class="topic-header">
+                    <div class="topic-icon">➗</div>
+                    <div class="topic-title">Polynomial Division Methods</div>
+                </div>
+                <div class="topic-description">
+                    Master both long division and synthetic division with interactive step-by-step examples. Learn the Remainder and Factor Theorems for efficient problem solving.
+                </div>
+                <ul class="topic-features">
+                    <li>Long division step-by-step process</li>
+                    <li>Synthetic division shortcuts</li>
+                    <li>Remainder & Factor Theorem applications</li>
+                    <li>Building polynomials from zeros</li>
+                </ul>
+                <div class="topic-meta">
+                    <div class="difficulty">
+                        <span>Difficulty: </span>
+                        <span class="difficulty-star">★</span>
+                        <span class="difficulty-star">★</span>
+                        <span class="difficulty-star">★</span>
+                        <span class="difficulty-star empty">★</span>
+                        <span class="difficulty-star empty">★</span>
+                    </div>
+                    <button class="launch-btn">Launch Guide</button>
+                </div>
+            </div>
+
+            <!-- Real Zeros -->
+            <div class="topic-card animated" onclick="window.location.href='real_zeros_finding_techniques.html'" id="problem-solving">
+                <div class="topic-header">
+                    <div class="topic-icon">🎯</div>
+                    <div class="topic-title">Real Zeros Finding Techniques</div>
+                </div>
+                <div class="topic-description">
+                    Hunt for exact polynomial zeros using the Rational Zeros Theorem, Descartes's Rule of Signs, and bounds testing. Master systematic zero-finding strategies.
+                </div>
+                <ul class="topic-features">
+                    <li>Rational Zeros Theorem workflow</li>
+                    <li>Descartes's Rule for prediction</li>
+                    <li>Upper & Lower bounds testing</li>
+                    <li>Complete zero-finding strategy</li>
+                </ul>
+                <div class="topic-meta">
+                    <div class="difficulty">
+                        <span>Difficulty: </span>
+                        <span class="difficulty-star">★</span>
+                        <span class="difficulty-star">★</span>
+                        <span class="difficulty-star">★</span>
+                        <span class="difficulty-star">★</span>
+                        <span class="difficulty-star empty">★</span>
+                    </div>
+                    <button class="launch-btn">Launch Guide</button>
+                </div>
+            </div>
+
+            <!-- Complex Zeros -->
+            <div class="topic-card animated" onclick="window.location.href='complex_zeros_and_fundamental_theorem.html'">
+                <div class="topic-header">
+                    <div class="topic-icon">🌌</div>
+                    <div class="topic-title">Complex Zeros & Fundamental Theorem</div>
+                </div>
+                <div class="topic-description">
+                    Explore the world of complex numbers and understand why every polynomial can be completely factored. Master conjugate pairs and complete factorization.
+                </div>
+                <ul class="topic-features">
+                    <li>Fundamental Theorem of Algebra</li>
+                    <li>Complex conjugate pairs</li>
+                    <li>Complete linear factorization</li>
+                    <li>Building polynomials from complex zeros</li>
+                </ul>
+                <div class="topic-meta">
+                    <div class="difficulty">
+                        <span>Difficulty: </span>
+                        <span class="difficulty-star">★</span>
+                        <span class="difficulty-star">★</span>
+                        <span class="difficulty-star">★</span>
+                        <span class="difficulty-star">★</span>
+                        <span class="difficulty-star">★</span>
+                    </div>
+                    <button class="launch-btn">Launch Guide</button>
+                </div>
+            </div>
+
+            <!-- Rational Functions -->
+            <div class="topic-card animated" onclick="window.location.href='rational_functions_asymptotes_holes.html'" id="applications">
+                <div class="topic-header">
+                    <div class="topic-icon">📐</div>
+                    <div class="topic-title">Rational Functions: Asymptotes & Holes</div>
+                </div>
+                <div class="topic-description">
+                    Master rational function analysis including vertical/horizontal asymptotes, holes, and slant asymptotes. Learn complete graphing strategies and real-world applications.
+                </div>
+                <ul class="topic-features">
+                    <li>Vertical & horizontal asymptotes</li>
+                    <li>Hole identification and location</li>
+                    <li>Slant asymptotes and end behavior</li>
+                    <li>Complete rational function graphing</li>
+                </ul>
+                <div class="topic-meta">
+                    <div class="difficulty">
+                        <span>Difficulty: </span>
+                        <span class="difficulty-star">★</span>
+                        <span class="difficulty-star">★</span>
+                        <span class="difficulty-star">★</span>
+                        <span class="difficulty-star">★</span>
+                        <span class="difficulty-star empty">★</span>
+                    </div>
+                    <button class="launch-btn">Launch Guide</button>
+                </div>
+            </div>
+
+            <!-- Inequalities -->
+            <div class="topic-card animated" onclick="window.location.href='polynomial_and_rational_inequalities.html'">
+                <div class="topic-header">
+                    <div class="topic-icon">📊</div>
+                    <div class="topic-title">Polynomial & Rational Inequalities</div>
+                </div>
+                <div class="topic-description">
+                    Master sign analysis and interval testing for solving polynomial and rational inequalities. Learn systematic approaches to finding solution sets.
+                </div>
+                <ul class="topic-features">
+                    <li>Sign analysis and cut points</li>
+                    <li>Polynomial inequality solving</li>
+                    <li>Rational inequality techniques</li>
+                    <li>Domain problems as inequalities</li>
+                </ul>
+                <div class="topic-meta">
+                    <div class="difficulty">
+                        <span>Difficulty: </span>
+                        <span class="difficulty-star">★</span>
+                        <span class="difficulty-star">★</span>
+                        <span class="difficulty-star">★</span>
+                        <span class="difficulty-star">★</span>
+                        <span class="difficulty-star empty">★</span>
+                    </div>
+                    <button class="launch-btn">Launch Guide</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <h3>🚀 Ready to Master Math 129?</h3>
+            <p>
+                Each guide is designed to build your understanding step-by-step with interactive visualizations, 
+                real-world applications, and comprehensive examples. Start with the foundations and work your way 
+                through the advanced topics at your own pace.
+            </p>
+            <div style="margin-top: 20px; color: #888; font-size: 0.9em;">
+                <p>💡 <strong>Pro Tip:</strong> Each guide includes a "Why This Matters" section showing real-world applications!</p>
+                <p>🎯 <strong>Study Strategy:</strong> Work through the interactive examples and try the practice problems for best results.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add staggered animation to cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.topic-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+
+        // Add smooth scrolling for navigation
+        document.querySelectorAll('.quick-nav-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key >= '1' && e.key <= '7') {
+                e.preventDefault();
+                const cards = document.querySelectorAll('.topic-card');
+                const index = parseInt(e.key) - 1;
+                if (cards[index]) {
+                    cards[index].click();
+                }
+            }
+        });
+
+        // Add visual feedback for card interactions
+        document.querySelectorAll('.topic-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

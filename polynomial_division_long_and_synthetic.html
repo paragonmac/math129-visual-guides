@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polynomial Division Visual Guide</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e0e0e0;
+        }
+        
+        .container {
+            background: #0f0f1e;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #8b9eff;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #b0b0b0;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #1a1a2e;
+            border-radius: 10px;
+            border-left: 5px solid #8b9eff;
+        }
+        
+        .section h2 {
+            color: #8b9eff;
+            margin-top: 0;
+        }
+        
+        canvas {
+            border: 2px solid #8b9eff;
+            border-radius: 8px;
+            display: block;
+            margin: 20px auto;
+            background: #0a0a15;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        
+        .step-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .step {
+            background: #16213e;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #2a3a5a;
+        }
+        
+        .step h3 {
+            color: #a8b3ff;
+            margin-top: 0;
+            font-size: 1.1em;
+        }
+        
+        .step ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .step li {
+            margin: 8px 0;
+        }
+        
+        .formula {
+            background: #1e2a4a;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            margin: 10px 0;
+            text-align: center;
+            border: 1px dashed #8b9eff;
+            color: #e0e0e0;
+        }
+        
+        .highlight {
+            background: #4a4a2a;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+            color: #ffd54f;
+        }
+        
+        .key-point {
+            background: #1e3a2e;
+            border-left: 4px solid #4caf50;
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            color: #e0e0e0;
+        }
+        
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        button {
+            background: #8b9eff;
+            color: #0f0f1e;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background 0.3s;
+            font-weight: bold;
+        }
+        
+        button:hover {
+            background: #a8b3ff;
+        }
+        
+        .division-work {
+            background: #0a0a15;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            border: 2px solid #8b9eff;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        
+        .division-step {
+            margin: 10px 0;
+            padding: 10px;
+            background: #1a1a2e;
+            border-radius: 5px;
+            border-left: 3px solid #4caf50;
+        }
+        
+        .synthetic-box {
+            background: #1e2a4a;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid #8b9eff;
+        }
+        
+        .synthetic-row {
+            font-family: 'Courier New', monospace;
+            font-size: 1.2em;
+            margin: 10px 0;
+            text-align: center;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .comparison-table th {
+            background: #8b9eff;
+            color: #0f0f1e;
+            padding: 12px;
+            border: 1px solid #2a3a5a;
+            font-weight: bold;
+        }
+        
+        .comparison-table td {
+            padding: 12px;
+            border: 1px solid #2a3a5a;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background: #16213e;
+        }
+        
+        .theorem-box {
+            background: #2e1a3a;
+            border: 3px solid #9c27b0;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .theorem-box h3 {
+            color: #ce93d8;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>➗ Polynomial Division: Visual Step-by-Step Guide</h1>
+        <p class="subtitle">Long Division, Synthetic Division, and Powerful Theorems</p>
+        
+        <!-- WHY THIS MATTERS -->
+        <div class="section" style="border-left-color: #ff6b6b;">
+            <h2>🤔 Why Do We Care About Polynomial Division?</h2>
+            
+            <div class="step-container">
+                <div class="step">
+                    <h3>❌ Without Division Skills</h3>
+                    <p><strong>You're stuck:</strong></p>
+                    <ul>
+                        <li>Can't factor complex polynomials</li>
+                        <li>Can't find zeros efficiently</li>
+                        <li>Can't simplify rational expressions</li>
+                        <li>Can't verify if (x - c) is a factor</li>
+                    </ul>
+                    <p style="color: #ff6b6b;">You hit a wall on hard problems!</p>
+                </div>
+                
+                <div class="step">
+                    <h3>✅ With Division Mastery</h3>
+                    <p><strong>You can:</strong></p>
+                    <ul>
+                        <li>✓ Factor ANY polynomial (if one zero is known)</li>
+                        <li>✓ Evaluate P(c) instantly (Remainder Theorem)</li>
+                        <li>✓ Test if (x - c) is a factor in seconds</li>
+                        <li>✓ Build polynomials from zeros</li>
+                    </ul>
+                    <p style="color: #4caf50;">Unlock advanced algebra!</p>
+                </div>
+            </div>
+            
+            <div class="key-point">
+                <strong>💡 Real-World Impact:</strong> Engineers use polynomial division to analyze signal processing. Economists use it to model diminishing returns. Computer scientists use it in error-correcting codes. This isn't just algebra busywork—it's a fundamental tool!
+            </div>
+            
+            <div class="key-point" style="background: #2e1a3a; border-left-color: #9c27b0;">
+                <strong>🎯 Bottom Line:</strong> Polynomial division is like having a master key. Once you know one zero, you can unlock the entire factorization. That's POWER!
+            </div>
+        </div>
+        
+        <!-- SECTION 1: The Division Algorithm -->
+        <div class="section">
+            <h2>📐 Section 1: The Division Algorithm</h2>
+            
+            <p><strong>The fundamental relationship that ties everything together:</strong></p>
+            
+            <div class="formula" style="font-size: 1.3em;">
+                <span style="color: #8b9eff; font-weight: bold;"></span>P(x)</span> = <span style="color: #4caf50; font-weight: bold;">D(x)</span> · <span style="color: #ff9800; font-weight: bold;">Q(x)</span> + <span style="color: #f44336; font-weight: bold;">R(x)</span>
+            </div>
+            
+            <canvas id="divisionAlgorithmCanvas" width="800" height="400"></canvas>
+            
+            <div class="step-container">
+                <div class="step">
+                    <h3>The Players</h3>
+                    <p><strong>P(x)</strong> = <span class="highlight">Dividend</span></p>
+                    <p style="font-size: 0.9em;">What you're dividing</p>
+                    
+                    <p><strong>D(x)</strong> = <span class="highlight">Divisor</span></p>
+                    <p style="font-size: 0.9em;">What you're dividing by</p>
+                    
+                    <p><strong>Q(x)</strong> = <span class="highlight">Quotient</span></p>
+                    <p style="font-size: 0.9em;">The answer</p>
+                    
+                    <p><strong>R(x)</strong> = <span class="highlight">Remainder</span></p>
+                    <p style="font-size: 0.9em;">What's left over</p>
+                </div>
+                
+                <div class="step">
+                    <h3>Key Rules</h3>
+                    <p>✓ Degree of R(x) < Degree of D(x)</p>
+                    <p>✓ Or R(x) = 0 (divides evenly)</p>
+                    <p style="margin-top: 15px;"><strong>Example:</strong></p>
+                    <div class="formula" style="font-size: 0.9em;">
+                        <span style="color: #8b9eff; font-weight: bold;">6x² - 26x + 12</span> = <span style="color: #4caf50;">(x - 4)</span><span style="color: #ff9800;">(6x - 2)</span> + <span style="color: #f44336; font-weight: bold; font-size: 1.1em;">4</span>
+                    </div>
+                    <p style="font-size: 0.9em;">
+                        Dividend = Divisor × Quotient + Remainder
+                    </p>
+                </div>
+            </div>
+            
+            <div class="key-point">
+                <strong>💭 Think of it like regular division:</strong> 17 ÷ 5 = 3 remainder 2, or 17 = 5 × 3 + 2. Same idea!
+            </div>
+        </div>
+        
+        <!-- SECTION 2: Long Division -->
+        <div class="section">
+            <h2>📝 Section 2: Long Division (The Traditional Way)</h2>
+            
+            <p><strong>Example:</strong> Divide 6x² - 26x + 12 by x - 4</p>
+            
+            <canvas id="longDivisionCanvas" width="800" height="500"></canvas>
+            
+            <div class="controls">
+                <button onclick="previousLongDivStep()">⬅️ Previous Step</button>
+                <button onclick="nextLongDivStep()">Next Step ➡️</button>
+                <button onclick="resetLongDiv()">🔄 Reset to Complete</button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 10px;">
+                <span id="longDivStepIndicator" style="color: #8b9eff; font-weight: bold; font-size: 1.1em;">Step 1 of 7</span>
+            </div>
+            
+            <div class="key-point">
+                <strong>⚠️ Common Mistakes to Avoid:</strong>
+                <ul style="margin: 10px 0;">
+                    <li>Forgetting to include 0x terms for missing powers</li>
+                    <li>Sign errors when subtracting (change ALL signs!)</li>
+                    <li>Stopping too early (continue until remainder degree < divisor degree)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- SECTION 3: Synthetic Division -->
+        <div class="section">
+            <h2>⚡ Section 3: Synthetic Division (The Fast Way!)</h2>
+            
+            <div class="key-point" style="background: #3a2e1e; border-left-color: #ff9800;">
+                <strong>🚀 ONLY works when dividing by <span style="color: #4caf50; font-size: 1.2em;">(x - c)</span></strong> where <span style="color: #4caf50; font-weight: bold;">c</span> is a constant!
+            </div>
+            
+            <p><strong>Example:</strong> Divide 2x³ - 7x² + 5 by <span style="color: #4caf50; font-weight: bold;">(x - 3)</span> → use c = <span style="color: #4caf50; font-weight: bold; font-size: 1.2em;">3</span></p>
+            
+            <canvas id="syntheticCanvas" width="800" height="500"></canvas>
+            
+            <div class="controls">
+                <button onclick="previousSyntheticStep()">⬅️ Previous Step</button>
+                <button onclick="nextSyntheticStep()">Next Step ➡️</button>
+                <button onclick="resetSynthetic()">🔄 Reset to Complete</button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 10px;">
+                <span id="syntheticStepIndicator" style="color: #8b9eff; font-weight: bold; font-size: 1.1em;">Step 1 of 6</span>
+            </div>
+            
+            <div class="step-container">
+                <div class="step">
+                    <h3>⚡ Why Synthetic is Better</h3>
+                    <ul>
+                        <li>10x faster than long division</li>
+                        <li>Less writing, fewer errors</li>
+                        <li>Works great for Remainder Theorem</li>
+                        <li>Perfect for testing factors</li>
+                    </ul>
+                </div>
+                
+                <div class="step">
+                    <h3>⚠️ When You Can't Use It</h3>
+                    <ul>
+                        <li>Divisor is (x² + 1) ❌</li>
+                        <li>Divisor is (2x - 3) ❌</li>
+                        <li>Divisor is (x - √5) ✓ (can use!)</li>
+                        <li>Divisor is (x + 7) ✓ (use c = -7)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="key-point">
+                <strong>🎯 Pro Tip:</strong> If divisor is (x + c), use NEGATIVE c in synthetic division. For (x + 3), use c = -3!
+            </div>
+        </div>
+        
+        <!-- SECTION 4: Comparison -->
+        <div class="section">
+            <h2>⚖️ Section 4: Long vs. Synthetic Division</h2>
+            
+            <table class="comparison-table">
+                <tr>
+                    <th>Feature</th>
+                    <th>Long Division</th>
+                    <th>Synthetic Division</th>
+                </tr>
+                <tr>
+                    <td><strong>Works with any divisor?</strong></td>
+                    <td style="color: #4caf50;">✓ YES</td>
+                    <td style="color: #f44336;">✗ Only (x - c)</td>
+                </tr>
+                <tr>
+                    <td><strong>Speed</strong></td>
+                    <td style="color: #ff9800;">Slow</td>
+                    <td style="color: #4caf50;">Fast</td>
+                </tr>
+                <tr>
+                    <td><strong>Error-prone?</strong></td>
+                    <td style="color: #f44336;">More errors</td>
+                    <td style="color: #4caf50;">Fewer errors</td>
+                </tr>
+                <tr>
+                    <td><strong>Shows work clearly?</strong></td>
+                    <td style="color: #4caf50;">Very clear</td>
+                    <td style="color: #ff9800;">More compact</td>
+                </tr>
+                <tr>
+                    <td><strong>Best for Remainder Theorem?</strong></td>
+                    <td style="color: #ff9800;">Overkill</td>
+                    <td style="color: #4caf50;">Perfect!</td>
+                </tr>
+                <tr>
+                    <td><strong>Example divisor</strong></td>
+                    <td>(x² + 3x - 1)</td>
+                    <td>(x - 5)</td>
+                </tr>
+            </table>
+            
+            <div class="key-point">
+                <strong>📋 Decision Guide:</strong> Can you write the divisor as (x - c)? → Use synthetic! Otherwise → Use long division.
+            </div>
+        </div>
+        
+        <!-- SECTION 5: Remainder Theorem -->
+        <div class="section">
+            <h2>🎯 Section 5: Remainder Theorem (Instant Evaluation!)</h2>
+            
+            <div class="theorem-box">
+                <h3>🔮 The Remainder Theorem</h3>
+                <div class="formula" style="font-size: 1.2em; background: #1a1a2e;">
+                    <span style="color: #f44336; font-weight: bold; font-size: 1.2em;">P(c)</span> = <span style="color: #f44336; font-weight: bold;">Remainder</span> when <span style="color: #8b9eff;">P(x)</span> is divided by <span style="color: #4caf50;">(x - c)</span>
+                </div>
+                <p style="margin-top: 15px;"><strong>In English:</strong> To find P(c), just divide P(x) by (x - c) using synthetic division. The remainder IS your answer!</p>
+            </div>
+            
+            <p><strong>Example:</strong> Find P(-2) if P(x) = 3x⁵ - 5x⁴ - 4x³ + 7x - 3</p>
+            
+            <canvas id="remainderCanvas" width="800" height="400"></canvas>
+            
+            <div class="step-container">
+                <div class="step">
+                    <h3>The Old Way (Substitution)</h3>
+                    <p>P(-2) = 3(-2)⁵ - 5(-2)⁴ - 4(-2)³ + 7(-2) - 3</p>
+                    <p>= 3(-32) - 5(16) - 4(-8) - 14 - 3</p>
+                    <p>= -96 - 80 + 32 - 14 - 3</p>
+                    <p>= -161</p>
+                    <p style="color: #ff9800;">Lots of calculation!</p>
+                </div>
+                
+                <div class="step">
+                    <h3>The Smart Way (Remainder Theorem)</h3>
+                    <p>Synthetic division by (x - (-2)):</p>
+                    <div class="formula" style="font-size: 0.9em;">
+                        -2 | 3  -5  -4   0   7  -3<br>
+                        &nbsp;&nbsp;&nbsp;|    -6  22 -36  72 -158<br>
+                        &nbsp;&nbsp;&nbsp;|________________________<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3 -11  18 -36  79  <span class="highlight">-161</span>
+                    </div>
+                    <p style="color: #4caf50;">P(-2) = -161 ✓</p>
+                </div>
+            </div>
+            
+            <div class="key-point">
+                <strong>💡 Why It Works:</strong> When you divide P(x) by (x - c), you get P(x) = (x - c)·Q(x) + R. Plug in x = c: P(c) = (c - c)·Q(c) + R = 0 + R = R!
+            </div>
+        </div>
+        
+        <!-- SECTION 6: Factor Theorem -->
+        <div class="section">
+            <h2>🔑 Section 6: Factor Theorem (The Master Key!)</h2>
+            
+            <div class="theorem-box">
+                <h3>🗝️ The Factor Theorem</h3>
+                <div class="formula" style="font-size: 1.2em; background: #1a1a2e;">
+                    <span style="color: #4caf50; font-weight: bold;">(x - c)</span> is a factor of <span style="color: #8b9eff;">P(x)</span> ⟺ <span style="color: #f44336; font-weight: bold; font-size: 1.2em;">P(c) = 0</span>
+                </div>
+                <p style="margin-top: 15px;"><strong>In English:</strong> If c is a zero, then (x - c) is a factor. If (x - c) is a factor, then c is a zero. They're two sides of the same coin!</p>
+            </div>
+            
+            <p><strong>Example:</strong> Factor P(x) = x³ - 7x + 6, given that P(1) = 0</p>
+            
+            <canvas id="factorCanvas" width="800" height="500"></canvas>
+            
+            <div class="controls">
+                <button onclick="previousFactorStep()">⬅️ Previous Step</button>
+                <button onclick="nextFactorStep()">Next Step ➡️</button>
+                <button onclick="resetFactor()">🔄 Reset to Complete</button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 10px;">
+                <span id="factorStepIndicator" style="color: #8b9eff; font-weight: bold; font-size: 1.1em;">Step 1 of 4</span>
+            </div>
+            
+            <div class="key-point">
+                <strong>🎯 The Strategy:</strong> Know one zero → Use Factor Theorem → Divide to get quotient → Factor the quotient → Complete factorization!
+            </div>
+        </div>
+        
+        <!-- SECTION 7: Building Polynomials -->
+        <div class="section">
+            <h2>🏗️ Section 7: Constructing Polynomials from Zeros</h2>
+            
+            <p><strong>Example:</strong> Create a degree 3 polynomial with zeros at -2, 1, 3 and leading coefficient 2</p>
+            
+            <div class="division-step">
+                <strong>Step 1: Convert zeros to factors</strong>
+                <p>Zero: -2 → Factor: (x + 2)</p>
+                <p>Zero: 1 → Factor: (x - 1)</p>
+                <p>Zero: 3 → Factor: (x - 3)</p>
+            </div>
+            
+            <div class="division-step">
+                <strong>Step 2: Multiply factors</strong>
+                <div class="formula">P(x) = (x + 2)(x - 1)(x - 3)</div>
+            </div>
+            
+            <div class="division-step">
+                <strong>Step 3: Expand</strong>
+                <p>= (x + 2)[(x - 1)(x - 3)]</p>
+                <p>= (x + 2)[x² - 4x + 3]</p>
+                <p>= x³ - 4x² + 3x + 2x² - 8x + 6</p>
+                <div class="formula">= x³ - 2x² - 5x + 6</div>
+                <p style="color: #ff9800;">Current leading coefficient: 1</p>
+            </div>
+            
+            <div class="division-step">
+                <strong>Step 4: Adjust coefficient</strong>
+                <p>Need leading coefficient = 2</p>
+                <p>Multiply entire polynomial by: 2/1 = 2</p>
+                <div class="formula" style="background: #1e3a2e; border-color: #4caf50;">
+                    P(x) = 2x³ - 4x² - 10x + 12
+                </div>
+            </div>
+            
+            <canvas id="constructCanvas" width="800" height="400"></canvas>
+            
+            <div class="key-point">
+                <strong>✅ Verify Your Answer:</strong>
+                <ul style="margin: 10px 0;">
+                    <li>✓ Degree 3? YES (highest power is x³)</li>
+                    <li>✓ Leading coefficient 2? YES (2x³)</li>
+                    <li>✓ Zeros at -2, 1, 3? Test each: P(-2) = 0 ✓, P(1) = 0 ✓, P(3) = 0 ✓</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- SECTION 8: Real Applications -->
+        <div class="section" style="border-left-color: #ff9800;">
+            <h2>🌍 When You'll Actually Use This</h2>
+            
+            <div class="step-container">
+                <div class="step">
+                    <h3>🔐 Cryptography</h3>
+                    <p><strong>Problem:</strong> Error-correcting codes in data transmission</p>
+                    <p><strong>How:</strong> Polynomial division detects and corrects errors in sent data (like QR codes!)</p>
+                    <div class="formula" style="font-size: 0.9em;">Message + Error = P(x) / G(x)</div>
+                    <p style="font-size: 0.9em; color: #4caf50;">Used every time you scan a QR code or stream video!</p>
+                </div>
+                
+                <div class="step">
+                    <h3>📡 Signal Processing</h3>
+                    <p><strong>Problem:</strong> Filter unwanted frequencies</p>
+                    <p><strong>How:</strong> Factor transfer functions to design filters</p>
+                    <div class="formula" style="font-size: 0.9em;">H(s) = N(s) / D(s)</div>
+                    <p style="font-size: 0.9em; color: #4caf50;">Behind noise-cancelling headphones!</p>
+                </div>
+                
+                <div class="step">
+                    <h3>🎮 Computer Graphics</h3>
+                    <p><strong>Problem:</strong> Smooth curves and surfaces</p>
+                    <p><strong>How:</strong> Polynomial division in Bézier curve algorithms</p>
+                    <p style="font-size: 0.9em; color: #4caf50;">Every smooth curve in video games and animation!</p>
+                </div>
+                
+                <div class="step">
+                    <h3>💊 Pharmacokinetics</h3>
+                    <p><strong>Problem:</strong> Model drug absorption/elimination</p>
+                    <p><strong>How:</strong> Factor polynomials to find half-life components</p>
+                    <div class="formula" style="font-size: 0.9em;">C(t) = P(t) / Q(t)</div>
+                    <p style="font-size: 0.9em; color: #4caf50;">Determines safe dosing schedules!</p>
+                </div>
+            </div>
+            
+            <div class="key-point">
+                <strong>⚡ The Pattern:</strong> Whenever you need to break complex systems into simpler parts, polynomial division is your tool. It's the "divide and conquer" of algebra!
+            </div>
+        </div>
+        
+        <!-- SECTION 9: Quick Reference -->
+        <div class="section">
+            <h2>📋 Quick Reference Guide</h2>
+            
+            <table class="comparison-table">
+                <tr>
+                    <th>If you need to...</th>
+                    <th>Use...</th>
+                    <th>Why?</th>
+                </tr>
+                <tr>
+                    <td>Divide by (x² + 3x - 1)</td>
+                    <td>Long Division</td>
+                    <td>Not in form (x - c)</td>
+                </tr>
+                <tr>
+                    <td>Divide by (x - 5)</td>
+                    <td>Synthetic Division</td>
+                    <td>Much faster!</td>
+                </tr>
+                <tr>
+                    <td>Find P(7)</td>
+                    <td>Remainder Theorem</td>
+                    <td>Divide by (x - 7), remainder = P(7)</td>
+                </tr>
+                <tr>
+                    <td>Check if (x - 3) is a factor</td>
+                    <td>Factor Theorem</td>
+                    <td>Find P(3); if 0, it's a factor</td>
+                </tr>
+                <tr>
+                    <td>Factor completely</td>
+                    <td>Factor Theorem + Division</td>
+                    <td>Find one zero, divide, repeat</td>
+                </tr>
+                <tr>
+                    <td>Build from zeros</td>
+                    <td>Multiply factors</td>
+                    <td>Zero c → factor (x - c)</td>
+                </tr>
+            </table>
+            
+            <div class="key-point">
+                <strong>🎯 The Golden Rule:</strong> Can you write divisor as (x - c)? Use synthetic! Otherwise, use long division.
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Global state
+        let longDivStep = 1;
+        let syntheticStep = 1;
+        let factorStep = 1;
+        
+        // SECTION 1: Division Algorithm
+        const divAlgCanvas = document.getElementById('divisionAlgorithmCanvas');
+        const divAlgCtx = divAlgCanvas.getContext('2d');
+        
+        function drawDivisionAlgorithm() {
+            const ctx = divAlgCtx;
+            ctx.clearRect(0, 0, 800, 400);
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 24px Arial';
+            ctx.fillText('P(x) = D(x) · Q(x) + R(x)', 250, 50);
+            
+            // Draw boxes with better spacing
+            const boxes = [
+                {x: 50, y: 120, w: 150, h: 80, label: 'P(x)', sub: 'Dividend', color: '#8b9eff'},
+                {x: 50, y: 240, w: 150, h: 80, label: 'D(x)', sub: 'Divisor', color: '#4caf50'},
+                {x: 325, y: 120, w: 150, h: 80, label: 'Q(x)', sub: 'Quotient', color: '#ff9800'},
+                {x: 600, y: 120, w: 150, h: 80, label: 'R(x)', sub: 'Remainder', color: '#f44336'}
+            ];
+            
+            boxes.forEach(box => {
+                ctx.strokeStyle = box.color;
+                ctx.lineWidth = 3;
+                ctx.strokeRect(box.x, box.y, box.w, box.h);
+                
+                ctx.fillStyle = box.color;
+                ctx.font = 'bold 28px Arial';
+                ctx.fillText(box.label, box.x + box.w/2 - 35, box.y + 45);
+                
+                ctx.fillStyle = '#b0b0b0';
+                ctx.font = '14px Arial';
+                ctx.fillText(box.sub, box.x + box.w/2 - ctx.measureText(box.sub).width/2, box.y + 65);
+            });
+            
+            // Arrow from P(x) to Q(x) with "÷" label
+            ctx.strokeStyle = '#e0e0e0';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(200, 160);
+            ctx.lineTo(325, 160);
+            ctx.stroke();
+            
+            // Arrow head
+            ctx.fillStyle = '#e0e0e0';
+            ctx.beginPath();
+            ctx.moveTo(325, 160);
+            ctx.lineTo(315, 155);
+            ctx.lineTo(315, 165);
+            ctx.closePath();
+            ctx.fill();
+            
+            // "÷ D(x)" label on arrow
+            ctx.fillStyle = '#4caf50';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('÷ D(x)', 240, 145);
+            
+            // Arrow from D(x) × Q(x) showing multiplication
+            ctx.strokeStyle = '#ff9800';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(200, 280);
+            ctx.lineTo(325, 200);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            ctx.fillStyle = '#ff9800';
+            ctx.font = '16px Arial';
+            ctx.fillText('×', 240, 235);
+            
+            // Arrow from Q(x) to R(x) with "+" label
+            ctx.strokeStyle = '#e0e0e0';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(475, 160);
+            ctx.lineTo(600, 160);
+            ctx.stroke();
+            
+            // Arrow head
+            ctx.fillStyle = '#e0e0e0';
+            ctx.beginPath();
+            ctx.moveTo(600, 160);
+            ctx.lineTo(590, 155);
+            ctx.lineTo(590, 165);
+            ctx.closePath();
+            ctx.fill();
+            
+            // "+" label
+            ctx.fillStyle = '#f44336';
+            ctx.font = 'bold 20px Arial';
+            ctx.fillText('+', 530, 145);
+            
+            // Explanation text at bottom
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = '16px Arial';
+            ctx.fillText('Dividend ÷ Divisor = Quotient + Remainder', 220, 360);
+        }
+        
+        // SECTION 2: Long Division
+        const longDivCanvas = document.getElementById('longDivisionCanvas');
+        const longDivCtx = longDivCanvas.getContext('2d');
+        
+        function drawLongDivision(step) {
+            const ctx = longDivCtx;
+            ctx.clearRect(0, 0, 800, 500);
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('Divide: 6x² - 26x + 12 by x - 4', 20, 30);
+            
+            const y = 100; // Moved down from 80
+            
+            if (step >= 1) {
+                ctx.font = '16px Courier New';
+                ctx.fillText('_________________________', 220, y);
+                ctx.fillText('x - 4 |  6x² - 26x + 12', 100, y + 30);
+            }
+            
+            if (step >= 2) {
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 20px Courier New';
+                ctx.fillText('6x', 240, y - 15);
+            }
+            
+            if (step >= 3) {
+                ctx.fillStyle = '#ff9800';
+                ctx.font = '16px Courier New';
+                ctx.fillText('6x² - 24x', 220, y + 65); // More space
+            }
+            
+            if (step >= 4) {
+                ctx.strokeStyle = '#e0e0e0';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(220, y + 75);
+                ctx.lineTo(360, y + 75);
+                ctx.stroke();
+            }
+            
+            if (step >= 5) {
+                ctx.fillStyle = '#8b9eff';
+                ctx.font = '16px Courier New';
+                ctx.fillText('-2x + 12', 260, y + 100); // More space
+            }
+            
+            if (step >= 6) {
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 20px Courier New';
+                ctx.fillText('- 2', 280, y - 15);
+                
+                ctx.fillStyle = '#ff9800';
+                ctx.font = '16px Courier New';
+                ctx.fillText('-2x + 8', 260, y + 135); // More space
+                
+                ctx.strokeStyle = '#e0e0e0';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(260, y + 145);
+                ctx.lineTo(360, y + 145);
+                ctx.stroke();
+            }
+            
+            if (step >= 7) {
+                ctx.fillStyle = '#f44336';
+                ctx.font = 'bold 20px Courier New';
+                ctx.fillText('4', 295, y + 175); // More space
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 18px Arial';
+                ctx.fillText('← Remainder!', 340, y + 175);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('Quotient: 6x - 2    Remainder: 4', 100, y + 220); // Moved down
+                ctx.fillText('Answer: (6x² - 26x + 12) ÷ (x - 4) = 6x - 2 + 4/(x - 4)', 50, y + 250); // Moved down
+            }
+            
+            // Display ONLY current step text at bottom
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = '14px Arial';
+            const stepTexts = ['', 'Step 1: Set up the division', 'Step 2: Divide leading terms: 6x²/x = 6x', 'Step 3: Multiply: 6x(x - 4) = 6x² - 24x', 'Step 4: Subtract', 'Step 5: Result after subtraction: -2x + 12', 'Step 6: Divide -2x/x = -2, multiply by (x - 4)', 'Step 7: Final remainder is 4 (degree 0 < degree 1) ✓'];
+            ctx.fillText(stepTexts[step], 20, 470);
+        }
+        
+        function nextLongDivStep() {
+            if (longDivStep < 7) {
+                longDivStep++;
+                drawLongDivision(longDivStep);
+                updateLongDivIndicator();
+            }
+        }
+        
+        function previousLongDivStep() {
+            if (longDivStep > 1) {
+                longDivStep--;
+                drawLongDivision(longDivStep);
+                updateLongDivIndicator();
+            }
+        }
+        
+        function resetLongDiv() {
+            longDivStep = 7;
+            drawLongDivision(7);
+            updateLongDivIndicator();
+        }
+        
+        function updateLongDivIndicator() {
+            document.getElementById('longDivStepIndicator').textContent = `Step ${longDivStep} of 7`;
+        }
+        
+        // SECTION 3: Synthetic Division
+        const syntheticCanvas = document.getElementById('syntheticCanvas');
+        const syntheticCtx = syntheticCanvas.getContext('2d');
+        
+        function drawSynthetic(step) {
+            const ctx = syntheticCtx;
+            ctx.clearRect(0, 0, 800, 500);
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('Divide: 2x³ - 7x² + 0x + 5 by x - 3', 20, 30);
+            ctx.font = '14px Arial';
+            ctx.fillText('(Note: Must include 0x for missing term!)', 20, 55);
+            
+            const boxW = 80;
+            const boxH = 60;
+            const startX = 200;
+            const y1 = 110; // Moved down
+            const y2 = 200; // More spacing
+            const y3 = 300; // More spacing
+            
+            // Draw the c value
+            if (step >= 1) {
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 24px Courier New';
+                ctx.fillText('3', startX - 80, y1 + 40);
+                ctx.fillStyle = '#b0b0b0';
+                ctx.font = '12px Arial';
+                ctx.fillText('c = 3 (from x - 3)', startX - 120, y1 + 65);
+            }
+            
+            // Top row - coefficients
+            if (step >= 1) {
+                const coeffs = ['2', '-7', '0', '5'];
+                ctx.fillStyle = '#8b9eff';
+                ctx.font = 'bold 24px Courier New';
+                for (let i = 0; i < 4; i++) {
+                    ctx.fillText(coeffs[i], startX + i * boxW + 25, y1 + 40);
+                }
+            }
+            
+            // Draw dividing lines
+            if (step >= 2) {
+                ctx.strokeStyle = '#e0e0e0';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(startX - 100, y2 - 20);
+                ctx.lineTo(startX + 4 * boxW, y2 - 20);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(startX - 100, y3 - 20);
+                ctx.lineTo(startX + 4 * boxW, y3 - 20);
+                ctx.stroke();
+            }
+            
+            // Bring down first coefficient
+            if (step >= 3) {
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 24px Courier New';
+                ctx.fillText('2', startX + 25, y3 + 30);
+                
+                ctx.strokeStyle = '#4caf50';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.moveTo(startX + 40, y1 + 50);
+                ctx.lineTo(startX + 40, y3);
+                ctx.stroke();
+                ctx.setLineDash([]);
+            }
+            
+            // First multiply and add
+            if (step >= 4) {
+                ctx.fillStyle = '#ff9800';
+                ctx.font = '18px Courier New';
+                ctx.fillText('6', startX + boxW + 30, y2 + 30);
+                ctx.font = '12px Courier New';
+                ctx.fillText('(3 × 2)', startX + boxW + 15, y2 + 50);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 24px Courier New';
+                ctx.fillText('-1', startX + boxW + 20, y3 + 30);
+                ctx.font = '12px Courier New';
+                ctx.fillText('(-7 + 6)', startX + boxW + 10, y3 + 50);
+            }
+            
+            // Second multiply and add
+            if (step >= 5) {
+                ctx.fillStyle = '#ff9800';
+                ctx.font = '18px Courier New';
+                ctx.fillText('-3', startX + 2*boxW + 25, y2 + 30);
+                ctx.font = '12px Courier New';
+                ctx.fillText('(3 × -1)', startX + 2*boxW + 10, y2 + 50);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 24px Courier New';
+                ctx.fillText('-3', startX + 2*boxW + 20, y3 + 30);
+                ctx.font = '12px Courier New';
+                ctx.fillText('(0 + -3)', startX + 2*boxW + 10, y3 + 50);
+            }
+            
+            // Final multiply and add
+            if (step >= 6) {
+                ctx.fillStyle = '#ff9800';
+                ctx.font = '18px Courier New';
+                ctx.fillText('-9', startX + 3*boxW + 25, y2 + 30);
+                ctx.font = '12px Courier New';
+                ctx.fillText('(3 × -3)', startX + 3*boxW + 10, y2 + 50);
+                
+                ctx.fillStyle = '#f44336';
+                ctx.font = 'bold 28px Courier New';
+                ctx.fillText('-4', startX + 3*boxW + 20, y3 + 30);
+                ctx.font = '12px Courier New';
+                ctx.fillText('(5 + -9)', startX + 3*boxW + 10, y3 + 50);
+                
+                // Labels
+                ctx.fillStyle = '#4caf50';
+                ctx.font = '14px Arial';
+                ctx.fillText('Quotient coefficients', startX, y3 + 90);
+                ctx.strokeStyle = '#4caf50';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.moveTo(startX, y3 + 95);
+                ctx.lineTo(startX + 2.5*boxW, y3 + 95);
+                ctx.stroke();
+                
+                ctx.fillStyle = '#f44336';
+                ctx.fillText('Remainder', startX + 3*boxW, y3 + 90);
+                ctx.strokeStyle = '#f44336';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.moveTo(startX + 3*boxW, y3 + 95);
+                ctx.lineTo(startX + 3.8*boxW, y3 + 95);
+                ctx.stroke();
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('Quotient: 2x² - x - 3     Remainder: -4', 150, 430);
+            }
+            
+            // Display ONLY current step text at bottom
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = '14px Arial';
+            const stepTexts = ['', 'Step 1: Identify c = 3', 'Step 2: Draw lines and bring down first coefficient', 'Step 3: Bring down 2', 'Step 4: Multiply 3 × 2 = 6, add to -7 to get -1', 'Step 5: Multiply 3 × (-1) = -3, add to 0 to get -3', 'Step 6: Final answer - quotient drops degree by 1'];
+            ctx.fillText(stepTexts[step], 20, 470);
+        }
+        
+        function nextSyntheticStep() {
+            if (syntheticStep < 6) {
+                syntheticStep++;
+                drawSynthetic(syntheticStep);
+                updateSyntheticIndicator();
+            }
+        }
+        
+        function previousSyntheticStep() {
+            if (syntheticStep > 1) {
+                syntheticStep--;
+                drawSynthetic(syntheticStep);
+                updateSyntheticIndicator();
+            }
+        }
+        
+        function resetSynthetic() {
+            syntheticStep = 6;
+            drawSynthetic(6);
+            updateSyntheticIndicator();
+        }
+        
+        function updateSyntheticIndicator() {
+            document.getElementById('syntheticStepIndicator').textContent = `Step ${syntheticStep} of 6`;
+        }
+        
+        // SECTION 5: Remainder Theorem
+        const remainderCanvas = document.getElementById('remainderCanvas');
+        const remainderCtx = remainderCanvas.getContext('2d');
+        
+        function drawRemainder() {
+            const ctx = remainderCtx;
+            ctx.clearRect(0, 0, 800, 400);
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('Find P(-2) where P(x) = 3x⁵ - 5x⁴ - 4x³ + 7x - 3', 50, 30);
+            ctx.fillText('Using Synthetic Division:', 50, 60);
+            
+            const startX = 150;
+            const y1 = 120;
+            const y2 = 200;
+            const y3 = 280;
+            const boxW = 70;
+            
+            // c value
+            ctx.fillStyle = '#4caf50';
+            ctx.font = 'bold 24px Courier New';
+            ctx.fillText('-2', startX - 80, y1 + 40);
+            
+            // Coefficients
+            const coeffs = ['3', '-5', '-4', '0', '7', '-3'];
+            ctx.fillStyle = '#8b9eff';
+            for (let i = 0; i < 6; i++) {
+                ctx.fillText(coeffs[i], startX + i * boxW + 15, y1 + 40);
+            }
+            
+            // Lines
+            ctx.strokeStyle = '#e0e0e0';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(startX - 100, y2 - 20);
+            ctx.lineTo(startX + 6 * boxW, y2 - 20);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(startX - 100, y3 - 20);
+            ctx.lineTo(startX + 6 * boxW, y3 - 20);
+            ctx.stroke();
+            
+            // Show work (simplified)
+            ctx.fillStyle = '#ff9800';
+            ctx.font = '18px Courier New';
+            const multiples = ['-6', '22', '-36', '72', '-158'];
+            for (let i = 0; i < 5; i++) {
+                ctx.fillText(multiples[i], startX + (i+1) * boxW + 10, y2 + 40);
+            }
+            
+            // Bottom row
+            ctx.fillStyle = '#4caf50';
+            ctx.font = 'bold 22px Courier New';
+            const bottom = ['3', '-11', '18', '-36', '79'];
+            for (let i = 0; i < 5; i++) {
+                ctx.fillText(bottom[i], startX + i * boxW + 10, y3 + 40);
+            }
+            
+            // Remainder
+            ctx.fillStyle = '#f44336';
+            ctx.font = 'bold 28px Courier New';
+            ctx.fillText('-161', startX + 5 * boxW + 5, y3 + 40);
+            
+            // Box around remainder - adjusted to properly surround the text
+            ctx.strokeStyle = '#f44336';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(startX + 5 * boxW - 8, y3 + 10, boxW + 6, 45);
+            
+            ctx.fillStyle = '#4caf50';
+            ctx.font = 'bold 20px Arial';
+            ctx.fillText('Therefore: P(-2) = -161', 250, 360);
+        }
+        
+        // SECTION 6: Factor Theorem
+        const factorCanvas = document.getElementById('factorCanvas');
+        const factorCtx = factorCanvas.getContext('2d');
+        
+        function drawFactor(step) {
+            const ctx = factorCtx;
+            ctx.clearRect(0, 0, 800, 500);
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('Factor: P(x) = x³ - 7x + 6, given P(1) = 0', 20, 30);
+            
+            if (step >= 1) {
+                ctx.fillStyle = '#4caf50';
+                ctx.font = '16px Arial';
+                ctx.fillText('Given: P(1) = 0, so (x - 1) is a factor!', 20, 70);
+            }
+            
+            if (step >= 2) {
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('Divide P(x) by (x - 1) using synthetic division:', 20, 110);
+                
+                const startX = 200;
+                const y1 = 150;
+                const y2 = 220;
+                const y3 = 280;
+                const boxW = 80;
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 24px Courier New';
+                ctx.fillText('1', startX - 80, y1 + 40);
+                
+                const coeffs = ['1', '0', '-7', '6'];
+                ctx.fillStyle = '#8b9eff';
+                for (let i = 0; i < 4; i++) {
+                    ctx.fillText(coeffs[i], startX + i * boxW + 25, y1 + 40);
+                }
+                
+                ctx.strokeStyle = '#e0e0e0';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(startX - 100, y2 - 10);
+                ctx.lineTo(startX + 4 * boxW, y2 - 10);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(startX - 100, y3 - 10);
+                ctx.lineTo(startX + 4 * boxW, y3 - 10);
+                ctx.stroke();
+                
+                ctx.fillStyle = '#ff9800';
+                ctx.font = '18px Courier New';
+                ctx.fillText('1', startX + boxW + 30, y2 + 25);
+                ctx.fillText('1', startX + 2*boxW + 30, y2 + 25);
+                ctx.fillText('-6', startX + 3*boxW + 25, y2 + 25);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 24px Courier New';
+                ctx.fillText('1', startX + 25, y3 + 30);
+                ctx.fillText('1', startX + boxW + 25, y3 + 30);
+                ctx.fillText('-6', startX + 2*boxW + 20, y3 + 30);
+                
+                ctx.fillStyle = '#f44336';
+                ctx.font = 'bold 28px Courier New';
+                ctx.fillText('0', startX + 3*boxW + 30, y3 + 30);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('Quotient: x² + x - 6', 220, 340);
+            }
+            
+            if (step >= 3) {
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('So far: P(x) = (x - 1)(x² + x - 6)', 200, 375);
+                ctx.fillText('Now factor the quadratic:', 200, 400);
+                ctx.fillText('x² + x - 6 = (x + 3)(x - 2)', 220, 425);
+            }
+            
+            if (step >= 4) {
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 18px Arial';
+                ctx.fillText('Complete Factorization:', 220, 450);
+                
+                ctx.strokeStyle = '#4caf50';
+                ctx.lineWidth = 3;
+                ctx.strokeRect(200, 460, 380, 35);
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 22px Courier New';
+                ctx.fillText('P(x) = (x - 1)(x + 3)(x - 2)', 210, 485);
+            }
+            
+            // Display ONLY current step text at bottom
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = '14px Arial';
+            const stepTexts = ['', 'Step 1: Since P(1) = 0, we know (x - 1) is a factor', 'Step 2: Divide to get quotient x² + x - 6', 'Step 3: Factor the quadratic quotient', 'Step 4: Complete factorization with all zeros: 1, -3, 2'];
+            ctx.fillText(stepTexts[step], 20, 515);
+        }
+        
+        function nextFactorStep() {
+            if (factorStep < 4) {
+                factorStep++;
+                drawFactor(factorStep);
+                updateFactorIndicator();
+            }
+        }
+        
+        function previousFactorStep() {
+            if (factorStep > 1) {
+                factorStep--;
+                drawFactor(factorStep);
+                updateFactorIndicator();
+            }
+        }
+        
+        function resetFactor() {
+            factorStep = 4;
+            drawFactor(4);
+            updateFactorIndicator();
+        }
+        
+        function updateFactorIndicator() {
+            document.getElementById('factorStepIndicator').textContent = `Step ${factorStep} of 4`;
+        }
+        
+        // SECTION 7: Construct from zeros
+        const constructCanvas = document.getElementById('constructCanvas');
+        const constructCtx = constructCanvas.getContext('2d');
+        
+        function drawConstruct() {
+            const ctx = constructCtx;
+            ctx.clearRect(0, 0, 800, 400);
+            
+            // Draw the graph
+            ctx.strokeStyle = '#2a3a5a';
+            ctx.lineWidth = 1;
+            
+            // Grid
+            for (let x = 0; x <= 800; x += 50) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, 400);
+                ctx.stroke();
+            }
+            
+            for (let y = 0; y <= 400; y += 50) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(800, y);
+                ctx.stroke();
+            }
+            
+            // Axes
+            ctx.strokeStyle = '#e0e0e0';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(0, 200);
+            ctx.lineTo(800, 200);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(400, 0);
+            ctx.lineTo(400, 400);
+            ctx.stroke();
+            
+            // Draw P(x) = 2x³ - 4x² - 10x + 12
+            ctx.strokeStyle = '#8b9eff';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            
+            for (let x = 0; x <= 800; x += 1) {
+                const graphX = (x - 400) / 60;
+                const y = 2*Math.pow(graphX, 3) - 4*Math.pow(graphX, 2) - 10*graphX + 12;
+                const canvasY = 200 - y * 5;
+                
+                if (x === 0) {
+                    ctx.moveTo(x, canvasY);
+                } else {
+                    ctx.lineTo(x, canvasY);
+                }
+            }
+            ctx.stroke();
+            
+            // Mark zeros
+            function drawZero(x, label) {
+                const canvasX = 400 + x * 60;
+                ctx.fillStyle = '#f44336';
+                ctx.beginPath();
+                ctx.arc(canvasX, 200, 8, 0, 2 * Math.PI);
+                ctx.fill();
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 14px Arial';
+                ctx.fillText(label, canvasX - 15, 230);
+            }
+            
+            drawZero(-2, 'x = -2');
+            drawZero(1, 'x = 1');
+            drawZero(3, 'x = 3');
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('P(x) = 2x³ - 4x² - 10x + 12', 20, 30);
+            ctx.fillText('Zeros at: -2, 1, 3 ✓    Leading coefficient: 2 ✓', 20, 55);
+        }
+        
+        // Helper functions
+        function drawArrowLine(ctx, x1, y1, x2, y2, color) {
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+            
+            // Arrow head
+            const angle = Math.atan2(y2 - y1, x2 - x1);
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.moveTo(x2, y2);
+            ctx.lineTo(x2 - 10 * Math.cos(angle - Math.PI / 6), y2 - 10 * Math.sin(angle - Math.PI / 6));
+            ctx.lineTo(x2 - 10 * Math.cos(angle + Math.PI / 6), y2 - 10 * Math.sin(angle + Math.PI / 6));
+            ctx.closePath();
+            ctx.fill();
+        }
+        
+        // Initialize all canvases
+        drawDivisionAlgorithm();
+        drawLongDivision(1);
+        updateLongDivIndicator();
+        drawSynthetic(1);
+        updateSyntheticIndicator();
+        drawRemainder();
+        drawFactor(1);
+        updateFactorIndicator();
+        drawConstruct();
+    </script>
+</body>
+</html>

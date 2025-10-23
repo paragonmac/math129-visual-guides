@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polynomial & Rational Inequalities - Visual Guide</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #0a1628 0%, #1a0f2e 100%);
+            color: #e0e0e0;
+        }
+        
+        .container {
+            background: #0f0f1e;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #00d4ff;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #b0b0b0;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #1a1a2e;
+            border-radius: 10px;
+            border-left: 5px solid #00d4ff;
+        }
+        
+        .section h2 {
+            color: #00d4ff;
+            margin-top: 0;
+        }
+        
+        canvas {
+            border: 2px solid #00d4ff;
+            border-radius: 8px;
+            display: block;
+            margin: 20px auto;
+            background: #0a0a15;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+        }
+        
+        .step-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .step {
+            background: #16213e;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #2a3a5a;
+        }
+        
+        .step h3 {
+            color: #4dd0e1;
+            margin-top: 0;
+            font-size: 1.1em;
+        }
+        
+        .step ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .step li {
+            margin: 8px 0;
+        }
+        
+        .formula {
+            background: #1a2a3a;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            margin: 10px 0;
+            text-align: center;
+            border: 1px dashed #00d4ff;
+            color: #e0e0e0;
+        }
+        
+        .key-point {
+            background: #1a2e3a;
+            border-left: 4px solid #4dd0e1;
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            color: #e0e0e0;
+        }
+        
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        button {
+            background: #00d4ff;
+            color: #0f0f1e;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background 0.3s;
+            font-weight: bold;
+        }
+        
+        button:hover {
+            background: #4dd0e1;
+        }
+        
+        .theorem-box {
+            background: #1e2a3a;
+            border: 3px solid #00d4ff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+        
+        .theorem-box h3 {
+            color: #4dd0e1;
+            margin-top: 0;
+            font-size: 1.4em;
+        }
+        
+        .warning-box {
+            background: #3a2e1e;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+        
+        table th {
+            background: #00d4ff;
+            color: #0f0f1e;
+            padding: 10px;
+            border: 1px solid #2a3a5a;
+            font-weight: bold;
+        }
+        
+        table td {
+            padding: 10px;
+            border: 1px solid #2a3a5a;
+            text-align: center;
+        }
+        
+        table tr:nth-child(even) {
+            background: #1a1a2e;
+        }
+        
+        .method-number {
+            display: inline-block;
+            background: #00d4ff;
+            color: #0f0f1e;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .positive {
+            color: #4caf50;
+            font-weight: bold;
+        }
+        
+        .negative {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        
+        .zero {
+            color: #ff9800;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Polynomial & Rational Inequalities</h1>
+        <p class="subtitle">Finding Where Functions Are Positive or Negative</p>
+        
+        <!-- WHY THIS MATTERS -->
+        <div class="section" style="border-left-color: #ff6b6b;">
+            <h2>🤔 Why Study Inequalities?</h2>
+            
+            <div class="step-container">
+                <div class="step">
+                    <h3>❌ Without Understanding Sign Analysis</h3>
+                    <p><strong>You struggle with:</strong></p>
+                    <ul>
+                        <li>Finding domains of square root functions</li>
+                        <li>Determining where functions are positive/negative</li>
+                        <li>Solving real-world constraint problems</li>
+                        <li>Understanding why solutions are intervals</li>
+                        <li>Knowing which endpoints to include</li>
+                    </ul>
+                    <p style="color: #ff6b6b;">Guessing and checking!</p>
+                </div>
+                
+                <div class="step">
+                    <h3>✅ With Inequality Mastery</h3>
+                    <p><strong>You can:</strong></p>
+                    <ul>
+                        <li>✓ Systematically find all solutions</li>
+                        <li>✓ Understand why functions change sign</li>
+                        <li>✓ Use sign diagrams with confidence</li>
+                        <li>✓ Handle complex rational inequalities</li>
+                        <li>✓ Solve domain problems easily</li>
+                    </ul>
+                    <p style="color: #4caf50;">Complete mastery!</p>
+                </div>
+            </div>
+            
+            <div class="key-point">
+                <strong>💡 The Big Insight:</strong> Functions don't randomly change from positive to negative. They can ONLY change sign at special points: zeros (where numerator = 0) and vertical asymptotes (where denominator = 0). Between these points, the sign stays constant!
+            </div>
+        </div>
+        
+        <!-- SECTION 1: Polynomial Inequalities -->
+        <div class="section">
+            <h2>📐 Method 1: Polynomial Inequalities</h2>
+            <span class="method-number">Sign Analysis Basics</span>
+            
+            <div class="theorem-box">
+                <h3>🎯 The Foundation</h3>
+                <p><strong>Key Principle:</strong> A polynomial can only change sign at its <span style="color: #ff9800; font-weight: bold;">zeros</span></p>
+                <div class="formula">
+                    Between consecutive <span style="color: #ff9800;">zeros</span>,<br>
+                    the polynomial is ENTIRELY <span style="color: #4caf50;">positive</span><br>
+                    or ENTIRELY <span style="color: #f44336;">negative</span>
+                </div>
+                <p style="margin-top: 15px; text-align: center;"><strong>This is called the <span style="color: #9c27b0;">Intermediate Value Property</span></strong></p>
+            </div>
+            
+            <p><strong>Example:</strong> Solve (x - 2)(2x - 1)(x + 3) ≥ 0</p>
+            
+            <canvas id="polyCanvas" width="800" height="1100"></canvas>
+            
+            <div class="controls">
+                <button onclick="previousPolyStep()">⬅️ Previous Step</button>
+                <button onclick="nextPolyStep()">Next Step ➡️</button>
+                <button onclick="resetPoly()">🔄 Reset to Complete</button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 10px;">
+                <span id="polyStepIndicator" style="color: #4dd0e1; font-weight: bold; font-size: 1.1em;">Step 1 of 6</span>
+            </div>
+            
+            <div class="key-point">
+                <strong>🎯 Remember:</strong> For ≥ or ≤, include zeros (use [ ]). For > or <, exclude zeros (use ( )).
+            </div>
+        </div>
+        
+        <!-- SECTION 2: Rational Inequalities -->
+        <div class="section">
+            <h2>🔢 Method 2: Rational Inequalities</h2>
+            <span class="method-number">Cut Points Method</span>
+            
+            <div class="theorem-box">
+                <h3>🔴 Critical Concept: Cut Points</h3>
+                <p><strong>Cut points are where the function can change sign:</strong></p>
+                <ul style="line-height: 1.8;">
+                    <li><strong class="zero">Zeros of <span style="color: #4caf50;">numerator</span>:</strong> function = 0 (CAN include for ≤ or ≥)</li>
+                    <li><strong class="negative">Zeros of <span style="color: #f44336;">denominator</span>:</strong> function undefined (NEVER include!)</li>
+                </ul>
+                <div class="formula">
+                    Cut Points = {<span style="color: #4caf50;">numerator zeros</span>} ∪ {<span style="color: #f44336;">denominator zeros</span>}
+                </div>
+            </div>
+            
+            <p><strong>Example:</strong> Solve (1 - 2x)/(x² - 2x - 3) ≥ 1</p>
+            
+            <canvas id="rationalCanvas" width="800" height="1400"></canvas>
+            
+            <div class="controls">
+                <button onclick="previousRationalStep()">⬅️ Previous Step</button>
+                <button onclick="nextRationalStep()">Next Step ➡️</button>
+                <button onclick="resetRational()">🔄 Reset to Complete</button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 10px;">
+                <span id="rationalStepIndicator" style="color: #4dd0e1; font-weight: bold; font-size: 1.1em;">Step 1 of 7</span>
+            </div>
+            
+            <div class="warning-box">
+                <strong>⚠️ CRITICAL RULE:</strong> NEVER include values where the denominator equals zero, even for ≤ or ≥ inequalities! Division by zero is undefined.
+            </div>
+        </div>
+        
+        <!-- SECTION 3: Sign Diagram Technique -->
+        <div class="section">
+            <h2>📋 Method 3: Creating Sign Diagrams</h2>
+            <span class="method-number">The Visual Approach</span>
+            
+            <canvas id="signDiagramCanvas" width="800" height="900"></canvas>
+            
+            <div class="controls">
+                <button onclick="previousSignStep()">⬅️ Previous Step</button>
+                <button onclick="nextSignStep()">Next Step ➡️</button>
+                <button onclick="resetSign()">🔄 Reset to Complete</button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 10px;">
+                <span id="signStepIndicator" style="color: #4dd0e1; font-weight: bold; font-size: 1.1em;">Step 1 of 4</span>
+            </div>
+            
+            <div class="theorem-box">
+                <h3>📊 Sign Multiplication Rules</h3>
+                <table>
+                    <tr>
+                        <th>Factor 1</th>
+                        <th>Factor 2</th>
+                        <th>Product</th>
+                    </tr>
+                    <tr>
+                        <td class="positive">+</td>
+                        <td class="positive">+</td>
+                        <td class="positive">+</td>
+                    </tr>
+                    <tr>
+                        <td class="positive">+</td>
+                        <td class="negative">−</td>
+                        <td class="negative">−</td>
+                    </tr>
+                    <tr>
+                        <td class="negative">−</td>
+                        <td class="positive">+</td>
+                        <td class="negative">−</td>
+                    </tr>
+                    <tr>
+                        <td class="negative">−</td>
+                        <td class="negative">−</td>
+                        <td class="positive">+</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <!-- SECTION 4: Special Cases -->
+        <div class="section">
+            <h2>⭐ Method 4: Special Factor Cases</h2>
+            <span class="method-number">Squared & Irreducible Factors</span>
+            
+            <div class="step-container">
+                <div class="step">
+                    <h3>Squared Factors</h3>
+                    <div class="formula" style="font-size: 0.9em;">(x - a)² ≥ 0 always!</div>
+                    <ul>
+                        <li>Equals 0 at x = a</li>
+                        <li>Positive everywhere else</li>
+                        <li><strong class="zero">Doesn't change sign</strong></li>
+                        <li>Graph "bounces" off x-axis</li>
+                    </ul>
+                </div>
+                
+                <div class="step">
+                    <h3>Irreducible Quadratics</h3>
+                    <div class="formula" style="font-size: 0.9em;">x² + bx + c (no real zeros)</div>
+                    <ul>
+                        <li>Check discriminant: b² - 4ac < 0</li>
+                        <li>If leading coeff > 0: always positive</li>
+                        <li>If leading coeff < 0: always negative</li>
+                        <li><strong class="positive">Ignore in sign diagram!</strong></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <canvas id="specialCanvas" width="800" height="900"></canvas>
+            
+            <div class="controls">
+                <button onclick="previousSpecialStep()">⬅️ Previous Step</button>
+                <button onclick="nextSpecialStep()">Next Step ➡️</button>
+                <button onclick="resetSpecial()">🔄 Reset to Complete</button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 10px;">
+                <span id="specialStepIndicator" style="color: #4dd0e1; font-weight: bold; font-size: 1.1em;">Step 1 of 4</span>
+            </div>
+        </div>
+        
+        <!-- SECTION 5: Domain Problems -->
+        <div class="section">
+            <h2>🎯 Method 5: Domain Problems as Inequalities</h2>
+            <span class="method-number">Hidden Inequalities</span>
+            
+            <div class="theorem-box">
+                <h3>🔍 Common Domain Translations</h3>
+                <table>
+                    <tr>
+                        <th>Function Type</th>
+                        <th>Domain Requirement</th>
+                        <th>Inequality</th>
+                    </tr>
+                    <tr>
+                        <td>√f(x)</td>
+                        <td>Radicand ≥ 0</td>
+                        <td>f(x) ≥ 0</td>
+                    </tr>
+                    <tr>
+                        <td>1/f(x)</td>
+                        <td>Denominator ≠ 0</td>
+                        <td>f(x) ≠ 0</td>
+                    </tr>
+                    <tr>
+                        <td>1/√f(x)</td>
+                        <td>Radicand > 0</td>
+                        <td>f(x) > 0</td>
+                    </tr>
+                    <tr>
+                        <td>√(1/f(x))</td>
+                        <td>Fraction ≥ 0, denom ≠ 0</td>
+                        <td>f(x) > 0</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <canvas id="domainCanvas" width="800" height="1000"></canvas>
+            
+            <div class="controls">
+                <button onclick="previousDomainStep()">⬅️ Previous Step</button>
+                <button onclick="nextDomainStep()">Next Step ➡️</button>
+                <button onclick="resetDomain()">🔄 Reset to Complete</button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 10px;">
+                <span id="domainStepIndicator" style="color: #4dd0e1; font-weight: bold; font-size: 1.1em;">Step 1 of 5</span>
+            </div>
+        </div>
+        
+        <!-- Quick Reference -->
+        <div class="section">
+            <h2>📚 Quick Reference Guide</h2>
+            
+            <div class="theorem-box">
+                <h3>🎯 Step-by-Step Checklist</h3>
+                <table>
+                    <tr>
+                        <th>Step</th>
+                        <th>Polynomial Inequality</th>
+                        <th>Rational Inequality</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Move to one side = 0</td>
+                        <td>Move to one side, combine fractions</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Factor completely</td>
+                        <td>Factor numerator AND denominator</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Find zeros</td>
+                        <td>Find cut points (both num & denom zeros)</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Create intervals</td>
+                        <td>Create intervals</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Make sign diagram</td>
+                        <td>Make sign diagram</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Include zeros for ≤ or ≥</td>
+                        <td>Include num zeros ONLY, NEVER denom zeros</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="warning-box">
+                <strong>⚠️ Common Mistakes to Avoid:</strong>
+                <ul>
+                    <li>Including denominator zeros in solutions</li>
+                    <li>Forgetting to check endpoints</li>
+                    <li>Not combining to a single fraction first</li>
+                    <li>Multiplying by variables (might be negative!)</li>
+                    <li>Ignoring squared or irreducible factors</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Global state
+        let polyStep = 1;
+        let rationalStep = 1;
+        let signStep = 1;
+        let specialStep = 1;
+        let domainStep = 1;
+        
+        // SECTION 1: Polynomial Inequalities
+        const polyCanvas = document.getElementById('polyCanvas');
+        const polyCtx = polyCanvas.getContext('2d');
+        
+        function drawPoly(step) {
+            const ctx = polyCtx;
+            ctx.clearRect(0, 0, 800, 1100);
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('Solve: (x - 2)(2x - 1)(x + 3) ≥ 0', 20, 30);
+            
+            const y = 70;
+            
+            if (step >= 1) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 1: Find the zeros', 20, y);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '18px Arial';
+                ctx.fillText('x - 2 = 0  →  x = 2', 50, y + 35);
+                ctx.fillText('2x - 1 = 0  →  x = 1/2', 50, y + 65);
+                ctx.fillText('x + 3 = 0  →  x = -3', 50, y + 95);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 20px Arial';
+                ctx.fillText('Zeros: x = -3, x = 1/2, x = 2', 200, y + 135);
+            }
+            
+            if (step >= 2) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 2: Plot zeros on number line', 20, y + 190);
+                
+                // Draw number line
+                const lineY = y + 230;
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(100, lineY);
+                ctx.lineTo(700, lineY);
+                ctx.stroke();
+                
+                // Mark zeros
+                const scale = 100;
+                const center = 400;
+                const zeros = [-3, 0.5, 2];
+                const zeroPositions = [center - 3*scale/2, center + 0.5*scale/2, center + 2*scale/2];
+                
+                zeros.forEach((z, i) => {
+                    const xPos = zeroPositions[i];
+                    ctx.fillStyle = '#ff9800';
+                    ctx.beginPath();
+                    ctx.arc(xPos, lineY, 8, 0, 2 * Math.PI);
+                    ctx.fill();
+                    
+                    ctx.fillStyle = '#e0e0e0';
+                    ctx.font = '14px Arial';
+                    ctx.fillText(z === 0.5 ? '1/2' : z.toString(), xPos - 10, lineY + 25);
+                });
+            }
+            
+            if (step >= 3) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 3: Identify intervals', 20, y + 290);
+                
+                const lineY = y + 230;
+                const scale = 100;
+                const center = 400;
+                
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = '13px Arial';
+                ctx.fillText('(-∞, -3)', 150, lineY + 60);
+                ctx.fillText('(-3, 1/2)', 280, lineY + 60);
+                ctx.fillText('(1/2, 2)', 450, lineY + 60);
+                ctx.fillText('(2, ∞)', 600, lineY + 60);
+            }
+            
+            if (step >= 4) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 4: Test each interval (factor-by-factor)', 20, y + 380);
+                
+                // Create sign table
+                const tableY = y + 420;
+                const tableData = [
+                    ['Interval', 'Test', '(x-2)', '(2x-1)', '(x+3)', 'Product'],
+                    ['(-∞,-3)', 'x=-4', '-', '-', '-', '-'],
+                    ['(-3,1/2)', 'x=0', '-', '-', '+', '+'],
+                    ['(1/2,2)', 'x=1', '-', '+', '+', '-'],
+                    ['(2,∞)', 'x=3', '+', '+', '+', '+']
+                ];
+                
+                ctx.font = '14px Arial';
+                const colWidths = [120, 80, 90, 90, 90, 90];
+                let xPos = 100;
+                
+                // Draw table
+                tableData.forEach((row, rowIdx) => {
+                    xPos = 100;
+                    row.forEach((cell, colIdx) => {
+                        const cellY = tableY + rowIdx * 30;
+                        
+                        // Header row
+                        if (rowIdx === 0) {
+                            ctx.fillStyle = '#00d4ff';
+                            ctx.fillRect(xPos, cellY, colWidths[colIdx], 28);
+                            ctx.fillStyle = '#0f0f1e';
+                            ctx.font = 'bold 13px Arial';
+                        } else {
+                            ctx.strokeStyle = '#2a3a5a';
+                            ctx.strokeRect(xPos, cellY, colWidths[colIdx], 28);
+                            
+                            if (cell === '+') {
+                                ctx.fillStyle = '#4caf50';
+                                ctx.font = 'bold 16px Arial';
+                            } else if (cell === '-') {
+                                ctx.fillStyle = '#ff6b6b';
+                                ctx.font = 'bold 16px Arial';
+                            } else {
+                                ctx.fillStyle = '#e0e0e0';
+                                ctx.font = '13px Arial';
+                            }
+                        }
+                        
+                        ctx.fillText(cell, xPos + 10, cellY + 19);
+                        xPos += colWidths[colIdx];
+                    });
+                });
+            }
+            
+            if (step >= 5) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 5: Identify where expression ≥ 0', 20, y + 620);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('We want positive (+) or zero:', 50, y + 655);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = '18px Arial';
+                ctx.fillText('• Positive on: (-3, 1/2) and (2, ∞)', 70, y + 690);
+            }
+            
+            if (step >= 6) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 6: Check endpoints (≥ includes zeros)', 20, y + 740);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('At x = -3: expression = 0 ✓ Include', 50, y + 780);
+                ctx.fillText('At x = 1/2: expression = 0 ✓ Include', 50, y + 810);
+                ctx.fillText('At x = 2: expression = 0 ✓ Include', 50, y + 840);
+                
+                ctx.strokeStyle = '#4caf50';
+                ctx.lineWidth = 4;
+                ctx.strokeRect(150, y + 880, 500, 80);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 28px Arial';
+                ctx.fillText('Solution: [-3, 1/2] ∪ [2, ∞)', 190, y + 930);
+            }
+            
+            // Step indicator
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = '14px Arial';
+            const stepTexts = ['', 'Find zeros by setting each factor = 0', 'Plot zeros to divide number line', 'Zeros create intervals to test', 'Test one value in each interval', 'Find where the product is positive', 'Check if endpoints should be included'];
+            ctx.fillText(stepTexts[step], 20, 1090);
+        }
+        
+        function nextPolyStep() {
+            if (polyStep < 6) {
+                polyStep++;
+                drawPoly(polyStep);
+                updatePolyIndicator();
+            }
+        }
+        
+        function previousPolyStep() {
+            if (polyStep > 1) {
+                polyStep--;
+                drawPoly(polyStep);
+                updatePolyIndicator();
+            }
+        }
+        
+        function resetPoly() {
+            polyStep = 6;
+            drawPoly(6);
+            updatePolyIndicator();
+        }
+        
+        function updatePolyIndicator() {
+            document.getElementById('polyStepIndicator').textContent = `Step ${polyStep} of 6`;
+        }
+        
+        // Initialize
+        drawPoly(1);
+        updatePolyIndicator();
+        
+        // Placeholder functions for other sections
+        const rationalCanvas = document.getElementById('rationalCanvas');
+        const rationalCtx = rationalCanvas.getContext('2d');
+        
+        function drawRational(step) {
+            const ctx = rationalCtx;
+            ctx.clearRect(0, 0, 800, 1400);
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('Solve: (1 - 2x)/(x² - 2x - 3) ≥ 1', 20, 30);
+            
+            const y = 70;
+            
+            if (step >= 1) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 1: Move everything to one side', 20, y);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('(1 - 2x)/(x² - 2x - 3) - 1 ≥ 0', 50, y + 35);
+                ctx.fillText('Get common denominator:', 50, y + 65);
+                ctx.fillText('[(1 - 2x) - (x² - 2x - 3)]/(x² - 2x - 3) ≥ 0', 50, y + 95);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 18px Arial';
+                ctx.fillText('(4 - x²)/(x² - 2x - 3) ≥ 0', 200, y + 135);
+            }
+            
+            if (step >= 2) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 2: Factor numerator and denominator', 20, y + 190);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('Numerator: 4 - x² = (2 - x)(2 + x)', 50, y + 225);
+                ctx.fillText('Denominator: x² - 2x - 3 = (x - 3)(x + 1)', 50, y + 255);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 18px Arial';
+                ctx.fillText('(2 - x)(2 + x) / [(x - 3)(x + 1)] ≥ 0', 150, y + 295);
+            }
+            
+            if (step >= 3) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 3: Find cut points', 20, y + 350);
+                
+                ctx.strokeStyle = '#4caf50';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(50, y + 380, 300, 80);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = '16px Arial';
+                ctx.fillText('Numerator zeros:', 60, y + 405);
+                ctx.fillText('x = 2, x = -2', 80, y + 430);
+                ctx.fillText('(CAN include for ≥)', 80, y + 450);
+                
+                ctx.strokeStyle = '#ff6b6b';
+                ctx.strokeRect(400, y + 380, 300, 80);
+                
+                ctx.fillStyle = '#ff6b6b';
+                ctx.fillText('Denominator zeros:', 410, y + 405);
+                ctx.fillText('x = 3, x = -1', 430, y + 430);
+                ctx.fillText('(NEVER include!)', 430, y + 450);
+                
+                ctx.fillStyle = '#ff9800';
+                ctx.font = 'bold 18px Arial';
+                ctx.fillText('Cut points: -2, -1, 2, 3', 250, y + 495);
+            }
+            
+            if (step >= 4) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 4: Plot cut points on number line', 20, y + 540);
+                
+                // Draw number line
+                const lineY = y + 580;
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(100, lineY);
+                ctx.lineTo(700, lineY);
+                ctx.stroke();
+                
+                // Mark cut points
+                const scale = 80;
+                const center = 400;
+                const cutPoints = [-2, -1, 2, 3];
+                const colors = ['#4caf50', '#ff6b6b', '#4caf50', '#ff6b6b'];
+                
+                cutPoints.forEach((cp, i) => {
+                    const xPos = center + cp * scale;
+                    ctx.fillStyle = colors[i];
+                    ctx.beginPath();
+                    ctx.arc(xPos, lineY, 8, 0, 2 * Math.PI);
+                    ctx.fill();
+                    
+                    ctx.fillStyle = '#e0e0e0';
+                    ctx.font = '14px Arial';
+                    ctx.fillText(cp.toString(), xPos - 8, lineY + 25);
+                });
+            }
+            
+            if (step >= 5) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 5: Create sign table', 20, y + 650);
+                
+                // Create sign table
+                const tableY = y + 690;
+                const tableData = [
+                    ['Interval', 'Test', '(2-x)', '(2+x)', '(x-3)', '(x+1)', 'Result'],
+                    ['(-∞,-2)', 'x=-3', '+', '-', '-', '-', '+'],
+                    ['(-2,-1)', 'x=-1.5', '+', '+', '-', '-', '+'],
+                    ['(-1,2)', 'x=0', '+', '+', '-', '+', '-'],
+                    ['(2,3)', 'x=2.5', '-', '+', '-', '+', '+'],
+                    ['(3,∞)', 'x=4', '-', '+', '+', '+', '-']
+                ];
+                
+                ctx.font = '12px Arial';
+                const colWidths = [100, 70, 70, 70, 70, 70, 70];
+                let xPos = 80;
+                
+                tableData.forEach((row, rowIdx) => {
+                    xPos = 80;
+                    row.forEach((cell, colIdx) => {
+                        const cellY = tableY + rowIdx * 28;
+                        
+                        if (rowIdx === 0) {
+                            ctx.fillStyle = '#00d4ff';
+                            ctx.fillRect(xPos, cellY, colWidths[colIdx], 26);
+                            ctx.fillStyle = '#0f0f1e';
+                            ctx.font = 'bold 11px Arial';
+                        } else {
+                            ctx.strokeStyle = '#2a3a5a';
+                            ctx.strokeRect(xPos, cellY, colWidths[colIdx], 26);
+                            
+                            if (cell === '+') {
+                                ctx.fillStyle = '#4caf50';
+                                ctx.font = 'bold 14px Arial';
+                            } else if (cell === '-') {
+                                ctx.fillStyle = '#ff6b6b';
+                                ctx.font = 'bold 14px Arial';
+                            } else {
+                                ctx.fillStyle = '#e0e0e0';
+                                ctx.font = '11px Arial';
+                            }
+                        }
+                        
+                        ctx.fillText(cell, xPos + 8, cellY + 17);
+                        xPos += colWidths[colIdx];
+                    });
+                });
+            }
+            
+            if (step >= 6) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 6: Identify where expression ≥ 0', 20, y + 880);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('Positive on: (-∞, -2), (-2, -1), (2, 3)', 50, y + 915);
+            }
+            
+            if (step >= 7) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 7: Check endpoints carefully!', 20, y + 965);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = '15px Arial';
+                ctx.fillText('✓ x = -2: numerator = 0, denominator ≠ 0 → INCLUDE', 50, y + 1000);
+                ctx.fillStyle = '#ff6b6b';
+                ctx.fillText('✗ x = -1: denominator = 0 → NEVER INCLUDE', 50, y + 1025);
+                ctx.fillStyle = '#4caf50';
+                ctx.fillText('✓ x = 2: numerator = 0, denominator ≠ 0 → INCLUDE', 50, y + 1050);
+                ctx.fillStyle = '#ff6b6b';
+                ctx.fillText('✗ x = 3: denominator = 0 → NEVER INCLUDE', 50, y + 1075);
+                
+                ctx.strokeStyle = '#4caf50';
+                ctx.lineWidth = 4;
+                ctx.strokeRect(120, y + 1100, 560, 60);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 24px Arial';
+                ctx.fillText('Solution: (-∞, -1) ∪ [2, 3)', 200, y + 1140);
+            }
+            
+            // Step indicator
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = '14px Arial';
+            const stepTexts = ['', 'Combine into single fraction on one side', 'Factor completely', 'Find all cut points', 'Plot cut points on number line', 'Test intervals with sign table', 'Identify positive regions', 'Include/exclude endpoints appropriately'];
+            ctx.fillText(stepTexts[step], 20, 1390);
+        }
+        
+        function nextRationalStep() {
+            if (rationalStep < 7) {
+                rationalStep++;
+                drawRational(rationalStep);
+                document.getElementById('rationalStepIndicator').textContent = `Step ${rationalStep} of 7`;
+            }
+        }
+        
+        function previousRationalStep() {
+            if (rationalStep > 1) {
+                rationalStep--;
+                drawRational(rationalStep);
+                document.getElementById('rationalStepIndicator').textContent = `Step ${rationalStep} of 7`;
+            }
+        }
+        
+        function resetRational() {
+            rationalStep = 7;
+            drawRational(7);
+            document.getElementById('rationalStepIndicator').textContent = `Step ${rationalStep} of 7`;
+        }
+        
+        drawRational(1);
+        
+        // Sign diagram placeholder
+        const signDiagramCanvas = document.getElementById('signDiagramCanvas');
+        const signCtx = signDiagramCanvas.getContext('2d');
+        
+        function drawSign(step) {
+            const ctx = signCtx;
+            ctx.clearRect(0, 0, 800, 900);
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('How to Create a Sign Diagram', 250, 30);
+            
+            const y = 70;
+            
+            if (step >= 1) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 1: Draw number line with zeros/cut points', 20, y);
+                
+                // Draw number line
+                const lineY = y + 50;
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.moveTo(150, lineY);
+                ctx.lineTo(650, lineY);
+                ctx.stroke();
+                
+                // Arrow
+                ctx.beginPath();
+                ctx.moveTo(650, lineY);
+                ctx.lineTo(640, lineY - 5);
+                ctx.moveTo(650, lineY);
+                ctx.lineTo(640, lineY + 5);
+                ctx.stroke();
+                
+                // Mark critical points
+                const points = [-3, 0.5, 2];
+                const positions = [250, 400, 550];
+                
+                points.forEach((p, i) => {
+                    ctx.fillStyle = '#ff9800';
+                    ctx.beginPath();
+                    ctx.arc(positions[i], lineY, 8, 0, 2 * Math.PI);
+                    ctx.fill();
+                    
+                    ctx.fillStyle = '#e0e0e0';
+                    ctx.font = '14px Arial';
+                    ctx.fillText(p === 0.5 ? '1/2' : p.toString(), positions[i] - 10, lineY + 30);
+                });
+                
+                ctx.fillStyle = '#b0b0b0';
+                ctx.font = '12px Arial';
+                ctx.fillText('Example: (x - 2)(2x - 1)(x + 3)', 280, y + 90);
+            }
+            
+            if (step >= 2) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 2: Label intervals between points', 20, y + 180);
+                
+                const lineY = y + 50;
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = '13px Arial';
+                ctx.fillText('I₁', 190, lineY - 20);
+                ctx.fillText('I₂', 320, lineY - 20);
+                ctx.fillText('I₃', 470, lineY - 20);
+                ctx.fillText('I₄', 600, lineY - 20);
+                
+                // Draw interval brackets
+                ctx.strokeStyle = '#4dd0e1';
+                ctx.lineWidth = 2;
+                const intervals = [
+                    [150, 240],
+                    [260, 390],
+                    [410, 540],
+                    [560, 650]
+                ];
+                
+                intervals.forEach(([start, end]) => {
+                    ctx.beginPath();
+                    ctx.moveTo(start, lineY - 30);
+                    ctx.lineTo(start, lineY - 25);
+                    ctx.moveTo(start, lineY - 27);
+                    ctx.lineTo(end, lineY - 27);
+                    ctx.moveTo(end, lineY - 30);
+                    ctx.lineTo(end, lineY - 25);
+                    ctx.stroke();
+                });
+            }
+            
+            if (step >= 3) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 3: Choose test values in each interval', 20, y + 280);
+                
+                const testY = y + 320;
+                const tests = [
+                    {x: -4, pos: 190, interval: 'I₁: (-∞, -3)'},
+                    {x: 0, pos: 320, interval: 'I₂: (-3, 1/2)'},
+                    {x: 1, pos: 470, interval: 'I₃: (1/2, 2)'},
+                    {x: 3, pos: 600, interval: 'I₄: (2, ∞)'}
+                ];
+                
+                tests.forEach(test => {
+                    ctx.fillStyle = '#00d4ff';
+                    ctx.beginPath();
+                    ctx.arc(test.pos, y + 50, 5, 0, 2 * Math.PI);
+                    ctx.fill();
+                    
+                    ctx.fillStyle = '#e0e0e0';
+                    ctx.font = '12px Arial';
+                    ctx.fillText(test.interval, test.pos - 35, testY);
+                    ctx.fillStyle = '#00d4ff';
+                    ctx.font = 'bold 13px Arial';
+                    ctx.fillText('x = ' + test.x, test.pos - 20, testY + 20);
+                });
+            }
+            
+            if (step >= 4) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 4: Evaluate sign at each test value', 20, y + 420);
+                
+                // Create comprehensive sign analysis
+                const signY = y + 460;
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '14px Arial';
+                ctx.fillText('Test x = -4:', 50, signY);
+                ctx.font = '13px Arial';
+                ctx.fillText('(-4 - 2) = -6', 80, signY + 25);
+                ctx.fillText('(2(-4) - 1) = -9', 80, signY + 45);
+                ctx.fillText('(-4 + 3) = -1', 80, signY + 65);
+                ctx.fillStyle = '#ff6b6b';
+                ctx.font = 'bold 14px Arial';
+                ctx.fillText('(-)(-)(-) = -', 80, signY + 90);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '14px Arial';
+                ctx.fillText('Test x = 0:', 250, signY);
+                ctx.font = '13px Arial';
+                ctx.fillText('(0 - 2) = -2', 280, signY + 25);
+                ctx.fillText('(2(0) - 1) = -1', 280, signY + 45);
+                ctx.fillText('(0 + 3) = 3', 280, signY + 65);
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 14px Arial';
+                ctx.fillText('(-)(-)(+) = +', 280, signY + 90);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '14px Arial';
+                ctx.fillText('Test x = 1:', 450, signY);
+                ctx.font = '13px Arial';
+                ctx.fillText('(1 - 2) = -1', 480, signY + 25);
+                ctx.fillText('(2(1) - 1) = 1', 480, signY + 45);
+                ctx.fillText('(1 + 3) = 4', 480, signY + 65);
+                ctx.fillStyle = '#ff6b6b';
+                ctx.font = 'bold 14px Arial';
+                ctx.fillText('(-)(+)(+) = -', 480, signY + 90);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '14px Arial';
+                ctx.fillText('Test x = 3:', 650, signY);
+                ctx.font = '13px Arial';
+                ctx.fillText('(3 - 2) = 1', 50, signY + 125);
+                ctx.fillText('(2(3) - 1) = 5', 50, signY + 145);
+                ctx.fillText('(3 + 3) = 6', 50, signY + 165);
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 14px Arial';
+                ctx.fillText('(+)(+)(+) = +', 50, signY + 190);
+                
+                // Final sign diagram
+                ctx.strokeStyle = '#00d4ff';
+                ctx.lineWidth = 3;
+                ctx.strokeRect(250, signY + 220, 300, 120);
+                
+                ctx.fillStyle = '#00d4ff';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Final Sign Diagram:', 280, signY + 245);
+                
+                ctx.font = '15px Arial';
+                ctx.fillStyle = '#ff6b6b';
+                ctx.fillText('-', 280, signY + 275);
+                ctx.fillStyle = '#4caf50';
+                ctx.fillText('+', 360, signY + 275);
+                ctx.fillStyle = '#ff6b6b';
+                ctx.fillText('-', 440, signY + 275);
+                ctx.fillStyle = '#4caf50';
+                ctx.fillText('+', 520, signY + 275);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '12px Arial';
+                ctx.fillText('(-∞,-3)', 265, signY + 300);
+                ctx.fillText('(-3,1/2)', 345, signY + 300);
+                ctx.fillText('(1/2,2)', 425, signY + 300);
+                ctx.fillText('(2,∞)', 510, signY + 300);
+                
+                ctx.fillStyle = '#ff9800';
+                ctx.font = 'bold 13px Arial';
+                ctx.fillText('-3', 325, signY + 275);
+                ctx.fillText('1/2', 405, signY + 275);
+                ctx.fillText('2', 490, signY + 275);
+            }
+            
+            // Step indicator
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = '14px Arial';
+            const stepTexts = ['', 'Mark zeros/cut points on number line', 'Identify intervals between points', 'Choose convenient test values', 'Evaluate and record signs'];
+            ctx.fillText(stepTexts[step], 20, 890);
+        }
+        
+        function nextSignStep() {
+            if (signStep < 4) {
+                signStep++;
+                drawSign(signStep);
+                document.getElementById('signStepIndicator').textContent = `Step ${signStep} of 4`;
+            }
+        }
+        
+        function previousSignStep() {
+            if (signStep > 1) {
+                signStep--;
+                drawSign(signStep);
+                document.getElementById('signStepIndicator').textContent = `Step ${signStep} of 4`;
+            }
+        }
+        
+        function resetSign() {
+            signStep = 4;
+            drawSign(4);
+            document.getElementById('signStepIndicator').textContent = `Step ${signStep} of 4`;
+        }
+        
+        drawSign(1);
+        
+        // Special cases placeholder
+        const specialCanvas = document.getElementById('specialCanvas');
+        const specialCtx = specialCanvas.getContext('2d');
+        
+        function drawSpecial(step) {
+            const ctx = specialCtx;
+            ctx.clearRect(0, 0, 800, 900);
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('Special Factor Cases', 300, 30);
+            
+            const y = 70;
+            
+            if (step >= 1) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 17px Arial';
+                ctx.fillText('Case 1: Squared Factors', 20, y);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '15px Arial';
+                ctx.fillText('Example: (x - 2)²(3x + 1)(x + 2) ≥ 0', 50, y + 35);
+                
+                ctx.strokeStyle = '#ff9800';
+                ctx.lineWidth = 3;
+                ctx.strokeRect(50, y + 60, 700, 100);
+                
+                ctx.fillStyle = '#ff9800';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Key Insight: (x - 2)² is ALWAYS ≥ 0', 200, y + 90);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '14px Arial';
+                ctx.fillText('• At x = 2: (2 - 2)² = 0', 80, y + 120);
+                ctx.fillText('• Everywhere else: (x - 2)² > 0', 80, y + 140);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 15px Arial';
+                ctx.fillText('✓ Sign does NOT change at x = 2!', 420, y + 130);
+            }
+            
+            if (step >= 2) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Analysis: Focus only on factors that change sign', 20, y + 200);
+                
+                // Sign table for non-squared factors only
+                const tableY = y + 240;
+                const tableData = [
+                    ['Interval', '(3x + 1)', '(x + 2)', 'With (x-2)²', 'Overall'],
+                    ['x < -2', '-', '-', 'always +', '+'],
+                    ['-2 < x < -1/3', '-', '+', 'always +', '-'],
+                    ['x > -1/3', '+', '+', 'always +', '+']
+                ];
+                
+                ctx.font = '13px Arial';
+                const colWidths = [120, 100, 100, 120, 100];
+                let xPos = 100;
+                
+                tableData.forEach((row, rowIdx) => {
+                    xPos = 100;
+                    row.forEach((cell, colIdx) => {
+                        const cellY = tableY + rowIdx * 30;
+                        
+                        if (rowIdx === 0) {
+                            ctx.fillStyle = '#00d4ff';
+                            ctx.fillRect(xPos, cellY, colWidths[colIdx], 28);
+                            ctx.fillStyle = '#0f0f1e';
+                            ctx.font = 'bold 12px Arial';
+                        } else {
+                            ctx.strokeStyle = '#2a3a5a';
+                            ctx.strokeRect(xPos, cellY, colWidths[colIdx], 28);
+                            
+                            if (cell === '+') {
+                                ctx.fillStyle = '#4caf50';
+                                ctx.font = 'bold 15px Arial';
+                            } else if (cell === '-') {
+                                ctx.fillStyle = '#ff6b6b';
+                                ctx.font = 'bold 15px Arial';
+                            } else {
+                                ctx.fillStyle = '#e0e0e0';
+                                ctx.font = '12px Arial';
+                            }
+                        }
+                        
+                        ctx.fillText(cell, xPos + 10, cellY + 18);
+                        xPos += colWidths[colIdx];
+                    });
+                });
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Solution: (-∞, -2] ∪ [-1/3, ∞)', 230, tableY + 140);
+                ctx.fillStyle = '#ff9800';
+                ctx.font = '14px Arial';
+                ctx.fillText('Note: x = 2 is included (makes expression = 0)', 200, tableY + 165);
+            }
+            
+            if (step >= 3) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 17px Arial';
+                ctx.fillText('Case 2: Irreducible Quadratic Factors', 20, y + 470);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '15px Arial';
+                ctx.fillText('Example: (x - 2)(3x + 1)(x² + x + 2) ≤ 0', 50, y + 505);
+                
+                ctx.strokeStyle = '#4caf50';
+                ctx.lineWidth = 3;
+                ctx.strokeRect(50, y + 530, 700, 120);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Key Insight: Check if x² + x + 2 has real zeros', 180, y + 560);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '14px Arial';
+                ctx.fillText('Discriminant: b² - 4ac = 1² - 4(1)(2) = 1 - 8 = -7 < 0', 100, y + 590);
+                ctx.fillText('No real zeros → factor never equals zero', 100, y + 615);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 15px Arial';
+                ctx.fillText('Test x = 0: (0)² + 0 + 2 = 2 > 0 → Always positive!', 100, y + 640);
+            }
+            
+            if (step >= 4) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Simplified: Just solve (x - 2)(3x + 1) ≤ 0', 180, y + 690);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '14px Arial';
+                ctx.fillText('Zeros: x = 2, x = -1/3', 100, y + 720);
+                
+                ctx.fillStyle = '#ff6b6b';
+                ctx.font = '15px Arial';
+                ctx.fillText('Negative when one factor is negative:', 100, y + 750);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 18px Arial';
+                ctx.fillText('Solution: [-1/3, 2]', 280, y + 790);
+                
+                ctx.fillStyle = '#b0b0b0';
+                ctx.font = 'italic 13px Arial';
+                ctx.fillText('(The irreducible quadratic doesn\'t affect the sign!)', 220, y + 815);
+            }
+            
+            // Step indicator
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = '14px Arial';
+            const stepTexts = ['', 'Squared factors are always non-negative', 'Only consider factors that change sign', 'Check discriminant for irreducible quadratics', 'Simplify by ignoring always-positive factors'];
+            ctx.fillText(stepTexts[step], 20, 890);
+        }
+        
+        function nextSpecialStep() {
+            if (specialStep < 4) {
+                specialStep++;
+                drawSpecial(specialStep);
+                document.getElementById('specialStepIndicator').textContent = `Step ${specialStep} of 4`;
+            }
+        }
+        
+        function previousSpecialStep() {
+            if (specialStep > 1) {
+                specialStep--;
+                drawSpecial(specialStep);
+                document.getElementById('specialStepIndicator').textContent = `Step ${specialStep} of 4`;
+            }
+        }
+        
+        function resetSpecial() {
+            specialStep = 4;
+            drawSpecial(4);
+            document.getElementById('specialStepIndicator').textContent = `Step ${specialStep} of 4`;
+        }
+        
+        drawSpecial(1);
+        
+        // Domain placeholder
+        const domainCanvas = document.getElementById('domainCanvas');
+        const domainCtx = domainCanvas.getContext('2d');
+        
+        function drawDomain(step) {
+            const ctx = domainCtx;
+            ctx.clearRect(0, 0, 800, 1000);
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('Domain Problems as Inequalities', 250, 30);
+            
+            const y = 70;
+            
+            if (step >= 1) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Example: Find the domain of f(x) = √(6 - x - x²)', 20, y);
+                
+                ctx.strokeStyle = '#00d4ff';
+                ctx.lineWidth = 3;
+                ctx.strokeRect(50, y + 30, 700, 80);
+                
+                ctx.fillStyle = '#00d4ff';
+                ctx.font = 'bold 17px Arial';
+                ctx.fillText('Translation: For square root to be defined...', 180, y + 60);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('We need the radicand ≥ 0', 260, y + 90);
+            }
+            
+            if (step >= 2) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 1: Set up the inequality', 20, y + 160);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '18px Arial';
+                ctx.fillText('Radicand: 6 - x - x²', 100, y + 195);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 20px Arial';
+                ctx.fillText('6 - x - x² ≥ 0', 300, y + 235);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '15px Arial';
+                ctx.fillText('or equivalently:', 100, y + 270);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 20px Arial';
+                ctx.fillText('-x² - x + 6 ≥ 0', 280, y + 300);
+            }
+            
+            if (step >= 3) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 2: Factor (multiply by -1 and flip inequality)', 20, y + 350);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('-x² - x + 6 ≥ 0  →  x² + x - 6 ≤ 0', 100, y + 385);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('Factor: x² + x - 6 = (x + 3)(x - 2)', 100, y + 420);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 18px Arial';
+                ctx.fillText('(x + 3)(x - 2) ≤ 0', 270, y + 455);
+            }
+            
+            if (step >= 4) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 3: Create sign diagram', 20, y + 505);
+                
+                // Number line
+                const lineY = y + 545;
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(150, lineY);
+                ctx.lineTo(650, lineY);
+                ctx.stroke();
+                
+                // Mark zeros
+                const zero1 = 300; // x = -3
+                const zero2 = 500; // x = 2
+                
+                ctx.fillStyle = '#ff9800';
+                ctx.beginPath();
+                ctx.arc(zero1, lineY, 8, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(zero2, lineY, 8, 0, 2 * Math.PI);
+                ctx.fill();
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '14px Arial';
+                ctx.fillText('-3', zero1 - 10, lineY + 25);
+                ctx.fillText('2', zero2 - 5, lineY + 25);
+                
+                // Signs
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 18px Arial';
+                ctx.fillText('+', 220, lineY - 10);
+                ctx.fillStyle = '#ff6b6b';
+                ctx.fillText('-', 395, lineY - 10);
+                ctx.fillStyle = '#4caf50';
+                ctx.fillText('+', 570, lineY - 10);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '12px Arial';
+                ctx.fillText('x < -3', 200, lineY + 50);
+                ctx.fillText('-3 < x < 2', 365, lineY + 50);
+                ctx.fillText('x > 2', 550, lineY + 50);
+            }
+            
+            if (step >= 5) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 4: Find where (x + 3)(x - 2) ≤ 0', 20, y + 640);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '15px Arial';
+                ctx.fillText('We want negative or zero:', 100, y + 675);
+                
+                ctx.fillStyle = '#ff6b6b';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('• Negative on interval: (-3, 2)', 120, y + 705);
+                
+                ctx.fillStyle = '#ff9800';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('• Zero at endpoints: x = -3 and x = 2', 120, y + 735);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = '14px Arial';
+                ctx.fillText('✓ Include endpoints (≤ allows equality)', 120, y + 760);
+                
+                ctx.strokeStyle = '#4caf50';
+                ctx.lineWidth = 4;
+                ctx.strokeRect(150, y + 800, 500, 80);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 26px Arial';
+                ctx.fillText('Domain: [-3, 2]', 280, y + 850);
+                
+                ctx.fillStyle = '#b0b0b0';
+                ctx.font = 'italic 13px Arial';
+                ctx.fillText('(All x values where the square root is defined)', 230, y + 875);
+            }
+            
+            // Step indicator
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = '14px Arial';
+            const stepTexts = ['', 'Translate domain requirement to inequality', 'Set up radicand ≥ 0', 'Factor the expression', 'Use sign diagram to find solution', 'Solution is the domain of the function'];
+            ctx.fillText(stepTexts[step], 20, 990);
+        }
+        
+        function nextDomainStep() {
+            if (domainStep < 5) {
+                domainStep++;
+                drawDomain(domainStep);
+                document.getElementById('domainStepIndicator').textContent = `Step ${domainStep} of 5`;
+            }
+        }
+        
+        function previousDomainStep() {
+            if (domainStep > 1) {
+                domainStep--;
+                drawDomain(domainStep);
+                document.getElementById('domainStepIndicator').textContent = `Step ${domainStep} of 5`;
+            }
+        }
+        
+        function resetDomain() {
+            domainStep = 5;
+            drawDomain(5);
+            document.getElementById('domainStepIndicator').textContent = `Step ${domainStep} of 5`;
+        }
+        
+        drawDomain(1);
+    </script>
+</body>
+</html>

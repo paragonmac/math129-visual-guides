@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Zeros of Polynomials - Visual Guide</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e0e0e0;
+        }
+        
+        .container {
+            background: #0f0f1e;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #ffd700;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #b0b0b0;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #1a1a2e;
+            border-radius: 10px;
+            border-left: 5px solid #ffd700;
+        }
+        
+        .section h2 {
+            color: #ffd700;
+            margin-top: 0;
+        }
+        
+        canvas {
+            border: 2px solid #ffd700;
+            border-radius: 8px;
+            display: block;
+            margin: 20px auto;
+            background: #0a0a15;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        
+        .step-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .step {
+            background: #16213e;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #2a3a5a;
+        }
+        
+        .step h3 {
+            color: #ffd700;
+            margin-top: 0;
+            font-size: 1.1em;
+        }
+        
+        .step ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .step li {
+            margin: 8px 0;
+        }
+        
+        .formula {
+            background: #1e2a4a;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            margin: 10px 0;
+            text-align: center;
+            border: 1px dashed #ffd700;
+            color: #e0e0e0;
+        }
+        
+        .highlight {
+            background: #4a4a2a;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        
+        .key-point {
+            background: #1e3a2e;
+            border-left: 4px solid #4caf50;
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            color: #e0e0e0;
+        }
+        
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        button {
+            background: #ffd700;
+            color: #0f0f1e;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background 0.3s;
+            font-weight: bold;
+        }
+        
+        button:hover {
+            background: #ffed4e;
+        }
+        
+        .theorem-box {
+            background: #2e1a3a;
+            border: 3px solid #9c27b0;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .theorem-box h3 {
+            color: #ce93d8;
+            margin-top: 0;
+        }
+        
+        .example-box {
+            background: #1a2e1a;
+            border: 2px solid #4caf50;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .warning-box {
+            background: #3a2e1e;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .comparison-table th {
+            background: #ffd700;
+            color: #0f0f1e;
+            padding: 12px;
+            border: 1px solid #2a3a5a;
+            font-weight: bold;
+        }
+        
+        .comparison-table td {
+            padding: 12px;
+            border: 1px solid #2a3a5a;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background: #16213e;
+        }
+        
+        .fraction {
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+        }
+        
+        .fraction-top {
+            border-bottom: 1px solid #e0e0e0;
+            padding: 0 5px;
+        }
+        
+        .fraction-bottom {
+            padding: 0 5px;
+        }
+        
+        .work-box {
+            background: #0a0a15;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.05em;
+            border: 2px solid #ffd700;
+            margin: 20px 0;
+        }
+        
+        .step-label {
+            color: #4caf50;
+            font-weight: bold;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+        
+        .method-number {
+            display: inline-block;
+            background: #ffd700;
+            color: #0f0f1e;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Real Zeros of Polynomials</h1>
+        <p class="subtitle">Master the Hunt for Exact Solutions!</p>
+        
+        <!-- WHY THIS MATTERS -->
+        <div class="section" style="border-left-color: #ff6b6b;">
+            <h2>🤔 Why Hunt for Real Zeros?</h2>
+            
+            <div class="step-container">
+                <div class="step">
+                    <h3>❌ Without These Skills</h3>
+                    <p><strong>You're limited:</strong></p>
+                    <ul>
+                        <li>Can only estimate from graphs</li>
+                        <li>Miss exact values (like √2)</li>
+                        <li>Can't solve exactly by hand</li>
+                        <li>No way to verify calculator answers</li>
+                        <li>Stuck when calculator fails</li>
+                    </ul>
+                    <p style="color: #ff6b6b;">Relying on graphing alone!</p>
+                </div>
+                
+                <div class="step">
+                    <h3>✅ With Zero-Finding Mastery</h3>
+                    <p><strong>You can:</strong></p>
+                    <ul>
+                        <li>✓ Find EXACT zeros (rational & irrational)</li>
+                        <li>✓ Know how many zeros to expect</li>
+                        <li>✓ Narrow down search efficiently</li>
+                        <li>✓ Completely factor any polynomial</li>
+                        <li>✓ Verify graphing calculator results</li>
+                    </ul>
+                    <p style="color: #4caf50;">Total algebraic control!</p>
+                </div>
+            </div>
+            
+            <div class="key-point">
+                <strong>💡 Real-World Power:</strong> Engineers design filters by finding zeros of transfer functions. Economists find break-even points (profit = 0). Physicists find equilibrium positions. Computer graphics use zero-finding for collision detection. These aren't approximations—they need EXACT answers!
+            </div>
+            
+            <div class="key-point" style="background: #2e1a3a; border-left-color: #9c27b0;">
+                <strong>🎯 Bottom Line:</strong> Graphing gives you a picture. Algebra gives you PRECISION. This section teaches you to find exact zeros that a graph can only approximate!
+            </div>
+        </div>
+        
+        <!-- SECTION 1: Rational Zeros Theorem -->
+        <div class="section">
+            <h2>📋 Method 1: The Rational Zeros Theorem</h2>
+            <span class="method-number">The List Maker</span>
+            
+            <div class="theorem-box">
+                <h3>🔮 The Rational Zeros Theorem</h3>
+                <p><strong>If p/q is a rational zero of P(x) (in lowest terms), then:</strong></p>
+                <div class="formula" style="font-size: 1.2em;">
+                    <span style="color: #ff9800; font-weight: bold; font-size: 1.3em;">p</span> = factor of constant term <span style="color: #ff9800;">a₀</span><br>
+                    <span style="color: #4cc9f0; font-weight: bold; font-size: 1.3em;">q</span> = factor of leading coefficient <span style="color: #4cc9f0;">aₙ</span>
+                </div>
+                <p style="margin-top: 15px;"><strong>Translation:</strong> Every rational zero must be <span style="color: #4caf50; font-weight: bold; font-size: 1.1em;">p/q</span> where <span style="color: #ff9800;">p</span> divides the constant and <span style="color: #4cc9f0;">q</span> divides the leading coefficient!</p>
+            </div>
+            
+            <p><strong>Example:</strong> Find all possible rational zeros of <span style="color: #8b9eff; font-weight: bold;">P(x) = 2x³ + x² - 13x + 6</span></p>
+            
+            <canvas id="rationalZerosCanvas" width="800" height="600"></canvas>
+            
+            <div class="controls">
+                <button onclick="previousRationalStep()">⬅️ Previous Step</button>
+                <button onclick="nextRationalStep()">Next Step ➡️</button>
+                <button onclick="resetRational()">🔄 Reset to Complete</button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 10px;">
+                <span id="rationalStepIndicator" style="color: #ffd700; font-weight: bold; font-size: 1.1em;">Step 1 of 6</span>
+            </div>
+            
+            <div class="key-point">
+                <strong>⚡ Pro Tip:</strong> If the leading coefficient is <span style="color: #4cc9f0; font-weight: bold; font-size: 1.2em;">1</span>, then all rational zeros MUST be factors of the constant term. This makes life much easier!
+            </div>
+            
+            <div class="warning-box">
+                <strong>⚠️ Important Limitations:</strong>
+                <ul style="margin: 10px 0;">
+                    <li>This only finds RATIONAL zeros (fractions/integers)</li>
+                    <li>Does NOT find irrational zeros (like √2 or 1 + √3)</li>
+                    <li>Lists POSSIBLE zeros - must test each one!</li>
+                    <li>Some polynomials have NO rational zeros at all</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- SECTION 2: Descartes's Rule of Signs -->
+        <div class="section">
+            <h2>🔍 Method 2: Descartes's Rule of Signs</h2>
+            <span class="method-number">The Predictor</span>
+            
+            <div class="theorem-box">
+                <h3>📊 Descartes's Rule of Signs</h3>
+                <p><strong>Count sign changes to predict how many real zeros!</strong></p>
+                <div class="formula">
+                    # of <span style="color: #4caf50; font-weight: bold;">positive real zeros</span> = # of <span style="color: #f44336; font-weight: bold;">sign changes</span> in <span style="color: #4cc9f0;">P(x)</span><br>
+                    OR that number minus an <span style="color: #ff9800; font-weight: bold;">even integer</span> (2, 4, 6...)
+                </div>
+                <div class="formula" style="margin-top: 10px;">
+                    # of <span style="color: #f44336; font-weight: bold;">negative real zeros</span> = # of <span style="color: #f44336; font-weight: bold;">sign changes</span> in <span style="color: #9c27b0;">P(-x)</span><br>
+                    OR that number minus an <span style="color: #ff9800; font-weight: bold;">even integer</span>
+                </div>
+            </div>
+            
+            <p><strong>Example:</strong> Use Descartes's Rule on P(x) = 3x⁶ + 4x⁵ + 3x³ - x - 3</p>
+            
+            <canvas id="descartesCanvas" width="800" height="650"></canvas>
+            
+            <div class="controls">
+                <button onclick="previousDescartesStep()">⬅️ Previous Step</button>
+                <button onclick="nextDescartesStep()">Next Step ➡️</button>
+                <button onclick="resetDescartes()">🔄 Reset to Complete</button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 10px;">
+                <span id="descartesStepIndicator" style="color: #ffd700; font-weight: bold; font-size: 1.1em;">Step 1 of 4</span>
+            </div>
+            
+            <div class="key-point">
+                <strong>🎯 Why This Helps:</strong> Descartes tells you HOW MANY zeros to expect before you start testing. If it says "1 positive zero," you can stop after finding one! Saves tons of time!
+            </div>
+            
+            <div class="warning-box">
+                <strong>⚠️ Common Mistakes:</strong>
+                <ul style="margin: 10px 0;">
+                    <li>Missing zero coefficients (don't count them as sign changes!)</li>
+                    <li>Forgetting to subtract by EVEN numbers only</li>
+                    <li>Thinking this tells you WHICH zeros (it doesn't!)</li>
+                    <li>Not accounting for multiplicity (x² means counted twice)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- SECTION 3: Upper and Lower Bounds -->
+        <div class="section">
+            <h2>🎚️ Method 3: Upper and Lower Bounds</h2>
+            <span class="method-number">The Range Finder</span>
+            
+            <div class="theorem-box">
+                <h3>📐 Upper and Lower Bounds Theorem</h3>
+                <p><strong>Find boundaries that contain ALL real zeros!</strong></p>
+                <div class="formula" style="text-align: left; padding: 15px;">
+                    <strong style="color: #4caf50;">Upper Bound (<span style="font-size: 1.2em;">b > 0</span>):</strong><br>
+                    Divide by (x - b) using synthetic division.<br>
+                    If <span style="color: #4caf50; font-weight: bold; font-size: 1.1em;">ALL entries ≥ 0</span> → <span style="color: #4caf50; font-weight: bold;">b</span> is an upper bound
+                </div>
+                <div class="formula" style="text-align: left; padding: 15px; margin-top: 10px;">
+                    <strong style="color: #f44336;">Lower Bound (<span style="font-size: 1.2em;">a < 0</span>):</strong><br>
+                    Divide by (x - a) using synthetic division.<br>
+                    If entries <span style="color: #f44336; font-weight: bold; font-size: 1.1em;">ALTERNATE signs</span> (+,-,+,- or -,+,-,+) → <span style="color: #f44336; font-weight: bold;">a</span> is a lower bound<br>
+                    <em style="color: #b0b0b0;">(Zero counts as either + or -)</em>
+                </div>
+            </div>
+            
+            <p><strong>Example:</strong> Find bounds for P(x) = x⁴ - 3x² + 2x - 5</p>
+            
+            <canvas id="boundsCanvas" width="800" height="700"></canvas>
+            
+            <div class="controls">
+                <button onclick="previousBoundsStep()">⬅️ Previous Step</button>
+                <button onclick="nextBoundsStep()">Next Step ➡️</button>
+                <button onclick="resetBounds()">🔄 Reset to Complete</button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 10px;">
+                <span id="boundsStepIndicator" style="color: #ffd700; font-weight: bold; font-size: 1.1em;">Step 1 of 5</span>
+            </div>
+            
+            <div class="key-point">
+                <strong>💡 Why Bounds Matter:</strong> Once you find bounds, you know EXACTLY where to look for zeros. All real zeros are guaranteed to be between the lower and upper bounds. This is perfect for setting your graphing calculator window!
+            </div>
+        </div>
+        
+        <!-- SECTION 4: Complete Strategy -->
+        <div class="section">
+            <h2>🎯 Method 4: Complete Zero-Finding Strategy</h2>
+            <span class="method-number">The Master Plan</span>
+            
+            <p><strong>Putting it ALL together - the most efficient way to find every zero!</strong></p>
+            
+            <div class="work-box">
+                <div style="color: #ffd700; font-size: 1.3em; margin-bottom: 15px; text-align: center;">
+                    <strong>The Zero-Finding Flowchart</strong>
+                </div>
+                
+                <div style="text-align: center; margin: 20px 0;">
+                    <div style="background: #16213e; padding: 15px; border-radius: 8px; display: inline-block; border: 2px solid #ffd700;">
+                        <strong style="color: #ffd700;">START: Given polynomial P(x)</strong>
+                    </div>
+                    
+                    <div style="margin: 10px 0; color: #4caf50; font-size: 1.5em;">↓</div>
+                    
+                    <div style="background: #16213e; padding: 15px; border-radius: 8px; display: inline-block; border: 2px solid #9c27b0;">
+                        <strong style="color: #ce93d8;">STEP 1: Descartes's Rule</strong><br>
+                        <span style="font-size: 0.9em;">Know how many positive/negative zeros to expect</span>
+                    </div>
+                    
+                    <div style="margin: 10px 0; color: #4caf50; font-size: 1.5em;">↓</div>
+                    
+                    <div style="background: #16213e; padding: 15px; border-radius: 8px; display: inline-block; border: 2px solid #ff9800;">
+                        <strong style="color: #ffb74d;">STEP 2: Rational Zeros Theorem</strong><br>
+                        <span style="font-size: 0.9em;">List all possible rational zeros</span>
+                    </div>
+                    
+                    <div style="margin: 10px 0; color: #4caf50; font-size: 1.5em;">↓</div>
+                    
+                    <div style="background: #16213e; padding: 15px; border-radius: 8px; display: inline-block; border: 2px solid #4caf50;">
+                        <strong style="color: #81c784;">STEP 3: Find Bounds</strong><br>
+                        <span style="font-size: 0.9em;">Narrow the search range</span>
+                    </div>
+                    
+                    <div style="margin: 10px 0; color: #4caf50; font-size: 1.5em;">↓</div>
+                    
+                    <div style="background: #16213e; padding: 15px; border-radius: 8px; display: inline-block; border: 2px solid #2196f3;">
+                        <strong style="color: #64b5f6;">STEP 4: Test with Synthetic Division</strong><br>
+                        <span style="font-size: 0.9em;">Test candidates between bounds until remainder = 0</span>
+                    </div>
+                    
+                    <div style="margin: 10px 0; color: #4caf50; font-size: 1.5em;">↓</div>
+                    
+                    <div style="background: #16213e; padding: 15px; border-radius: 8px; display: inline-block; border: 2px solid #ff6b6b;">
+                        <strong style="color: #ff6b6b;">STEP 5: Factor and Reduce</strong><br>
+                        <span style="font-size: 0.9em;">Use quotient, repeat until you reach a quadratic</span>
+                    </div>
+                    
+                    <div style="margin: 10px 0; color: #4caf50; font-size: 1.5em;">↓</div>
+                    
+                    <div style="background: #16213e; padding: 15px; border-radius: 8px; display: inline-block; border: 2px solid #ffd700;">
+                        <strong style="color: #ffd700;">STEP 6: Quadratic Formula</strong><br>
+                        <span style="font-size: 0.9em;">Solve final quadratic for remaining zeros</span>
+                    </div>
+                    
+                    <div style="margin: 10px 0; color: #4caf50; font-size: 1.5em;">↓</div>
+                    
+                    <div style="background: #1e3a2e; padding: 15px; border-radius: 8px; display: inline-block; border: 3px solid #4caf50;">
+                        <strong style="color: #4caf50; font-size: 1.2em;">✓ DONE: Complete Factorization!</strong>
+                    </div>
+                </div>
+            </div>
+            
+            <p><strong>Full Example:</strong> Find all zeros of P(x) = 2x⁴ - 3x³ - 11x² + 6x</p>
+            
+            <canvas id="strategyCanvas" width="800" height="700"></canvas>
+            
+            <div class="controls">
+                <button onclick="previousStrategyStep()">⬅️ Previous Step</button>
+                <button onclick="nextStrategyStep()">Next Step ➡️</button>
+                <button onclick="resetStrategy()">🔄 Reset to Complete</button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 10px;">
+                <span id="strategyStepIndicator" style="color: #ffd700; font-weight: bold; font-size: 1.1em;">Step 1 of 8</span>
+            </div>
+        </div>
+        
+        <!-- SECTION 5: Quick Reference -->
+        <div class="section">
+            <h2>📚 Quick Reference Guide</h2>
+            
+            <table class="comparison-table">
+                <tr>
+                    <th>Method</th>
+                    <th>What It Tells You</th>
+                    <th>What It Doesn't Tell You</th>
+                    <th>When to Use</th>
+                </tr>
+                <tr>
+                    <td><strong>Rational Zeros Theorem</strong></td>
+                    <td style="color: #4caf50;">ALL possible rational zeros</td>
+                    <td style="color: #ff6b6b;">Which ones are actual zeros<br>Irrational zeros</td>
+                    <td>Always start here for rational candidates</td>
+                </tr>
+                <tr>
+                    <td><strong>Descartes's Rule</strong></td>
+                    <td style="color: #4caf50;">HOW MANY positive/negative zeros</td>
+                    <td style="color: #ff6b6b;">WHICH zeros<br>Exact values</td>
+                    <td>Predict how many to expect before testing</td>
+                </tr>
+                <tr>
+                    <td><strong>Upper/Lower Bounds</strong></td>
+                    <td style="color: #4caf50;">Range containing ALL real zeros</td>
+                    <td style="color: #ff6b6b;">Exact zero locations<br>How many zeros</td>
+                    <td>Narrow search range, set graph window</td>
+                </tr>
+                <tr>
+                    <td><strong>Synthetic Division</strong></td>
+                    <td style="color: #4caf50;">If candidate IS a zero<br>Quotient for next step</td>
+                    <td style="color: #ff6b6b;">Other zeros</td>
+                    <td>Test each candidate from RZT</td>
+                </tr>
+                <tr>
+                    <td><strong>Quadratic Formula</strong></td>
+                    <td style="color: #4caf50;">EXACT zeros (even irrational)</td>
+                    <td style="color: #ff6b6b;">-</td>
+                    <td>Final step when reduced to quadratic</td>
+                </tr>
+            </table>
+            
+            <div class="key-point">
+                <strong>🎯 The Golden Rule:</strong> Use Descartes first (know what to expect), Rational Zeros Theorem second (get candidates), Bounds third (narrow range), then test systematically with synthetic division!
+            </div>
+        </div>
+        
+        <!-- SECTION 6: Common Pitfalls -->
+        <div class="section">
+            <h2>⚠️ Common Mistakes to Avoid</h2>
+            
+            <div class="step-container">
+                <div class="step" style="border-color: #f44336;">
+                    <h3>❌ Mistake #1</h3>
+                    <p><strong>Thinking RZT finds ALL zeros</strong></p>
+                    <p style="color: #ff6b6b;">It only finds RATIONAL zeros!</p>
+                    <p style="color: #4caf50;">✓ Remember: Irrational zeros come from Quadratic Formula</p>
+                </div>
+                
+                <div class="step" style="border-color: #f44336;">
+                    <h3>❌ Mistake #2</h3>
+                    <p><strong>Stopping after one zero</strong></p>
+                    <p style="color: #ff6b6b;">Polynomials can have multiple zeros!</p>
+                    <p style="color: #4caf50;">✓ Continue with quotient until degree ≤ 2</p>
+                </div>
+                
+                <div class="step" style="border-color: #f44336;">
+                    <h3>❌ Mistake #3</h3>
+                    <p><strong>Not simplifying RZT list</strong></p>
+                    <p style="color: #ff6b6b;">Testing 2/2 = 1 is duplicate work!</p>
+                    <p style="color: #4caf50;">✓ Simplify all fractions, remove duplicates</p>
+                </div>
+                
+                <div class="step" style="border-color: #f44336;">
+                    <h3>❌ Mistake #4</h3>
+                    <p><strong>Misapplying Descartes's Rule</strong></p>
+                    <p style="color: #ff6b6b;">Subtract by 3, 5, 7... (odd numbers)</p>
+                    <p style="color: #4caf50;">✓ Only subtract EVEN numbers: 0, 2, 4, 6...</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SECTION 7: Real Applications -->
+        <div class="section" style="border-left-color: #ff9800;">
+            <h2>🌍 When You'll Actually Use This</h2>
+            
+            <div class="step-container">
+                <div class="step">
+                    <h3>🏗️ Engineering: Bridge Design</h3>
+                    <p><strong>Problem:</strong> Find natural frequencies where bridge vibrates</p>
+                    <p><strong>How:</strong> Solve characteristic polynomial = 0 to find resonant frequencies</p>
+                    <div class="formula" style="font-size: 0.9em;">P(ω) = ω⁴ - 12ω² + 20 = 0</div>
+                    <p style="font-size: 0.9em; color: #4caf50;">Must avoid these frequencies or bridge collapses!</p>
+                </div>
+                
+                <div class="step">
+                    <h3>💰 Economics: Break-Even Analysis</h3>
+                    <p><strong>Problem:</strong> When does profit = 0?</p>
+                    <p><strong>How:</strong> Revenue - Cost = 0, solve polynomial</p>
+                    <div class="formula" style="font-size: 0.9em;">-2x³ + 15x² - 10x - 8 = 0</div>
+                    <p style="font-size: 0.9em; color: #4caf50;">Zeros = break-even production quantities!</p>
+                </div>
+                
+                <div class="step">
+                    <h3>🎮 Graphics: Collision Detection</h3>
+                    <p><strong>Problem:</strong> When does object hit surface?</p>
+                    <p><strong>How:</strong> Set trajectory polynomial = surface height, solve</p>
+                    <div class="formula" style="font-size: 0.9em;">h(t) = -16t² + 50t + 6 = 0</div>
+                    <p style="font-size: 0.9em; color: #4caf50;">Zeros = exact collision times!</p>
+                </div>
+                
+                <div class="step">
+                    <h3>🔬 Chemistry: Equilibrium Points</h3>
+                    <p><strong>Problem:</strong> Find concentration at equilibrium</p>
+                    <p><strong>How:</strong> Rate equation = 0, solve for concentration</p>
+                    <div class="formula" style="font-size: 0.9em;">x³ - 3x + 1 = 0</div>
+                    <p style="font-size: 0.9em; color: #4caf50;">Zeros = stable equilibrium concentrations!</p>
+                </div>
+            </div>
+            
+            <div class="key-point">
+                <strong>⚡ The Pattern:</strong> Anytime you need to find WHERE something equals zero (break-even, collision, equilibrium, resonance), you're solving for real zeros of polynomials!
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Global state
+        let rationalStep = 1;
+        let descartesStep = 1;
+        let boundsStep = 1;
+        let strategyStep = 1;
+        
+        // SECTION 1: Rational Zeros Theorem
+        const rationalCanvas = document.getElementById('rationalZerosCanvas');
+        const rationalCtx = rationalCanvas.getContext('2d');
+        
+        function drawRationalZeros(step) {
+            const ctx = rationalCtx;
+            ctx.clearRect(0, 0, 800, 600);
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('Find possible rational zeros: P(x) = 2x³ + x² - 13x + 6', 20, 30);
+            
+            const y = 80;
+            
+            if (step >= 1) {
+                ctx.fillStyle = '#ffd700';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 1: Identify coefficients', 20, y);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('Constant term a₀ = 6', 50, y + 30);
+                ctx.fillText('Leading coefficient aₙ = 2', 50, y + 55);
+            }
+            
+            if (step >= 2) {
+                ctx.fillStyle = '#ffd700';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 2: Factors of 6 (constant term)', 20, y + 100);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = '20px Arial';
+                ctx.fillText('p = ±1, ±2, ±3, ±6', 50, y + 135);
+            }
+            
+            if (step >= 3) {
+                ctx.fillStyle = '#ffd700';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 3: Factors of 2 (leading coefficient)', 20, y + 180);
+                
+                ctx.fillStyle = '#ff9800';
+                ctx.font = '20px Arial';
+                ctx.fillText('q = ±1, ±2', 50, y + 215);
+            }
+            
+            if (step >= 4) {
+                ctx.fillStyle = '#ffd700';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 4: Form all fractions p/q', 20, y + 260);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('±1/1, ±2/1, ±3/1, ±6/1, ±1/2, ±2/2, ±3/2, ±6/2', 50, y + 295);
+            }
+            
+            if (step >= 5) {
+                ctx.fillStyle = '#ffd700';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 5: Simplify and remove duplicates', 20, y + 340);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 18px Arial';
+                ctx.fillText('±1, ±2, ±3, ±6, ±1/2, ±3/2', 50, y + 375);
+            }
+            
+            if (step >= 6) {
+                ctx.fillStyle = '#ffd700';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 6: Test with synthetic division', 20, y + 420);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '14px Arial';
+                ctx.fillText('(Try each candidate until remainder = 0)', 50, y + 450);
+            }
+            
+            // Step indicator at bottom
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = '14px Arial';
+            const stepTexts = ['', 'Identify the constant term and leading coefficient', 'List all factors of the constant term (these are possible p values)', 'List all factors of the leading coefficient (these are possible q values)', 'Create all possible fractions p/q', 'Simplify fractions and eliminate any duplicates', 'Now test each candidate using synthetic division!'];
+            ctx.fillText(stepTexts[step], 20, 590);
+        }
+        
+        function nextRationalStep() {
+            if (rationalStep < 6) {
+                rationalStep++;
+                drawRationalZeros(rationalStep);
+                updateRationalIndicator();
+            }
+        }
+        
+        function previousRationalStep() {
+            if (rationalStep > 1) {
+                rationalStep--;
+                drawRationalZeros(rationalStep);
+                updateRationalIndicator();
+            }
+        }
+        
+        function resetRational() {
+            rationalStep = 6;
+            drawRationalZeros(6);
+            updateRationalIndicator();
+        }
+        
+        function updateRationalIndicator() {
+            document.getElementById('rationalStepIndicator').textContent = `Step ${rationalStep} of 6`;
+        }
+        
+        // SECTION 2: Descartes's Rule
+        const descartesCanvas = document.getElementById('descartesCanvas');
+        const descartesCtx = descartesCanvas.getContext('2d');
+        
+        function drawDescartes(step) {
+            const ctx = descartesCtx;
+            ctx.clearRect(0, 0, 800, 650);
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('Descartes\'s Rule: P(x) = 3x⁶ + 4x⁵ + 3x³ - x - 3', 20, 30);
+            
+            const y = 80;
+            
+            if (step >= 1) {
+                ctx.fillStyle = '#ffd700';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 1: Count sign changes in P(x) for positive zeros', 20, y);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '18px Courier New';
+                ctx.fillText('P(x) = 3x⁶ + 4x⁵ + 3x³ - x - 3', 50, y + 40);
+                
+                if (step >= 2) {
+                    // Color code the signs - only green on the last sign of each change
+                    ctx.font = 'bold 18px Arial';
+                    
+                    ctx.fillStyle = '#e0e0e0'; // normal color
+                    ctx.fillText('(+)', 75, y + 70);
+                    
+                    ctx.fillStyle = '#e0e0e0'; // normal color
+                    ctx.fillText('(+)', 115, y + 70);
+                    
+                    ctx.fillStyle = '#e0e0e0'; // normal color
+                    ctx.fillText('(+)', 155, y + 70);
+                    
+                    ctx.fillStyle = '#4caf50'; // green - marks the change
+                    ctx.fillText('(-)', 195, y + 70);
+                    
+                    ctx.fillStyle = '#e0e0e0'; // normal color
+                    ctx.fillText('(-)', 235, y + 70);
+                    
+                    ctx.fillStyle = '#ffd700';
+                    ctx.font = 'bold 16px Arial';
+                    ctx.fillText('← ONE sign change (green mark)', 280, y + 70);
+                    
+                    ctx.fillStyle = '#4caf50';
+                    ctx.font = 'bold 18px Arial';
+                    ctx.fillText('→ 1 positive real zero', 50, y + 110);
+                } else {
+                    ctx.font = '16px Arial';
+                    ctx.fillText('(+)    (+)    (+)   (-)  (-)', 75, y + 70);
+                }
+            }
+            
+            if (step >= 3) {
+                ctx.fillStyle = '#ffd700';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 2: Find P(-x) for negative zeros', 20, y + 170);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('P(-x) = 3(-x)⁶ + 4(-x)⁵ + 3(-x)³ - (-x) - 3', 50, y + 205);
+                ctx.fillText('= 3x⁶ - 4x⁵ - 3x³ + x - 3', 80, y + 235);
+                
+                if (step >= 4) {
+                    // Color code the signs - only green on the last sign of each change
+                    ctx.font = 'bold 18px Arial';
+                    
+                    ctx.fillStyle = '#e0e0e0'; // normal color
+                    ctx.fillText('(+)', 100, y + 265);
+                    
+                    ctx.fillStyle = '#4caf50'; // green - marks the change
+                    ctx.fillText('(-)', 145, y + 265);
+                    
+                    ctx.fillStyle = '#e0e0e0'; // normal color
+                    ctx.fillText('(-)', 190, y + 265);
+                    
+                    ctx.fillStyle = '#4caf50'; // green - marks the change
+                    ctx.fillText('(+)', 235, y + 265);
+                    
+                    ctx.fillStyle = '#4caf50'; // green - marks the change
+                    ctx.fillText('(-)', 275, y + 265);
+                    
+                    ctx.fillStyle = '#ffd700';
+                    ctx.font = 'bold 16px Arial';
+                    ctx.fillText('← THREE sign changes (green marks)', 320, y + 265);
+                    
+                    ctx.fillStyle = '#f44336';
+                    ctx.font = 'bold 16px Arial';
+                    ctx.fillText('THREE sign changes', 50, y + 310);
+                    
+                    ctx.fillStyle = '#4caf50';
+                    ctx.font = 'bold 18px Arial';
+                    ctx.fillText('→ 3 or 1 negative real zeros', 50, y + 345);
+                    ctx.font = '14px Arial';
+                    ctx.fillText('(3 minus even numbers: 3 - 2 = 1)', 70, y + 370);
+                } else {
+                    ctx.font = '16px Arial';
+                    ctx.fillText('(+)   (-)   (-)  (+) (-)', 100, y + 265);
+                }
+            }
+            
+            if (step >= 4) {
+                ctx.fillStyle = '#ffd700';
+                ctx.font = 'bold 18px Arial';
+                ctx.fillText('Summary:', 250, y + 430);
+                
+                ctx.strokeStyle = '#4caf50';
+                ctx.lineWidth = 3;
+                ctx.strokeRect(200, y + 445, 400, 70);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('• 1 positive real zero', 220, y + 475);
+                ctx.fillText('• Either 3 or 1 negative real zeros', 220, y + 500);
+            }
+            
+            // Step indicator
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = '14px Arial';
+            const stepTexts = ['', 'Count sign changes in P(x) to find positive zeros', 'One sign change means exactly 1 positive zero', 'Substitute -x and count sign changes for negative zeros', 'Three sign changes means 3 or 1 negative zeros (subtract by 2)'];
+            if (step <= 4) {
+                ctx.fillText(stepTexts[step], 20, 640);
+            }
+        }
+        
+        function nextDescartesStep() {
+            if (descartesStep < 4) {
+                descartesStep++;
+                drawDescartes(descartesStep);
+                updateDescartesIndicator();
+            }
+        }
+        
+        function previousDescartesStep() {
+            if (descartesStep > 1) {
+                descartesStep--;
+                drawDescartes(descartesStep);
+                updateDescartesIndicator();
+            }
+        }
+        
+        function resetDescartes() {
+            descartesStep = 4;
+            drawDescartes(4);
+            updateDescartesIndicator();
+        }
+        
+        function updateDescartesIndicator() {
+            document.getElementById('descartesStepIndicator').textContent = `Step ${descartesStep} of 4`;
+        }
+        
+        // SECTION 3: Upper and Lower Bounds
+        const boundsCanvas = document.getElementById('boundsCanvas');
+        const boundsCtx = boundsCanvas.getContext('2d');
+        
+        function drawBounds(step) {
+            const ctx = boundsCtx;
+            ctx.clearRect(0, 0, 800, 700);
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('Find bounds for: P(x) = x⁴ - 3x² + 2x - 5', 20, 30);
+            
+            const y = 80;
+            
+            if (step >= 1) {
+                ctx.fillStyle = '#ffd700';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Finding Upper Bound: Try x = 2', 20, y);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Courier New';
+                
+                const startX = 200;
+                const y1 = y + 40;
+                const y2 = y + 100;
+                const y3 = y + 160;
+                const boxW = 70;
+                
+                ctx.fillText('2', startX - 60, y1);
+                ctx.fillText('|  1    0   -3    2   -5', startX - 50, y1);
+                
+                if (step >= 2) {
+                    ctx.fillText('|       2    4    2    8', startX - 50, y2);
+                    
+                    ctx.strokeStyle = '#e0e0e0';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(startX - 60, y3 - 20);
+                    ctx.lineTo(startX + 300, y3 - 20);
+                    ctx.stroke();
+                    
+                    ctx.fillStyle = '#4caf50';
+                    ctx.font = 'bold 18px Courier New';
+                    ctx.fillText('1    2    1    4    3', startX, y3);
+                    
+                    ctx.fillStyle = '#4caf50';
+                    ctx.font = 'bold 16px Arial';
+                    ctx.fillText('← All non-negative! ✓', startX + 180, y3);
+                    
+                    ctx.fillStyle = '#4caf50';
+                    ctx.font = 'bold 18px Arial';
+                    ctx.fillText('Upper bound = 2', 250, y3 + 50);
+                }
+            }
+            
+            if (step >= 3) {
+                ctx.fillStyle = '#ffd700';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Finding Lower Bound: Try x = -3', 20, y + 270);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Courier New';
+                
+                const startX = 200;
+                const y1 = y + 310;
+                const y2 = y + 370;
+                const y3 = y + 430;
+                
+                ctx.fillText('-3', startX - 65, y1);
+                ctx.fillText('|  1    0   -3    2   -5', startX - 50, y1);
+                
+                if (step >= 4) {
+                    ctx.fillText('|      -3    9  -18   48', startX - 50, y2);
+                    
+                    ctx.strokeStyle = '#e0e0e0';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(startX - 60, y3 - 20);
+                    ctx.lineTo(startX + 300, y3 - 20);
+                    ctx.stroke();
+                    
+                    ctx.fillStyle = '#f44336';
+                    ctx.font = 'bold 18px Courier New';
+                    ctx.fillText('1   -3    6  -16   43', startX, y3);
+                    
+                    ctx.fillStyle = '#f44336';
+                    ctx.font = '14px Arial';
+                    ctx.fillText('+   -   +   -   +', startX + 10, y3 + 25);
+                    ctx.fillText('Alternates! ✓', startX + 180, y3);
+                    
+                    ctx.fillStyle = '#f44336';
+                    ctx.font = 'bold 18px Arial';
+                    ctx.fillText('Lower bound = -3', 250, y3 + 60);
+                }
+            }
+            
+            if (step >= 5) {
+                ctx.strokeStyle = '#ffd700';
+                ctx.lineWidth = 4;
+                ctx.strokeRect(150, 630, 500, 50);
+                
+                ctx.fillStyle = '#ffd700';
+                ctx.font = 'bold 20px Arial';
+                ctx.fillText('All real zeros are between -3 and 2', 170, 660);
+            }
+            
+            // Step indicator
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = '14px Arial';
+            const stepTexts = ['', 'Test positive integers with synthetic division', 'All non-negative → upper bound found!', 'Test negative integers with synthetic division', 'Signs alternate → lower bound found!', 'Conclusion: All zeros must be in this range'];
+            ctx.fillText(stepTexts[step], 20, 695);
+        }
+        
+        function nextBoundsStep() {
+            if (boundsStep < 5) {
+                boundsStep++;
+                drawBounds(boundsStep);
+                updateBoundsIndicator();
+            }
+        }
+        
+        function previousBoundsStep() {
+            if (boundsStep > 1) {
+                boundsStep--;
+                drawBounds(boundsStep);
+                updateBoundsIndicator();
+            }
+        }
+        
+        function resetBounds() {
+            boundsStep = 5;
+            drawBounds(5);
+            updateBoundsIndicator();
+        }
+        
+        function updateBoundsIndicator() {
+            document.getElementById('boundsStepIndicator').textContent = `Step ${boundsStep} of 5`;
+        }
+        
+        // SECTION 4: Complete Strategy
+        const strategyCanvas = document.getElementById('strategyCanvas');
+        const strategyCtx = strategyCanvas.getContext('2d');
+        
+        function drawStrategy(step) {
+            const ctx = strategyCtx;
+            ctx.clearRect(0, 0, 800, 700);
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('Complete Strategy: P(x) = 2x⁴ - 3x³ - 11x² + 6x', 20, 30);
+            
+            const y = 70;
+            
+            if (step >= 1) {
+                ctx.fillStyle = '#ffd700';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 1: Factor out common term', 20, y);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = '18px Arial';
+                ctx.fillText('P(x) = x(2x³ - 3x² - 11x + 6)', 50, y + 30);
+                ctx.fillText('Zero found: x = 0', 50, y + 60);
+            }
+            
+            if (step >= 2) {
+                ctx.fillStyle = '#ffd700';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 2: Possible rational zeros of 2x³ - 3x² - 11x + 6', 20, y + 100);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('±1, ±2, ±3, ±6, ±1/2, ±3/2', 50, y + 130);
+            }
+            
+            if (step >= 3) {
+                ctx.fillStyle = '#ffd700';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 3: Test x = 3', 20, y + 170);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '14px Courier New';
+                ctx.fillText('3 | 2  -3  -11   6', 50, y + 200);
+                ctx.fillText('  |     6    9  -6', 50, y + 220);
+                ctx.fillText('  |_______________', 50, y + 240);
+                ctx.fillStyle = '#4caf50';
+                ctx.fillText('  2   3   -2   0  ✓', 50, y + 260);
+            }
+            
+            if (step >= 4) {
+                ctx.fillStyle = '#ffd700';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 4: Factor so far', 20, y + 300);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = '18px Arial';
+                ctx.fillText('P(x) = x(x - 3)(2x² + 3x - 2)', 50, y + 330);
+            }
+            
+            if (step >= 5) {
+                ctx.fillStyle = '#ffd700';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 5: Factor quadratic 2x² + 3x - 2', 20, y + 370);
+                
+                if (step >= 6) {
+                    ctx.fillStyle = '#4caf50';
+                    ctx.font = '18px Arial';
+                    ctx.fillText('= (2x - 1)(x + 2)', 50, y + 400);
+                }
+            }
+            
+            if (step >= 7) {
+                ctx.fillStyle = '#ffd700';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 6: Complete factorization', 20, y + 450);
+                
+                ctx.strokeStyle = '#4caf50';
+                ctx.lineWidth = 3;
+                ctx.strokeRect(50, y + 470, 700, 40);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 20px Arial';
+                ctx.fillText('P(x) = x(x - 3)(2x - 1)(x + 2)', 80, y + 497);
+            }
+            
+            if (step >= 8) {
+                ctx.fillStyle = '#ffd700';
+                ctx.font = 'bold 18px Arial';
+                ctx.fillText('All Zeros:', 250, y + 540);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 20px Arial';
+                ctx.fillText('x = 0, 3, 1/2, -2', 300, y + 570);
+            }
+            
+            // Step indicator
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = '14px Arial';
+            const stepTexts = ['', 'Always factor out common terms first!', 'List possible rational zeros using RZT', 'Test candidates with synthetic division', 'Write partial factorization', 'Work on the quotient (quadratic here)', 'Factor the quadratic', 'Complete factorization achieved!', 'List all zeros found'];
+            ctx.fillText(stepTexts[step], 20, 695);
+        }
+        
+        function nextStrategyStep() {
+            if (strategyStep < 8) {
+                strategyStep++;
+                drawStrategy(strategyStep);
+                updateStrategyIndicator();
+            }
+        }
+        
+        function previousStrategyStep() {
+            if (strategyStep > 1) {
+                strategyStep--;
+                drawStrategy(strategyStep);
+                updateStrategyIndicator();
+            }
+        }
+        
+        function resetStrategy() {
+            strategyStep = 8;
+            drawStrategy(8);
+            updateStrategyIndicator();
+        }
+        
+        function updateStrategyIndicator() {
+            document.getElementById('strategyStepIndicator').textContent = `Step ${strategyStep} of 8`;
+        }
+        
+        // Initialize all canvases
+        drawRationalZeros(1);
+        updateRationalIndicator();
+        drawDescartes(1);
+        updateDescartesIndicator();
+        drawBounds(1);
+        updateBoundsIndicator();
+        drawStrategy(1);
+        updateStrategyIndicator();
+    </script>
+</body>
+</html>

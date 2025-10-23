@@ -1,0 +1,1735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rational Functions - Visual Guide</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #0a1628 0%, #1a0f2e 100%);
+            color: #e0e0e0;
+        }
+        
+        .container {
+            background: #0f0f1e;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #00d4ff;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #b0b0b0;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #1a1a2e;
+            border-radius: 10px;
+            border-left: 5px solid #00d4ff;
+        }
+        
+        .section h2 {
+            color: #00d4ff;
+            margin-top: 0;
+        }
+        
+        canvas {
+            border: 2px solid #00d4ff;
+            border-radius: 8px;
+            display: block;
+            margin: 20px auto;
+            background: #0a0a15;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+        }
+        
+        .step-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .step {
+            background: #16213e;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #2a3a5a;
+        }
+        
+        .step h3 {
+            color: #4dd0e1;
+            margin-top: 0;
+            font-size: 1.1em;
+        }
+        
+        .step ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .step li {
+            margin: 8px 0;
+        }
+        
+        .formula {
+            background: #1a2a3a;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            margin: 10px 0;
+            text-align: center;
+            border: 1px dashed #00d4ff;
+            color: #e0e0e0;
+        }
+        
+        .key-point {
+            background: #1a2e3a;
+            border-left: 4px solid #4dd0e1;
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            color: #e0e0e0;
+        }
+        
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        button {
+            background: #00d4ff;
+            color: #0f0f1e;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background 0.3s;
+            font-weight: bold;
+        }
+        
+        button:hover {
+            background: #4dd0e1;
+        }
+        
+        .theorem-box {
+            background: #1e2a3a;
+            border: 3px solid #00d4ff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+        
+        .theorem-box h3 {
+            color: #4dd0e1;
+            margin-top: 0;
+            font-size: 1.4em;
+        }
+        
+        .warning-box {
+            background: #3a2e1e;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .comparison-table th {
+            background: #00d4ff;
+            color: #0f0f1e;
+            padding: 12px;
+            border: 1px solid #2a3a5a;
+            font-weight: bold;
+        }
+        
+        .comparison-table td {
+            padding: 12px;
+            border: 1px solid #2a3a5a;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background: #1a1a2e;
+        }
+        
+        .method-number {
+            display: inline-block;
+            background: #00d4ff;
+            color: #0f0f1e;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .asymptote-vertical {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        
+        .asymptote-horizontal {
+            color: #4caf50;
+            font-weight: bold;
+        }
+        
+        .hole {
+            color: #ff9800;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📐 Rational Functions</h1>
+        <p class="subtitle">Mastering Asymptotes, Holes, and Graph Behavior</p>
+        
+        <!-- WHY THIS MATTERS -->
+        <div class="section" style="border-left-color: #ff6b6b;">
+            <h2>🤔 Why Study Rational Functions?</h2>
+            
+            <div class="step-container">
+                <div class="step">
+                    <h3>❌ Without Understanding Asymptotes</h3>
+                    <p><strong>You're confused by:</strong></p>
+                    <ul>
+                        <li>Graphs that "blow up" to infinity</li>
+                        <li>Mysterious undefined points</li>
+                        <li>Why calculators show errors</li>
+                        <li>Weird graph behavior near certain x-values</li>
+                        <li>Functions that level off at infinity</li>
+                    </ul>
+                    <p style="color: #ff6b6b;">Graphs seem unpredictable!</p>
+                </div>
+                
+                <div class="step">
+                    <h3>✅ With Rational Function Mastery</h3>
+                    <p><strong>You can:</strong></p>
+                    <ul>
+                        <li>✓ Predict exactly where functions "blow up"</li>
+                        <li>✓ Find invisible boundary lines (asymptotes)</li>
+                        <li>✓ Sketch accurate graphs by hand</li>
+                        <li>✓ Understand end behavior instantly</li>
+                        <li>✓ Identify holes vs. asymptotes</li>
+                    </ul>
+                    <p style="color: #4caf50;">Complete graph control!</p>
+                </div>
+            </div>
+            
+            <div class="key-point">
+                <strong>💡 Real-World Everywhere:</strong> Drug dosage calculations (concentration = amount/volume), economics (average cost = total cost/quantity), physics (resistance = voltage/current), photography (focal length = 1/(1/u + 1/v)). Rational functions model any "per unit" relationship!
+            </div>
+            
+            <div class="key-point" style="background: #2e1a3a; border-left-color: #9d4edd;">
+                <strong>🎯 Bottom Line:</strong> Asymptotes are invisible fences that graphs can never cross (vertical) or approach at infinity (horizontal). Master these, and you master the graph!
+            </div>
+        </div>
+        
+        <!-- SECTION 1: What are Rational Functions? -->
+        <div class="section">
+            <h2>📊 Understanding Rational Functions</h2>
+            
+            <div class="theorem-box">
+                <h3>📐 Definition</h3>
+                <div class="formula" style="font-size: 1.3em;">
+                    r(x) = <span style="color: #4caf50; font-weight: bold;">P(x)</span> / <span style="color: #f44336; font-weight: bold;">Q(x)</span>
+                </div>
+                <p style="margin-top: 15px;"><strong>Where <span style="color: #4caf50;">P(x)</span> and <span style="color: #f44336;">Q(x)</span> are polynomials</strong></p>
+                <p style="text-align: center;"><strong>Domain:</strong> All real numbers EXCEPT where <span style="color: #f44336; font-weight: bold;">Q(x) = 0</span></p>
+            </div>
+            
+            <canvas id="basicCanvas" width="800" height="850"></canvas>
+            
+            <div class="key-point">
+                <strong>🎯 Key Insight:</strong> The denominator controls everything! Where it equals zero, the function either blows up (vertical asymptote) or has a hole. Understanding the denominator is the key to understanding rational functions!
+            </div>
+        </div>
+        
+        <!-- SECTION 2: Vertical Asymptotes -->
+        <div class="section">
+            <h2>📏 Method 1: Finding Vertical Asymptotes</h2>
+            <span class="method-number">The Blow-Up Finder</span>
+            
+            <div class="theorem-box">
+                <h3>🔴 Vertical Asymptotes</h3>
+                <p><strong>Definition:</strong> Vertical lines x = a where the function approaches ±∞</p>
+                <div class="formula">
+                    How to find: Set denominator = 0 and solve
+                </div>
+                <p style="margin-top: 15px; text-align: center;"><strong class="asymptote-vertical">The graph NEVER crosses a vertical asymptote!</strong></p>
+            </div>
+            
+            <p><strong>Example:</strong> Find vertical asymptotes of r(x) = (3x² - 2x - 1)/(2x² + 3x - 2)</p>
+            
+            <canvas id="verticalCanvas" width="800" height="1100"></canvas>
+            
+            <div class="controls">
+                <button onclick="previousVerticalStep()">⬅️ Previous Step</button>
+                <button onclick="nextVerticalStep()">Next Step ➡️</button>
+                <button onclick="resetVertical()">🔄 Reset to Complete</button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 10px;">
+                <span id="verticalStepIndicator" style="color: #4dd0e1; font-weight: bold; font-size: 1.1em;">Step 1 of 5</span>
+            </div>
+            
+            <div class="warning-box">
+                <strong>⚠️ Important:</strong> If a factor appears in BOTH numerator and denominator, it creates a HOLE, not an asymptote! (See Method 5)
+            </div>
+        </div>
+        
+        <!-- SECTION 3: Horizontal Asymptotes -->
+        <div class="section">
+            <h2>➡️ Method 2: Finding Horizontal Asymptotes</h2>
+            <span class="method-number">The End Behavior Guide</span>
+            
+            <div class="theorem-box">
+                <h3>🟢 Horizontal Asymptotes</h3>
+                <p><strong>Definition:</strong> Horizontal line y = b that the graph approaches as x → ±∞</p>
+                <div class="formula" style="text-align: left; padding: 20px;">
+                    <strong>Three Rules (compare degrees):</strong><br><br>
+                    1. If <span style="color: #4caf50; font-weight: bold;">n &lt; m</span>: &nbsp;&nbsp;<span style="color: #4caf50; font-weight: bold;">y = 0</span><br>
+                    &nbsp;&nbsp;&nbsp;(numerator degree less than denominator)<br><br>
+                    2. If <span style="color: #ff9800; font-weight: bold;">n = m</span>: &nbsp;&nbsp;<span style="color: #ff9800; font-weight: bold;">y = aₙ/bₘ</span><br>
+                    &nbsp;&nbsp;&nbsp;(ratio of leading coefficients)<br><br>
+                    3. If <span style="color: #f44336; font-weight: bold;">n &gt; m</span>: &nbsp;&nbsp;<span style="color: #f44336; font-weight: bold;">No horizontal asymptote</span><br>
+                    &nbsp;&nbsp;&nbsp;(may have slant asymptote)
+                </div>
+            </div>
+            
+            <p><strong>Example:</strong> Find horizontal asymptote of r(x) = (3x² - 2x - 1)/(2x² + 3x - 2)</p>
+            
+            <canvas id="horizontalCanvas" width="800" height="1100"></canvas>
+            
+            <div class="controls">
+                <button onclick="previousHorizontalStep()">⬅️ Previous Step</button>
+                <button onclick="nextHorizontalStep()">Next Step ➡️</button>
+                <button onclick="resetHorizontal()">🔄 Reset to Complete</button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 10px;">
+                <span id="horizontalStepIndicator" style="color: #4dd0e1; font-weight: bold; font-size: 1.1em;">Step 1 of 4</span>
+            </div>
+            
+            <div class="key-point">
+                <strong>💡 Unlike vertical asymptotes:</strong> Graphs CAN cross horizontal asymptotes! Horizontal asymptotes only describe behavior as x → ±∞, not behavior in the middle.
+            </div>
+        </div>
+        
+        <!-- SECTION 4: Complete Graphing -->
+        <div class="section">
+            <h2>🎨 Method 3: Complete Graph Sketching</h2>
+            <span class="method-number">The Master Sketcher</span>
+            
+            <p><strong>Example:</strong> Graph r(x) = (2x² + 7x - 4)/(x² + x - 2)</p>
+            
+            <canvas id="completeCanvas" width="800" height="1150"></canvas>
+            
+            <div class="controls">
+                <button onclick="previousCompleteStep()">⬅️ Previous Step</button>
+                <button onclick="nextCompleteStep()">Next Step ➡️</button>
+                <button onclick="resetComplete()">🔄 Reset to Complete</button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 10px;">
+                <span id="completeStepIndicator" style="color: #4dd0e1; font-weight: bold; font-size: 1.1em;">Step 1 of 8</span>
+            </div>
+            
+            <div class="theorem-box">
+                <h3>📋 Graphing Checklist</h3>
+                <ul style="line-height: 2;">
+                    <li>✓ Factor numerator and denominator</li>
+                    <li>✓ Find x-intercepts (zeros of numerator)</li>
+                    <li>✓ Find y-intercept (plug in x = 0)</li>
+                    <li>✓ Find vertical asymptotes (zeros of denominator)</li>
+                    <li>✓ Check behavior near vertical asymptotes</li>
+                    <li>✓ Find horizontal asymptote (compare degrees)</li>
+                    <li>✓ Plot additional points</li>
+                    <li>✓ Sketch the curve</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- SECTION 5: Holes -->
+        <div class="section">
+            <h2>🕳️ Method 4: Identifying Holes</h2>
+            <span class="method-number">The Hole Hunter</span>
+            
+            <div class="theorem-box">
+                <h3>🟠 Holes (Removable Discontinuities)</h3>
+                <p><strong>What they are:</strong> Points where the function is undefined but doesn't blow up</p>
+                <div class="formula">
+                    Occur when numerator and denominator<br>
+                    share a common factor
+                </div>
+                <p style="margin-top: 15px; text-align: center;"><strong class="hole">Cancel the common factor → Create a hole!</strong></p>
+            </div>
+            
+            <p><strong>Example:</strong> Graph s(x) = (x - 3)/(x² - 3x)</p>
+            
+            <canvas id="holesCanvas" width="800" height="1100"></canvas>
+            
+            <div class="controls">
+                <button onclick="previousHolesStep()">⬅️ Previous Step</button>
+                <button onclick="nextHolesStep()">Next Step ➡️</button>
+                <button onclick="resetHoles()">🔄 Reset to Complete</button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 10px;">
+                <span id="holesStepIndicator" style="color: #4dd0e1; font-weight: bold; font-size: 1.1em;">Step 1 of 5</span>
+            </div>
+            
+            <div class="warning-box">
+                <strong>⚠️ Hole vs. Asymptote:</strong>
+                <ul style="margin: 10px 0;">
+                    <li><strong><span style="color: #4caf50;">Common factor</span>:</strong> Creates a <span style="color: #ff9800; font-weight: bold;">HOLE 🕳️</span></li>
+                    <li><strong><span style="color: #f44336;">Factor only in denominator</span>:</strong> Creates <span style="color: #f44336; font-weight: bold;">VERTICAL ASYMPTOTE 📏</span></li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- SECTION 6: Slant Asymptotes -->
+        <div class="section">
+            <h2>📐 Method 5: Slant (Oblique) Asymptotes</h2>
+            <span class="method-number">The Diagonal Guide</span>
+            
+            <div class="theorem-box">
+                <h3>📊 Slant Asymptotes</h3>
+                <p><strong>When they occur:</strong> degree of numerator = <span style="color: #ff9800; font-weight: bold;">degree of denominator + 1</span></p>
+                <div class="formula">
+                    How to find: Use <span style="color: #4caf50;">polynomial long division</span><br>
+                    Slant asymptote = <span style="color: #ff9800; font-weight: bold;">quotient</span>
+                </div>
+            </div>
+            
+            <p><strong>Example:</strong> Find slant asymptote of r(x) = (x² - 4x - 5)/(x - 3)</p>
+            
+            <canvas id="slantCanvas" width="800" height="1100"></canvas>
+            
+            <div class="controls">
+                <button onclick="previousSlantStep()">⬅️ Previous Step</button>
+                <button onclick="nextSlantStep()">Next Step ➡️</button>
+                <button onclick="resetSlant()">🔄 Reset to Complete</button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 10px;">
+                <span id="slantStepIndicator" style="color: #4dd0e1; font-weight: bold; font-size: 1.1em;">Step 1 of 4</span>
+            </div>
+        </div>
+        
+        <!-- SECTION 7: Quick Reference -->
+        <div class="section">
+            <h2>📚 Quick Reference Guide</h2>
+            
+            <table class="comparison-table">
+                <tr>
+                    <th>Feature</th>
+                    <th>How to Find</th>
+                    <th>What It Means</th>
+                    <th>Can Graph Cross It?</th>
+                </tr>
+                <tr>
+                    <td><strong class="asymptote-vertical">Vertical Asymptote</strong></td>
+                    <td>Set denominator = 0<br>(no common factors)</td>
+                    <td>Function → ±∞</td>
+                    <td style="color: #f44336;"><strong>NO</strong></td>
+                </tr>
+                <tr>
+                    <td><strong class="asymptote-horizontal">Horizontal Asymptote</strong></td>
+                    <td>Compare degrees<br>Use 3 rules</td>
+                    <td>End behavior as x → ±∞</td>
+                    <td style="color: #4caf50;"><strong>YES</strong></td>
+                </tr>
+                <tr>
+                    <td><strong style="color: #ff9800;">Slant Asymptote</strong></td>
+                    <td>Long division<br>(when n = m + 1)</td>
+                    <td>Diagonal end behavior</td>
+                    <td style="color: #4caf50;"><strong>YES</strong></td>
+                </tr>
+                <tr>
+                    <td><strong class="hole">Hole</strong></td>
+                    <td>Common factors<br>cancel</td>
+                    <td>Single undefined point</td>
+                    <td style="color: #b0b0b0;">N/A</td>
+                </tr>
+            </table>
+            
+            <div class="theorem-box">
+                <h3>🎯 Horizontal Asymptote Quick Check</h3>
+                <table class="comparison-table" style="margin: 15px 0;">
+                    <tr>
+                        <th>Function</th>
+                        <th>Degrees (n vs m)</th>
+                        <th>Horizontal Asymptote</th>
+                    </tr>
+                    <tr>
+                        <td>1/x²</td>
+                        <td>0 < 2</td>
+                        <td>y = 0</td>
+                    </tr>
+                    <tr>
+                        <td>3x²/(2x² + 1)</td>
+                        <td>2 = 2</td>
+                        <td>y = 3/2</td>
+                    </tr>
+                    <tr>
+                        <td>x³/x²</td>
+                        <td>3 > 2</td>
+                        <td>None</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <!-- SECTION 8: Real Applications -->
+        <div class="section" style="border-left-color: #ff9800;">
+            <h2>🌍 When You'll Actually Use This</h2>
+            
+            <div class="step-container">
+                <div class="step">
+                    <h3>💊 Medicine: Drug Dosage</h3>
+                    <p><strong>Problem:</strong> Drug concentration over time</p>
+                    <p><strong>Formula:</strong></p>
+                    <div class="formula" style="font-size: 0.9em;">C(t) = (5t)/(t² + 1)</div>
+                    <p style="font-size: 0.9em;">Horizontal asymptote y = 0 tells us drug eventually leaves the system!</p>
+                </div>
+                
+                <div class="step">
+                    <h3>💰 Economics: Average Cost</h3>
+                    <p><strong>Problem:</strong> Cost per unit</p>
+                    <p><strong>Formula:</strong></p>
+                    <div class="formula" style="font-size: 0.9em;">AC(x) = (200 + 5x)/x</div>
+                    <p style="font-size: 0.9em;">Horizontal asymptote y = 5 is the long-run average cost!</p>
+                </div>
+                
+                <div class="step">
+                    <h3>⚡ Physics: Electrical Resistance</h3>
+                    <p><strong>Problem:</strong> Parallel resistors</p>
+                    <p><strong>Formula:</strong></p>
+                    <div class="formula" style="font-size: 0.9em;">R = (R₁R₂)/(R₁ + R₂)</div>
+                    <p style="font-size: 0.9em;">Vertical asymptotes show impossible configurations!</p>
+                </div>
+                
+                <div class="step">
+                    <h3>📸 Optics: Lens Formula</h3>
+                    <p><strong>Problem:</strong> Image distance</p>
+                    <p><strong>Formula:</strong></p>
+                    <div class="formula" style="font-size: 0.9em;">1/f = 1/u + 1/v</div>
+                    <p style="font-size: 0.9em;">Asymptotes define physical limits of focusing!</p>
+                </div>
+            </div>
+            
+            <div class="key-point">
+                <strong>⚡ The Pattern:</strong> Whenever you see "per unit" (cost per item, concentration per volume, speed per time), you're dealing with rational functions. Asymptotes tell you the limits and boundaries of real-world systems!
+            </div>
+        </div>
+        
+        <!-- SECTION 9: Common Mistakes -->
+        <div class="section">
+            <h2>⚠️ Common Mistakes to Avoid</h2>
+            
+            <div class="step-container">
+                <div class="step" style="border-color: #f44336;">
+                    <h3>❌ Mistake #1</h3>
+                    <p><strong>Thinking graphs can't cross horizontal asymptotes</strong></p>
+                    <p style="color: #ff6b6b;">They CAN! Only describes end behavior</p>
+                    <p style="color: #4caf50;">✓ Check middle values separately</p>
+                </div>
+                
+                <div class="step" style="border-color: #f44336;">
+                    <h3>❌ Mistake #2</h3>
+                    <p><strong>Missing holes</strong></p>
+                    <p style="color: #ff6b6b;">Forgetting to check for common factors</p>
+                    <p style="color: #4caf50;">✓ Always factor BOTH numerator and denominator</p>
+                </div>
+                
+                <div class="step" style="border-color: #f44336;">
+                    <h3>❌ Mistake #3</h3>
+                    <p><strong>Wrong horizontal asymptote rule</strong></p>
+                    <p style="color: #ff6b6b;">Using n < m rule when n = m</p>
+                    <p style="color: #4caf50;">✓ When n = m, use coefficient ratio!</p>
+                </div>
+                
+                <div class="step" style="border-color: #f44336;">
+                    <h3>❌ Mistake #4</h3>
+                    <p><strong>Setting numerator = 0 for domain</strong></p>
+                    <p style="color: #ff6b6b;">Domain restriction comes from denominator!</p>
+                    <p style="color: #4caf50;">✓ Set DENOMINATOR = 0 for restrictions</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Global state
+        let verticalStep = 1;
+        let horizontalStep = 1;
+        let completeStep = 1;
+        let holesStep = 1;
+        let slantStep = 1;
+        
+        // SECTION 1: Basic Rational Functions
+        const basicCanvas = document.getElementById('basicCanvas');
+        const basicCtx = basicCanvas.getContext('2d');
+        
+        function drawBasic() {
+            const ctx = basicCtx;
+            ctx.clearRect(0, 0, 800, 850);
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 20px Arial';
+            ctx.fillText('Anatomy of a Rational Function', 250, 40);
+            
+            // Draw the general form
+            ctx.fillStyle = '#4dd0e1';
+            ctx.font = 'bold 32px Arial';
+            ctx.fillText('r(x) =', 150, 120);
+            
+            // Fraction bar
+            ctx.strokeStyle = '#e0e0e0';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(280, 120);
+            ctx.lineTo(580, 120);
+            ctx.stroke();
+            
+            // Numerator
+            ctx.fillStyle = '#4caf50';
+            ctx.font = 'bold 28px Arial';
+            ctx.fillText('P(x)', 380, 100);
+            ctx.fillStyle = '#b0b0b0';
+            ctx.font = '16px Arial';
+            ctx.fillText('(Numerator polynomial)', 340, 75);
+            
+            // Denominator
+            ctx.fillStyle = '#ff6b6b';
+            ctx.font = 'bold 28px Arial';
+            ctx.fillText('Q(x)', 380, 155);
+            ctx.fillStyle = '#b0b0b0';
+            ctx.font = '16px Arial';
+            ctx.fillText('(Denominator polynomial)', 330, 180);
+            
+            // Examples
+            ctx.fillStyle = '#00d4ff';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('Common Examples:', 100, 250);
+            
+            const examples = [
+                {func: 'f(x) = 1/x', desc: 'Simple reciprocal', y: 300},
+                {func: 'g(x) = (x+2)/(x-3)', desc: 'Linear over linear', y: 360},
+                {func: 'h(x) = x²/(x²+1)', desc: 'Quadratic over quadratic', y: 420},
+                {func: 'k(x) = (x²-4)/(x²-9)', desc: 'Has holes or asymptotes?', y: 480}
+            ];
+            
+            examples.forEach(ex => {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 20px Courier New';
+                ctx.fillText(ex.func, 120, ex.y);
+                
+                ctx.fillStyle = '#b0b0b0';
+                ctx.font = '16px Arial';
+                ctx.fillText(ex.desc, 400, ex.y);
+            });
+            
+            // Domain note
+            ctx.strokeStyle = '#ff9800';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(100, 550, 600, 120);
+            
+            ctx.fillStyle = '#ff9800';
+            ctx.font = 'bold 20px Arial';
+            ctx.fillText('⚠️ CRITICAL RULE ⚠️', 280, 590);
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = '18px Arial';
+            ctx.fillText('Domain = All real numbers EXCEPT where Q(x) = 0', 140, 630);
+            ctx.font = '16px Arial';
+            ctx.fillText('(You cannot divide by zero!)', 280, 660);
+        }
+        
+        // SECTION 2: Vertical Asymptotes (Updated Graph)
+        const verticalCanvas = document.getElementById('verticalCanvas');
+        const verticalCtx = verticalCanvas.getContext('2d');
+        
+        function drawVertical(step) {
+            const ctx = verticalCtx;
+            ctx.clearRect(0, 0, 800, 1100);
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('Find vertical asymptotes: r(x) = (3x² - 2x - 1)/(2x² + 3x - 2)', 20, 30);
+            
+            const y = 80;
+            
+            if (step >= 1) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 1: Focus on the DENOMINATOR only', 20, y);
+                
+                ctx.strokeStyle = '#ff6b6b';
+                ctx.lineWidth = 3;
+                ctx.strokeRect(100, y + 20, 300, 60);
+                
+                ctx.fillStyle = '#ff6b6b';
+                ctx.font = 'bold 24px Arial';
+                ctx.fillText('2x² + 3x - 2', 130, y + 60);
+            }
+            
+            if (step >= 2) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 2: Factor the denominator', 20, y + 120);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '18px Arial';
+                ctx.fillText('2x² + 3x - 2 = (2x - 1)(x + 2)', 100, y + 160);
+            }
+            
+            if (step >= 3) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 3: Set each factor = 0', 20, y + 220);
+                
+                // First factor
+                ctx.strokeStyle = '#4caf50';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(100, y + 240, 250, 90);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '18px Arial';
+                ctx.fillText('Factor 1: 2x - 1 = 0', 120, y + 270);
+                ctx.fillText('2x = 1', 140, y + 300);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 20px Arial';
+                ctx.fillText('x = 1/2', 140, y + 325);
+            }
+            
+            if (step >= 4) {
+                // Second factor
+                ctx.strokeStyle = '#4caf50';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(400, y + 240, 250, 90);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '18px Arial';
+                ctx.fillText('Factor 2: x + 2 = 0', 420, y + 270);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 20px Arial';
+                ctx.fillText('x = -2', 440, y + 310);
+            }
+            
+            if (step >= 5) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 18px Arial';
+                ctx.fillText('Step 4: Vertical Asymptotes Found!', 20, y + 380);
+                
+                ctx.strokeStyle = '#ff6b6b';
+                ctx.lineWidth = 4;
+                ctx.strokeRect(150, y + 410, 500, 100);
+                
+                ctx.fillStyle = '#ff6b6b';
+                ctx.font = 'bold 28px Arial';
+                ctx.fillText('x = 1/2', 250, y + 460);
+                ctx.fillText('x = -2', 450, y + 460);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('(Vertical lines where function → ±∞)', 220, y + 495);
+                
+                // Draw coordinate graph
+                const graphY = y + 540;
+                const graphCenterX = 400;
+                const graphCenterY = graphY + 150;
+                const scale = 40;
+                
+                // Draw axes
+                ctx.strokeStyle = '#555';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(100, graphCenterY);
+                ctx.lineTo(700, graphCenterY);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(graphCenterX, graphY + 50);
+                ctx.lineTo(graphCenterX, graphY + 250);
+                ctx.stroke();
+                
+                // Draw vertical asymptotes
+                ctx.strokeStyle = '#ff6b6b';
+                ctx.lineWidth = 3;
+                ctx.setLineDash([10, 5]);
+                const asymptote1 = graphCenterX + 0.5 * scale;
+                const asymptote2 = graphCenterX - 2 * scale;
+                ctx.beginPath();
+                ctx.moveTo(asymptote1, graphY + 50);
+                ctx.lineTo(asymptote1, graphY + 250);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(asymptote2, graphY + 50);
+                ctx.lineTo(asymptote2, graphY + 250);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw function curves
+                ctx.strokeStyle = '#00d4ff';
+                ctx.lineWidth = 2.5;
+                
+                // Plot r(x) = (3x² - 2x - 1)/(2x² + 3x - 2)
+                // Factored: (3x + 1)(x - 1) / (2x - 1)(x + 2)
+                // Three regions: left of x=-2, between x=-2 and x=0.5, right of x=0.5
+                const regions = [
+                    {start: -5, end: -2.1},
+                    {start: -1.9, end: 0.4},
+                    {start: 0.6, end: 5}
+                ];
+                
+                regions.forEach(region => {
+                    ctx.beginPath();
+                    let started = false;
+                    for (let px = region.start; px <= region.end; px += 0.01) {
+                        const x = px;
+                        const y_val = (3*x*x - 2*x - 1)/(2*x*x + 3*x - 2);
+                        if (isFinite(y_val)) {
+                            const screenX = graphCenterX + x * scale;
+                            const screenY = graphCenterY - y_val * scale;
+                            // Clamp y values to reasonable bounds
+                            if (screenX >= 100 && screenX <= 700 && screenY >= graphY + 50 && screenY <= graphY + 250) {
+                                if (!started) {
+                                    ctx.moveTo(screenX, screenY);
+                                    started = true;
+                                } else {
+                                    ctx.lineTo(screenX, screenY);
+                                }
+                            } else if (started) {
+                                started = false;
+                            }
+                        }
+                    }
+                    ctx.stroke();
+                });
+                
+                // Labels
+                ctx.fillStyle = '#ff6b6b';
+                ctx.font = '14px Arial';
+                ctx.fillText('x = 1/2', asymptote1 - 25, graphY + 40);
+                ctx.fillText('x = -2', asymptote2 - 25, graphY + 40);
+            }
+            
+            // Step indicator
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = '14px Arial';
+            const stepTexts = ['', 'Isolate the denominator', 'Factor completely', 'Solve first factor for x', 'Solve second factor for x', 'These x-values are your vertical asymptotes!'];
+            ctx.fillText(stepTexts[step], 20, 1090);
+        }
+        
+        function nextVerticalStep() {
+            if (verticalStep < 5) {
+                verticalStep++;
+                drawVertical(verticalStep);
+                updateVerticalIndicator();
+            }
+        }
+        
+        function previousVerticalStep() {
+            if (verticalStep > 1) {
+                verticalStep--;
+                drawVertical(verticalStep);
+                updateVerticalIndicator();
+            }
+        }
+        
+        function resetVertical() {
+            verticalStep = 5;
+            drawVertical(5);
+            updateVerticalIndicator();
+        }
+        
+        function updateVerticalIndicator() {
+            document.getElementById('verticalStepIndicator').textContent = `Step ${verticalStep} of 5`;
+        }
+        
+        // SECTION 3: Horizontal Asymptotes
+        const horizontalCanvas = document.getElementById('horizontalCanvas');
+        const horizontalCtx = horizontalCanvas.getContext('2d');
+        
+        function drawHorizontal(step) {
+            const ctx = horizontalCtx;
+            ctx.clearRect(0, 0, 800, 1100);
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('Find horizontal asymptote: r(x) = (3x² - 2x - 1)/(2x² + 3x - 2)', 20, 30);
+            
+            const y = 80;
+            
+            if (step >= 1) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 1: Identify the degree of numerator and denominator', 20, y);
+                
+                // Numerator
+                ctx.strokeStyle = '#4caf50';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(100, y + 30, 280, 80);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 20px Arial';
+                ctx.fillText('Numerator: 3x² - 2x - 1', 120, y + 60);
+                ctx.font = 'bold 24px Arial';
+                ctx.fillText('Degree n = 2', 150, y + 95);
+                
+                // Denominator
+                ctx.strokeStyle = '#ff6b6b';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(420, y + 30, 280, 80);
+                
+                ctx.fillStyle = '#ff6b6b';
+                ctx.font = 'bold 20px Arial';
+                ctx.fillText('Denominator: 2x² + 3x - 2', 440, y + 60);
+                ctx.font = 'bold 24px Arial';
+                ctx.fillText('Degree m = 2', 470, y + 95);
+            }
+            
+            if (step >= 2) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 2: Compare degrees (n vs m)', 20, y + 170);
+                
+                ctx.strokeStyle = '#00d4ff';
+                ctx.lineWidth = 3;
+                ctx.strokeRect(200, y + 200, 400, 80);
+                
+                ctx.fillStyle = '#00d4ff';
+                ctx.font = 'bold 28px Arial';
+                ctx.fillText('n = 2  and  m = 2', 250, y + 235);
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 24px Arial';
+                ctx.fillText('n = m', 350, y + 270);
+            }
+            
+            if (step >= 3) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 3: Apply the rule for n = m', 20, y + 330);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '18px Arial';
+                ctx.fillText('When n = m, horizontal asymptote is:', 100, y + 370);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 24px Arial';
+                ctx.fillText('y = (leading coefficient of numerator)', 150, y + 410);
+                ctx.fillText('    (leading coefficient of denominator)', 150, y + 440);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '20px Arial';
+                ctx.fillText('y = 3/2', 320, y + 480);
+            }
+            
+            if (step >= 4) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 18px Arial';
+                ctx.fillText('Step 4: Horizontal Asymptote Found!', 20, y + 530);
+                
+                ctx.strokeStyle = '#4caf50';
+                ctx.lineWidth = 4;
+                ctx.strokeRect(200, y + 560, 400, 80);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 32px Arial';
+                ctx.fillText('y = 3/2 = 1.5', 280, y + 615);
+                
+                // Draw coordinate graph
+                const graphY = y + 670;
+                const graphCenterX = 400;
+                const graphCenterY = graphY + 100;
+                const scale = 30;
+                
+                // Draw axes
+                ctx.strokeStyle = '#555';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(100, graphCenterY);
+                ctx.lineTo(700, graphCenterY);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(graphCenterX, graphY);
+                ctx.lineTo(graphCenterX, graphY + 200);
+                ctx.stroke();
+                
+                // Draw horizontal asymptote
+                ctx.strokeStyle = '#4caf50';
+                ctx.lineWidth = 3;
+                ctx.setLineDash([10, 5]);
+                const asymptoteY = graphCenterY - 1.5 * scale;
+                ctx.beginPath();
+                ctx.moveTo(100, asymptoteY);
+                ctx.lineTo(700, asymptoteY);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw function - plot in separate regions to avoid asymptotes
+                ctx.strokeStyle = '#00d4ff';
+                ctx.lineWidth = 2.5;
+                
+                const hRegions = [
+                    {start: -8, end: -2.1},
+                    {start: -1.9, end: 0.4},
+                    {start: 0.6, end: 8}
+                ];
+                
+                hRegions.forEach(region => {
+                    ctx.beginPath();
+                    let started = false;
+                    for (let px = region.start; px <= region.end; px += 0.05) {
+                        const x = px;
+                        const y_val = (3*x*x - 2*x - 1)/(2*x*x + 3*x - 2);
+                        if (isFinite(y_val)) {
+                            const screenX = graphCenterX + x * scale;
+                            const screenY = graphCenterY - y_val * scale;
+                            if (screenX >= 100 && screenX <= 700 && screenY >= graphY && screenY <= graphY + 200) {
+                                if (!started) {
+                                    ctx.moveTo(screenX, screenY);
+                                    started = true;
+                                } else {
+                                    ctx.lineTo(screenX, screenY);
+                                }
+                            } else if (started) {
+                                started = false;
+                            }
+                        }
+                    }
+                    ctx.stroke();
+                });
+                
+                // Labels
+                ctx.fillStyle = '#4caf50';
+                ctx.font = '14px Arial';
+                ctx.fillText('y = 1.5', 60, asymptoteY + 5);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '12px Arial';
+                ctx.fillText('As x → ±∞, graph approaches y = 1.5', 260, graphY + 215);
+            }
+            
+            // Step indicator
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = '14px Arial';
+            const stepTexts = ['', 'Find degree of numerator and denominator', 'Compare the two degrees', 'Since n = m, use coefficient ratio rule', 'This is the horizontal asymptote!'];
+            ctx.fillText(stepTexts[step], 20, 1090);
+        }
+        
+        function nextHorizontalStep() {
+            if (horizontalStep < 4) {
+                horizontalStep++;
+                drawHorizontal(horizontalStep);
+                updateHorizontalIndicator();
+            }
+        }
+        
+        function previousHorizontalStep() {
+            if (horizontalStep > 1) {
+                horizontalStep--;
+                drawHorizontal(horizontalStep);
+                updateHorizontalIndicator();
+            }
+        }
+        
+        function resetHorizontal() {
+            horizontalStep = 4;
+            drawHorizontal(4);
+            updateHorizontalIndicator();
+        }
+        
+        function updateHorizontalIndicator() {
+            document.getElementById('horizontalStepIndicator').textContent = `Step ${horizontalStep} of 4`;
+        }
+        
+        // SECTION 4: Complete Graphing
+        const completeCanvas = document.getElementById('completeCanvas');
+        const completeCtx = completeCanvas.getContext('2d');
+        
+        function drawComplete(step) {
+            const ctx = completeCtx;
+            ctx.clearRect(0, 0, 800, 1150);
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('Graph: r(x) = (2x² + 7x - 4)/(x² + x - 2)', 20, 30);
+            
+            const y = 70;
+            
+            if (step >= 1) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 1: Factor', 20, y);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 18px Arial';
+                ctx.fillText('r(x) = (2x - 1)(x + 4) / (x - 1)(x + 2)', 50, y + 35);
+            }
+            
+            if (step >= 2) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 2: x-intercepts (numerator = 0)', 20, y + 85);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('2x - 1 = 0  →  x = 1/2', 50, y + 115);
+                ctx.fillText('x + 4 = 0  →  x = -4', 50, y + 140);
+            }
+            
+            if (step >= 3) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 3: y-intercept (plug in x = 0)', 20, y + 180);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('r(0) = (-4)/(-2) = 2', 50, y + 210);
+            }
+            
+            if (step >= 4) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 4: Vertical asymptotes (denominator = 0)', 20, y + 250);
+                
+                ctx.fillStyle = '#ff6b6b';
+                ctx.font = '18px Arial';
+                ctx.fillText('x = 1  and  x = -2', 50, y + 280);
+            }
+            
+            if (step >= 5) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 5: Horizontal asymptote (n = m)', 20, y + 320);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = '18px Arial';
+                ctx.fillText('y = 2/1 = 2', 50, y + 350);
+            }
+            
+            if (step >= 6) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 6: Summary of key features', 20, y + 395);
+                
+                ctx.strokeStyle = '#00d4ff';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(50, y + 415, 700, 140);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('• x-intercepts: x = 1/2, x = -4', 70, y + 445);
+                ctx.fillText('• y-intercept: y = 2', 70, y + 475);
+                
+                ctx.fillStyle = '#ff6b6b';
+                ctx.fillText('• Vertical asymptotes: x = 1, x = -2', 70, y + 505);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.fillText('• Horizontal asymptote: y = 2', 70, y + 535);
+            }
+            
+            if (step >= 7) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 7: Plot points and check behavior near asymptotes', 20, y + 590);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '14px Arial';
+                ctx.fillText('(Test values near x = -2 and x = 1)', 50, y + 620);
+            }
+            
+            if (step >= 8) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 8: Sketch the graph!', 20, y + 650);
+                
+                // Draw coordinate graph
+                const graphY = y + 680;
+                const graphCenterX = 400;
+                const graphCenterY = graphY + 120;
+                const scale = 35;
+                
+                // Draw axes
+                ctx.strokeStyle = '#555';
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.moveTo(100, graphCenterY);
+                ctx.lineTo(700, graphCenterY);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(graphCenterX, graphY);
+                ctx.lineTo(graphCenterX, graphY + 240);
+                ctx.stroke();
+                
+                // Draw vertical asymptotes
+                ctx.strokeStyle = '#ff6b6b';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([8, 4]);
+                const va1 = graphCenterX + 1 * scale; // x = 1
+                const va2 = graphCenterX - 2 * scale; // x = -2
+                ctx.beginPath();
+                ctx.moveTo(va1, graphY);
+                ctx.lineTo(va1, graphY + 240);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(va2, graphY);
+                ctx.lineTo(va2, graphY + 240);
+                ctx.stroke();
+                
+                // Draw horizontal asymptote
+                ctx.strokeStyle = '#4caf50';
+                const ha = graphCenterY - 2 * scale; // y = 2
+                ctx.beginPath();
+                ctx.moveTo(100, ha);
+                ctx.lineTo(700, ha);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw function r(x) = (2x² + 7x - 4)/(x² + x - 2)
+                ctx.strokeStyle = '#00d4ff';
+                ctx.lineWidth = 3;
+                
+                for (let region = 0; region < 3; region++) {
+                    ctx.beginPath();
+                    let started = false;
+                    for (let px = -6; px <= 4; px += 0.03) {
+                        if ((region === 0 && px < -2.1) || 
+                            (region === 1 && px > -1.9 && px < 0.9) ||
+                            (region === 2 && px > 1.1)) {
+                            const x = px;
+                            const y_val = (2*x*x + 7*x - 4)/(x*x + x - 2);
+                            if (Math.abs(y_val) < 10) {
+                                const screenX = graphCenterX + x * scale;
+                                const screenY = graphCenterY - y_val * scale;
+                                if (screenY >= graphY && screenY <= graphY + 240 && screenX >= 100 && screenX <= 700) {
+                                    if (!started) {
+                                        ctx.moveTo(screenX, screenY);
+                                        started = true;
+                                    } else {
+                                        ctx.lineTo(screenX, screenY);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    ctx.stroke();
+                }
+                
+                // Plot x-intercepts
+                ctx.fillStyle = '#4caf50';
+                ctx.beginPath();
+                ctx.arc(graphCenterX + 0.5 * scale, graphCenterY, 5, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(graphCenterX - 4 * scale, graphCenterY, 5, 0, 2 * Math.PI);
+                ctx.fill();
+                
+                // Plot y-intercept
+                ctx.fillStyle = '#ff9800';
+                ctx.beginPath();
+                ctx.arc(graphCenterX, graphCenterY - 2 * scale, 5, 0, 2 * Math.PI);
+                ctx.fill();
+                
+                // Labels
+                ctx.fillStyle = '#ff6b6b';
+                ctx.font = '11px Arial';
+                ctx.fillText('x=1', va1 - 10, graphY + 15);
+                ctx.fillText('x=-2', va2 - 15, graphY + 15);
+                ctx.fillStyle = '#4caf50';
+                ctx.fillText('y=2', 105, ha + 5);
+            }
+            
+            // Step indicator
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = '14px Arial';
+            const stepTexts = ['', 'Factor numerator and denominator', 'Find x-intercepts from numerator', 'Find y-intercept by plugging in 0', 'Find vertical asymptotes from denominator', 'Find horizontal asymptote by comparing degrees', 'Organize all the information', 'Check behavior near asymptotes', 'Now you can sketch an accurate graph!'];
+            ctx.fillText(stepTexts[step], 20, 1140);
+        }
+        
+        function nextCompleteStep() {
+            if (completeStep < 8) {
+                completeStep++;
+                drawComplete(completeStep);
+                updateCompleteIndicator();
+            }
+        }
+        
+        function previousCompleteStep() {
+            if (completeStep > 1) {
+                completeStep--;
+                drawComplete(completeStep);
+                updateCompleteIndicator();
+            }
+        }
+        
+        function resetComplete() {
+            completeStep = 8;
+            drawComplete(8);
+            updateCompleteIndicator();
+        }
+        
+        function updateCompleteIndicator() {
+            document.getElementById('completeStepIndicator').textContent = `Step ${completeStep} of 8`;
+        }
+        
+        // SECTION 5: Holes
+        const holesCanvas = document.getElementById('holesCanvas');
+        const holesCtx = holesCanvas.getContext('2d');
+        
+        function drawHoles(step) {
+            const ctx = holesCtx;
+            ctx.clearRect(0, 0, 800, 1100);
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('Graph with hole: s(x) = (x - 3)/(x² - 3x)', 20, 30);
+            
+            const y = 80;
+            
+            if (step >= 1) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 1: Factor numerator and denominator', 20, y);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '18px Arial';
+                ctx.fillText('Numerator: x - 3', 50, y + 40);
+                ctx.fillText('Denominator: x² - 3x = x(x - 3)', 50, y + 70);
+            }
+            
+            if (step >= 2) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 2: Identify common factor', 20, y + 130);
+                
+                ctx.strokeStyle = '#ff9800';
+                ctx.lineWidth = 3;
+                ctx.strokeRect(200, y + 160, 400, 80);
+                
+                ctx.fillStyle = '#ff9800';
+                ctx.font = 'bold 24px Arial';
+                ctx.fillText('Common factor: (x - 3)', 250, y + 215);
+            }
+            
+            if (step >= 3) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 3: Cancel common factor', 20, y + 280);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '20px Arial';
+                ctx.fillText('s(x) = (x - 3) / [x(x - 3)]', 150, y + 320);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 22px Arial';
+                ctx.fillText('= 1/x  for x ≠ 3', 250, y + 360);
+            }
+            
+            if (step >= 4) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 4: Identify the hole', 20, y + 420);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '18px Arial';
+                ctx.fillText('Function undefined at x = 3 (from canceled factor)', 50, y + 455);
+                ctx.fillText('To find y-coordinate of hole, plug x = 3 into simplified:', 50, y + 485);
+                
+                ctx.fillStyle = '#ff9800';
+                ctx.font = 'bold 20px Arial';
+                ctx.fillText('y = 1/3', 250, y + 520);
+                
+                ctx.fillStyle = '#ff9800';
+                ctx.font = 'bold 22px Arial';
+                ctx.fillText('Hole at (3, 1/3)', 280, y + 560);
+            }
+            
+            if (step >= 5) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 5: Graph y = 1/x with hole at (3, 1/3)', 20, y + 610);
+                
+                // Draw coordinate graph
+                const graphY = y + 640;
+                const graphCenterX = 400;
+                const graphCenterY = graphY + 120;
+                const scale = 40;
+                
+                // Draw axes
+                ctx.strokeStyle = '#555';
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.moveTo(100, graphCenterY);
+                ctx.lineTo(700, graphCenterY);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(graphCenterX, graphY);
+                ctx.lineTo(graphCenterX, graphY + 240);
+                ctx.stroke();
+                
+                // Draw vertical asymptote at x = 0
+                ctx.strokeStyle = '#ff6b6b';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([8, 4]);
+                ctx.beginPath();
+                ctx.moveTo(graphCenterX, graphY);
+                ctx.lineTo(graphCenterX, graphY + 240);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw function y = 1/x
+                ctx.strokeStyle = '#00d4ff';
+                ctx.lineWidth = 2.5;
+                
+                // Right side (x > 0)
+                ctx.beginPath();
+                let started = false;
+                for (let px = 0.3; px <= 6; px += 0.05) {
+                    const x = px;
+                    const y_val = 1 / x;
+                    const screenX = graphCenterX + x * scale;
+                    const screenY = graphCenterY - y_val * scale;
+                    if (screenY >= graphY && screenY <= graphY + 240 && screenX <= 700) {
+                        if (!started) {
+                            ctx.moveTo(screenX, screenY);
+                            started = true;
+                        } else {
+                            ctx.lineTo(screenX, screenY);
+                        }
+                    }
+                }
+                ctx.stroke();
+                
+                // Left side (x < 0)
+                ctx.beginPath();
+                started = false;
+                for (let px = -6; px <= -0.3; px += 0.05) {
+                    const x = px;
+                    const y_val = 1 / x;
+                    const screenX = graphCenterX + x * scale;
+                    const screenY = graphCenterY - y_val * scale;
+                    if (screenY >= graphY && screenY <= graphY + 240 && screenX >= 100) {
+                        if (!started) {
+                            ctx.moveTo(screenX, screenY);
+                            started = true;
+                        } else {
+                            ctx.lineTo(screenX, screenY);
+                        }
+                    }
+                }
+                ctx.stroke();
+                
+                // Draw hole at (3, 1/3)
+                const holeX = graphCenterX + 3 * scale;
+                const holeY = graphCenterY - (1/3) * scale;
+                ctx.strokeStyle = '#ff9800';
+                ctx.lineWidth = 4;
+                ctx.beginPath();
+                ctx.arc(holeX, holeY, 8, 0, 2 * Math.PI);
+                ctx.stroke();
+                
+                // Labels
+                ctx.fillStyle = '#ff9800';
+                ctx.font = '13px Arial';
+                ctx.fillText('Hole at (3, 1/3)', holeX + 15, holeY);
+                
+                ctx.fillStyle = '#ff6b6b';
+                ctx.font = '11px Arial';
+                ctx.fillText('x=0', graphCenterX + 5, graphY + 15);
+            }
+            
+            // Step indicator
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = '14px Arial';
+            const stepTexts = ['', 'Factor both parts completely', 'Look for common factors', 'Cancel the common factor', 'The canceled factor creates a hole', 'Graph with an open circle at the hole'];
+            ctx.fillText(stepTexts[step], 20, 1090);
+        }
+        
+        function nextHolesStep() {
+            if (holesStep < 5) {
+                holesStep++;
+                drawHoles(holesStep);
+                updateHolesIndicator();
+            }
+        }
+        
+        function previousHolesStep() {
+            if (holesStep > 1) {
+                holesStep--;
+                drawHoles(holesStep);
+                updateHolesIndicator();
+            }
+        }
+        
+        function resetHoles() {
+            holesStep = 5;
+            drawHoles(5);
+            updateHolesIndicator();
+        }
+        
+        function updateHolesIndicator() {
+            document.getElementById('holesStepIndicator').textContent = `Step ${holesStep} of 5`;
+        }
+        
+        // SECTION 6: Slant Asymptotes
+        const slantCanvas = document.getElementById('slantCanvas');
+        const slantCtx = slantCanvas.getContext('2d');
+        
+        function drawSlant(step) {
+            const ctx = slantCtx;
+            ctx.clearRect(0, 0, 800, 1100);
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('Find slant asymptote: r(x) = (x² - 4x - 5)/(x - 3)', 20, 30);
+            
+            const y = 80;
+            
+            if (step >= 1) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 1: Check degrees (n = 2, m = 1, so n = m + 1 ✓)', 20, y);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = '18px Arial';
+                ctx.fillText('Since n = m + 1, there IS a slant asymptote!', 50, y + 35);
+            }
+            
+            if (step >= 2) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 2: Perform polynomial long division', 20, y + 90);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '18px Courier New';
+                ctx.fillText('         x - 1', 200, y + 130);
+                ctx.fillText('      _____________', 150, y + 150);
+                ctx.fillText('x - 3 | x² - 4x - 5', 150, y + 170);
+                
+                if (step >= 3) {
+                    ctx.fillText('        x² - 3x', 150, y + 195);
+                    ctx.fillText('        ________', 150, y + 215);
+                    ctx.fillText('           -x - 5', 150, y + 235);
+                    ctx.fillText('           -x + 3', 150, y + 260);
+                    ctx.fillText('           ______', 150, y + 280);
+                    ctx.fillText('              -8', 150, y + 300);
+                    
+                    ctx.fillStyle = '#4caf50';
+                    ctx.font = 'bold 18px Arial';
+                    ctx.fillText('← Quotient', 420, y + 130);
+                    
+                    ctx.fillStyle = '#ff9800';
+                    ctx.fillText('← Remainder', 350, y + 300);
+                }
+            }
+            
+            if (step >= 3) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 3: Write result', 20, y + 360);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '20px Arial';
+                ctx.fillText('r(x) = (x - 1) + (-8)/(x - 3)', 150, y + 400);
+                
+                ctx.fillStyle = '#b0b0b0';
+                ctx.font = '14px Arial';
+                ctx.fillText('Quotient     Remainder/Divisor', 160, y + 425);
+            }
+            
+            if (step >= 4) {
+                ctx.fillStyle = '#4dd0e1';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText('Step 4: Slant asymptote is the quotient', 20, y + 470);
+                
+                ctx.strokeStyle = '#4caf50';
+                ctx.lineWidth = 4;
+                ctx.strokeRect(200, y + 500, 400, 80);
+                
+                ctx.fillStyle = '#4caf50';
+                ctx.font = 'bold 32px Arial';
+                ctx.fillText('y = x - 1', 300, y + 555);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = '16px Arial';
+                ctx.fillText('As |x| → ∞, the term -8/(x-3) → 0', 220, y + 610);
+                ctx.fillText('So the graph approaches the line y = x - 1', 200, y + 635);
+                
+                // Draw coordinate graph
+                const graphY = y + 670;
+                const graphCenterX = 400;
+                const graphCenterY = graphY + 100;
+                const scale = 25;
+                
+                // Draw axes
+                ctx.strokeStyle = '#555';
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.moveTo(100, graphCenterY);
+                ctx.lineTo(700, graphCenterY);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(graphCenterX, graphY);
+                ctx.lineTo(graphCenterX, graphY + 200);
+                ctx.stroke();
+                
+                // Draw slant asymptote y = x - 1
+                ctx.strokeStyle = '#4caf50';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([10, 5]);
+                ctx.beginPath();
+                for (let x = -8; x <= 8; x += 0.5) {
+                    const y_line = x - 1;
+                    const screenX = graphCenterX + x * scale;
+                    const screenY = graphCenterY - y_line * scale;
+                    if (x === -8) {
+                        ctx.moveTo(screenX, screenY);
+                    } else {
+                        ctx.lineTo(screenX, screenY);
+                    }
+                }
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw vertical asymptote at x = 3
+                ctx.strokeStyle = '#ff6b6b';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([8, 4]);
+                const va = graphCenterX + 3 * scale;
+                ctx.beginPath();
+                ctx.moveTo(va, graphY);
+                ctx.lineTo(va, graphY + 200);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw function r(x) = (x² - 4x - 5)/(x - 3)
+                ctx.strokeStyle = '#00d4ff';
+                ctx.lineWidth = 2.5;
+                
+                // Left of asymptote
+                ctx.beginPath();
+                let started = false;
+                for (let px = -5; px <= 2.9; px += 0.05) {
+                    const x = px;
+                    const y_val = (x*x - 4*x - 5)/(x - 3);
+                    if (Math.abs(y_val) < 10) {
+                        const screenX = graphCenterX + x * scale;
+                        const screenY = graphCenterY - y_val * scale;
+                        if (screenY >= graphY && screenY <= graphY + 200 && screenX >= 100) {
+                            if (!started) {
+                                ctx.moveTo(screenX, screenY);
+                                started = true;
+                            } else {
+                                ctx.lineTo(screenX, screenY);
+                            }
+                        }
+                    }
+                }
+                ctx.stroke();
+                
+                // Right of asymptote
+                ctx.beginPath();
+                started = false;
+                for (let px = 3.1; px <= 8; px += 0.05) {
+                    const x = px;
+                    const y_val = (x*x - 4*x - 5)/(x - 3);
+                    if (Math.abs(y_val) < 10) {
+                        const screenX = graphCenterX + x * scale;
+                        const screenY = graphCenterY - y_val * scale;
+                        if (screenY >= graphY && screenY <= graphY + 200 && screenX <= 700) {
+                            if (!started) {
+                                ctx.moveTo(screenX, screenY);
+                                started = true;
+                            } else {
+                                ctx.lineTo(screenX, screenY);
+                            }
+                        }
+                    }
+                }
+                ctx.stroke();
+                
+                // Labels
+                ctx.fillStyle = '#4caf50';
+                ctx.font = '12px Arial';
+                ctx.fillText('y = x - 1', 620, graphY + 80);
+                ctx.fillStyle = '#ff6b6b';
+                ctx.font = '11px Arial';
+                ctx.fillText('x=3', va - 10, graphY + 15);
+            }
+            
+            // Step indicator
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = '14px Arial';
+            const stepTexts = ['', 'Verify n = m + 1 for slant asymptote', 'Divide numerator by denominator', 'Complete the long division', 'The quotient is the slant asymptote equation'];
+            ctx.fillText(stepTexts[step], 20, 1090);
+        }
+        
+        function nextSlantStep() {
+            if (slantStep < 4) {
+                slantStep++;
+                drawSlant(slantStep);
+                updateSlantIndicator();
+            }
+        }
+        
+        function previousSlantStep() {
+            if (slantStep > 1) {
+                slantStep--;
+                drawSlant(slantStep);
+                updateSlantIndicator();
+            }
+        }
+        
+        function resetSlant() {
+            slantStep = 4;
+            drawSlant(4);
+            updateSlantIndicator();
+        }
+        
+        function updateSlantIndicator() {
+            document.getElementById('slantStepIndicator').textContent = `Step ${slantStep} of 4`;
+        }
+        
+        // Initialize all canvases
+        drawBasic();
+        drawVertical(1);
+        updateVerticalIndicator();
+        drawHorizontal(1);
+        updateHorizontalIndicator();
+        drawComplete(1);
+        updateCompleteIndicator();
+        drawHoles(1);
+        updateHolesIndicator();
+        drawSlant(1);
+        updateSlantIndicator();
+    </script>
+</body>
+</html>

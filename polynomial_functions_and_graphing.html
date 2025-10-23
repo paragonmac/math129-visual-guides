@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polynomial Functions Visual Guide</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e0e0e0;
+        }
+        
+        .container {
+            background: #0f0f1e;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #8b9eff;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #b0b0b0;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #1a1a2e;
+            border-radius: 10px;
+            border-left: 5px solid #8b9eff;
+        }
+        
+        .section h2 {
+            color: #8b9eff;
+            margin-top: 0;
+        }
+        
+        canvas {
+            border: 2px solid #8b9eff;
+            border-radius: 8px;
+            display: block;
+            margin: 20px auto;
+            background: #0a0a15;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        
+        .step-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .step {
+            background: #16213e;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #2a3a5a;
+        }
+        
+        .step h3 {
+            color: #a8b3ff;
+            margin-top: 0;
+            font-size: 1.1em;
+        }
+        
+        .step ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .step li {
+            margin: 8px 0;
+        }
+        
+        .formula {
+            background: #1e2a4a;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            margin: 10px 0;
+            text-align: center;
+            border: 1px dashed #8b9eff;
+            color: #e0e0e0;
+        }
+        
+        .highlight {
+            background: #4a4a2a;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+            color: #ffd54f;
+        }
+        
+        .key-point {
+            background: #1e3a2e;
+            border-left: 4px solid #4caf50;
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            color: #e0e0e0;
+        }
+        
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        button {
+            background: #8b9eff;
+            color: #0f0f1e;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background 0.3s;
+            font-weight: bold;
+        }
+        
+        button:hover {
+            background: #a8b3ff;
+        }
+        
+        .behavior-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .behavior-table th {
+            background: #8b9eff;
+            color: #0f0f1e;
+            padding: 12px;
+            border: 1px solid #2a3a5a;
+            font-weight: bold;
+        }
+        
+        .behavior-table td {
+            padding: 12px;
+            border: 1px solid #2a3a5a;
+            text-align: center;
+        }
+        
+        .behavior-table tr:nth-child(even) {
+            background: #16213e;
+        }
+        
+        .arrow-up {
+            color: #4caf50;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        
+        .arrow-down {
+            color: #f44336;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .multiplicity-box {
+            background: #1e2a4a;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #8b9eff;
+            text-align: center;
+        }
+        
+        .multiplicity-box h4 {
+            margin-top: 0;
+            color: #a8b3ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📈 Polynomial Functions: Visual Step-by-Step Guide</h1>
+        <p class="subtitle">Understanding graphs, zeros, and behavior</p>
+        
+        <!-- WHY THIS MATTERS -->
+        <div class="section" style="border-left-color: #ff6b6b;">
+            <h2>🤔 Why Do We Care About Polynomial Behavior?</h2>
+            
+            <div class="step-container">
+                <div class="step">
+                    <h3>❌ Without Understanding Polynomials</h3>
+                    <p><strong>You're stuck with:</strong></p>
+                    <ul>
+                        <li>Plotting dozens of points by hand</li>
+                        <li>Guessing where the graph goes</li>
+                        <li>No idea how many times it crosses the x-axis</li>
+                        <li>Can't predict the shape</li>
+                    </ul>
+                    <p style="color: #ff6b6b;">Hours of work for one graph!</p>
+                </div>
+                
+                <div class="step">
+                    <h3>✅ With Polynomial Analysis</h3>
+                    <p><strong>You can instantly know:</strong></p>
+                    <ul>
+                        <li>✓ Where it crosses the x-axis (zeros)</li>
+                        <li>✓ Does it cross or just touch? (multiplicity)</li>
+                        <li>✓ What happens at the edges? (end behavior)</li>
+                        <li>✓ Where are the peaks and valleys? (extrema)</li>
+                    </ul>
+                    <p style="color: #4caf50;">Sketch accurate graphs in seconds!</p>
+                </div>
+            </div>
+            
+            <div class="key-point">
+                <strong>💡 Real-World Impact:</strong> Engineers use polynomials to model everything from roller coasters to rocket trajectories. Business analysts use them for profit projections. Knowing the behavior means knowing where things peak, crash, or break even—without testing every single point!
+            </div>
+            
+            <div class="key-point" style="background: #2e1a3a; border-left-color: #9c27b0;">
+                <strong>🎯 Bottom Line:</strong> Understanding polynomial behavior is like having X-ray vision for graphs. You see through the equation to instantly know what the graph looks like—that's the power we're unlocking here!
+            </div>
+        </div>
+        
+        <!-- SECTION 1: End Behavior -->
+        <div class="section">
+            <h2>🎢 Section 1: End Behavior - What Happens at the Edges?</h2>
+            
+            <p><strong>Key Insight:</strong> Only the <span class="highlight">leading term</span> (highest degree) matters for end behavior!</p>
+            
+            <div class="formula">P(x) = <span style="color: #4caf50; font-weight: bold;">-2x⁴</span> + 5x³ + 4x - 7</div>
+            <p style="text-align: center;">We only care about <span style="color: #4caf50; font-weight: bold;">-2x⁴</span> for end behavior!</p>
+            
+            <canvas id="endBehaviorCanvas" width="800" height="500"></canvas>
+            
+            <div class="controls">
+                <button onclick="showEvenPositive()">Even Degree, + Leading</button>
+                <button onclick="showEvenNegative()">Even Degree, - Leading</button>
+                <button onclick="showOddPositive()">Odd Degree, + Leading</button>
+                <button onclick="showOddNegative()">Odd Degree, - Leading</button>
+            </div>
+            
+            <table class="behavior-table">
+                <tr>
+                    <th>Degree</th>
+                    <th>Leading Coefficient</th>
+                    <th>Left End (x → -∞)</th>
+                    <th>Right End (x → ∞)</th>
+                    <th>Visual</th>
+                </tr>
+                <tr>
+                    <td><strong>EVEN</strong></td>
+                    <td>Positive (+)</td>
+                    <td><span class="arrow-up">↑ UP</span></td>
+                    <td><span class="arrow-up">↑ UP</span></td>
+                    <td>Both ends rise (smile)</td>
+                </tr>
+                <tr>
+                    <td><strong>EVEN</strong></td>
+                    <td>Negative (-)</td>
+                    <td><span class="arrow-down">↓ DOWN</span></td>
+                    <td><span class="arrow-down">↓ DOWN</span></td>
+                    <td>Both ends fall (frown)</td>
+                </tr>
+                <tr>
+                    <td><strong>ODD</strong></td>
+                    <td>Positive (+)</td>
+                    <td><span class="arrow-down">↓ DOWN</span></td>
+                    <td><span class="arrow-up">↑ UP</span></td>
+                    <td>Left falls, right rises</td>
+                </tr>
+                <tr>
+                    <td><strong>ODD</strong></td>
+                    <td>Negative (-)</td>
+                    <td><span class="arrow-up">↑ UP</span></td>
+                    <td><span class="arrow-down">↓ DOWN</span></td>
+                    <td>Left rises, right falls</td>
+                </tr>
+            </table>
+            
+            <div class="key-point">
+                <strong>🎯 Memory Trick:</strong> EVEN degree = EVEN behavior (both ends same). ODD degree = OPPOSITE ends. Leading coefficient tells you UP (+) or DOWN (-).
+            </div>
+        </div>
+        
+        <!-- SECTION 2: Finding Zeros -->
+        <div class="section">
+            <h2>🎯 Section 2: Finding Zeros (X-Intercepts)</h2>
+            
+            <p><strong>Zeros = Roots = X-intercepts = Solutions to P(x) = 0</strong></p>
+            
+            <div class="formula">P(x) = x³ - 2x² - 3x</div>
+            
+            <div class="step">
+                <h3>Step-by-Step Factoring:</h3>
+                <div class="formula">P(x) = x³ - 2x² - 3x</div>
+                <p>1. Factor out GCF:</p>
+                <div class="formula">P(x) = <span style="color: #4caf50;">x</span>(x² - 2x - 3)</div>
+                <p>2. Factor the quadratic:</p>
+                <div class="formula">P(x) = <span style="color: #4caf50;">x</span>(<span style="color: #ff9800;">x - 3</span>)(<span style="color: #4cc9f0;">x + 1</span>)</div>
+                <p>3. Set each factor = 0:</p>
+                <div class="formula"><span style="color: #4caf50;">x = 0</span>  OR  <span style="color: #ff9800;">x = 3</span>  OR  <span style="color: #4cc9f0;">x = -1</span></div>
+                <p><strong>Zeros:</strong> <span style="color: #4cc9f0; font-weight: bold;">x = -1</span>, <span style="color: #4caf50; font-weight: bold;">0</span>, <span style="color: #ff9800; font-weight: bold;">3</span></p>
+            </div>
+            
+            <canvas id="zerosCanvas" width="800" height="500"></canvas>
+            
+            <div class="key-point">
+                <strong>⚡ Key Connection:</strong> If (x - c) is a factor, then c is a zero. If c is a zero, then (x - c) is a factor. They're two sides of the same coin!
+            </div>
+        </div>
+        
+        <!-- SECTION 3: Multiplicity -->
+        <div class="section">
+            <h2>🔄 Section 3: Multiplicity - Does It Cross or Bounce?</h2>
+            
+            <p><strong>Multiplicity = How many times a factor appears</strong></p>
+            
+            <div class="formula">P(x) = <span style="color: #4caf50;">x²</span><span style="color: #ff9800;">(x - 2)³</span><span style="color: #4cc9f0;">(x + 1)²</span></div>
+            
+            <div class="grid-4">
+                <div class="multiplicity-box">
+                    <h4>x = 0</h4>
+                    <p>Factor: <span style="color: #4caf50; font-weight: bold;">x²</span></p>
+                    <p><strong>Multiplicity: <span style="color: #ff9800;">2</span> (EVEN)</strong></p>
+                    <p style="color: #ff9800;">🔴 TOUCHES & BOUNCES</p>
+                </div>
+                
+                <div class="multiplicity-box">
+                    <h4>x = 2</h4>
+                    <p>Factor: <span style="color: #ff9800; font-weight: bold;">(x - 2)³</span></p>
+                    <p><strong>Multiplicity: <span style="color: #4caf50;">3</span> (ODD)</strong></p>
+                    <p style="color: #4caf50;">✅ CROSSES THROUGH</p>
+                </div>
+                
+                <div class="multiplicity-box">
+                    <h4>x = -1</h4>
+                    <p>Factor: <span style="color: #4cc9f0; font-weight: bold;">(x + 1)²</span></p>
+                    <p><strong>Multiplicity: <span style="color: #ff9800;">2</span> (EVEN)</strong></p>
+                    <p style="color: #ff9800;">🔴 TOUCHES & BOUNCES</p>
+                </div>
+                
+                <div class="multiplicity-box" style="background: #1e3a2e; border-color: #4caf50;">
+                    <h4>Quick Rule</h4>
+                    <p><strong>ODD:</strong> Cross through</p>
+                    <p><strong>EVEN:</strong> Touch & bounce</p>
+                    <p style="font-size: 0.9em; margin-top: 10px;">Higher multiplicity = flatter behavior</p>
+                </div>
+            </div>
+            
+            <canvas id="multiplicityCanvas" width="800" height="500"></canvas>
+            
+            <div class="controls">
+                <button onclick="showMultiplicity(1)">Multiplicity 1 (Cross)</button>
+                <button onclick="showMultiplicity(2)">Multiplicity 2 (Touch)</button>
+                <button onclick="showMultiplicity(3)">Multiplicity 3 (Flat Cross)</button>
+                <button onclick="showMultiplicity(4)">Multiplicity 4 (Flat Touch)</button>
+            </div>
+            
+            <div class="key-point">
+                <strong>💡 Why This Matters:</strong> Imagine a ball thrown in the air. A zero with even multiplicity is like the ball bouncing—it touches the ground and goes back up. Odd multiplicity is like the ball going through the ground to the other side (in math world!).
+            </div>
+        </div>
+        
+        <!-- SECTION 4: Complete Graph Sketch -->
+        <div class="section">
+            <h2>🎨 Section 4: Putting It All Together - Sketching Graphs</h2>
+            
+            <p><strong>Example:</strong> Sketch P(x) = x(x - 3)(x + 1)</p>
+            
+            <div class="step-container">
+                <div class="step">
+                    <h3>Step 1: Find Zeros</h3>
+                    <p>Already factored!</p>
+                    <div class="formula">x = -1, 0, 3</div>
+                </div>
+                
+                <div class="step">
+                    <h3>Step 2: Multiplicity</h3>
+                    <p>All factors to the 1st power</p>
+                    <p><strong>All ODD → all CROSS</strong></p>
+                </div>
+                
+                <div class="step">
+                    <h3>Step 3: Y-Intercept</h3>
+                    <p>P(0) = 0(0-3)(0+1) = 0</p>
+                    <div class="formula">y-int: (0, 0)</div>
+                </div>
+                
+                <div class="step">
+                    <h3>Step 4: End Behavior</h3>
+                    <p>Degree: 3 (ODD)</p>
+                    <p>Leading coeff: +1 (POSITIVE)</p>
+                    <p><strong>Left ↓, Right ↑</strong></p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <h3>Step 5: Sign Chart (Where is the graph above/below x-axis?)</h3>
+                <canvas id="signChartCanvas" width="800" height="200"></canvas>
+            </div>
+            
+            <canvas id="completeSketchCanvas" width="800" height="500"></canvas>
+            
+            <div class="controls">
+                <button onclick="previousStep()">⬅️ Previous Step</button>
+                <button onclick="nextStep()">Next Step ➡️</button>
+                <button onclick="resetSketch()">🔄 Reset to Complete</button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 10px;">
+                <span id="stepIndicator" style="color: #8b9eff; font-weight: bold; font-size: 1.1em;">Step 5 of 5</span>
+            </div>
+            
+            <div class="key-point">
+                <strong>🎯 The Process:</strong> Zeros tell you WHERE the graph crosses. Multiplicity tells you HOW it crosses. End behavior tells you what happens at the edges. Sign chart fills in the gaps. Put it together = perfect sketch!
+            </div>
+        </div>
+        
+        <!-- SECTION 5: Local Extrema -->
+        <div class="section">
+            <h2>⛰️ Section 5: Local Extrema (Peaks and Valleys)</h2>
+            
+            <div class="formula">P(x) = x⁴ - 5x² + 4</div>
+            
+            <div class="step-container">
+                <div class="step">
+                    <h3>🔢 The Rule</h3>
+                    <p>A polynomial of degree <span style="color: #4caf50; font-weight: bold;">n</span> has</p>
+                    <div class="formula">AT MOST <span style="color: #ff9800; font-weight: bold;">(n - 1)</span> extrema</div>
+                    <p>For degree <span style="color: #4caf50; font-weight: bold;">4</span>:</p>
+                    <p><strong>Maximum: <span style="color: #ff9800;">4 - 1 = 3</span> extrema</strong></p>
+                    <p style="font-size: 0.9em; color: #b0b0b0;">Could have 3, 2, 1, or even 0!</p>
+                </div>
+                
+                <div class="step">
+                    <h3>📊 What They Mean</h3>
+                    <p><strong>Local Maximum:</strong> A "hilltop"</p>
+                    <p>Highest point in a region</p>
+                    <p style="margin-top: 15px;"><strong>Local Minimum:</strong> A "valley"</p>
+                    <p>Lowest point in a region</p>
+                </div>
+            </div>
+            
+            <canvas id="extremaCanvas" width="800" height="500"></canvas>
+            
+            <div class="key-point">
+                <strong>💼 Real Application:</strong> In business, local maxima show peak profits at certain production levels. Local minima show cost bottlenecks. Knowing where these occur helps companies make smart decisions without testing every single value!
+            </div>
+        </div>
+        
+        <!-- SECTION 6: Intermediate Value Theorem -->
+        <div class="section">
+            <h2>🎲 Section 6: Intermediate Value Theorem (IVT)</h2>
+            
+            <p><strong>The Theorem:</strong> If P(a) and P(b) have opposite signs, there's at least one zero between a and b</p>
+            
+            <div class="formula">P(x) = x³ - 2x - 5</div>
+            
+            <div class="step-container">
+                <div class="step">
+                    <h3>Check <span style="color: #4cc9f0;">x = 2</span></h3>
+                    <p>P(2) = 2³ - 2(2) - 5</p>
+                    <p>P(2) = 8 - 4 - 5</p>
+                    <div class="formula" style="background: #3a1e1e; border-color: #f44336;">P(2) = <span style="color: #f44336; font-weight: bold;">-1</span> (NEGATIVE)</div>
+                </div>
+                
+                <div class="step">
+                    <h3>Check <span style="color: #ff9800;">x = 3</span></h3>
+                    <p>P(3) = 3³ - 2(3) - 5</p>
+                    <p>P(3) = 27 - 6 - 5</p>
+                    <div class="formula" style="background: #1e3a2e; border-color: #4caf50;">P(3) = <span style="color: #4caf50; font-weight: bold;">16</span> (POSITIVE)</div>
+                </div>
+            </div>
+            
+            <canvas id="ivtCanvas" width="800" height="500"></canvas>
+            
+            <div class="key-point">
+                <strong>✅ Conclusion:</strong> Since P(2) is negative and P(3) is positive, the graph must cross the x-axis somewhere between x = 2 and x = 3. Therefore, <strong>there exists at least one zero in the interval (2, 3)</strong>.
+            </div>
+            
+            <div class="key-point" style="background: #2e1a3a; border-left-color: #9c27b0;">
+                <strong>🤔 Why "At Least One"?</strong> The theorem guarantees AT LEAST one zero, but there could be more! If the graph crosses back and forth multiple times, you might have 3, 5, or more zeros in that interval—but you're guaranteed at least 1.
+            </div>
+        </div>
+        
+        <!-- SECTION 7: Real Applications -->
+        <div class="section" style="border-left-color: #ff9800;">
+            <h2>🌍 When You'll Actually Use This</h2>
+            
+            <div class="step-container">
+                <div class="step">
+                    <h3>🎢 Engineering: Roller Coaster Design</h3>
+                    <p><strong>Problem:</strong> Design a smooth track section</p>
+                    <div class="formula">h(x) = -0.001x³ + 0.1x²</div>
+                    <p><strong>Need to know:</strong></p>
+                    <ul>
+                        <li>Where does it touch the ground? (zeros)</li>
+                        <li>What's the highest point? (local max)</li>
+                        <li>Does it ever dip below ground? (sign analysis)</li>
+                    </ul>
+                </div>
+                
+                <div class="step">
+                    <h3>📈 Economics: Market Analysis</h3>
+                    <p><strong>Problem:</strong> Predict market cycles</p>
+                    <div class="formula">M(t) = t⁴ - 8t³ + 18t²</div>
+                    <p><strong>Need to know:</strong></p>
+                    <ul>
+                        <li>When does the market crash? (zeros)</li>
+                        <li>Peak boom times? (local maxima)</li>
+                        <li>Long-term trend? (end behavior)</li>
+                    </ul>
+                </div>
+                
+                <div class="step">
+                    <h3>🚀 Physics: Projectile Motion</h3>
+                    <p><strong>Problem:</strong> Track a rocket's altitude</p>
+                    <div class="formula">h(t) = -16t³ + 120t²</div>
+                    <p><strong>Need to know:</strong></p>
+                    <ul>
+                        <li>When does it hit the ground? (zeros)</li>
+                        <li>Maximum altitude? (local max)</li>
+                        <li>Is it coming down at t = 10? (sign chart)</li>
+                    </ul>
+                </div>
+                
+                <div class="step">
+                    <h3>💊 Medicine: Drug Concentration</h3>
+                    <p><strong>Problem:</strong> Drug levels in bloodstream</p>
+                    <div class="formula">C(t) = t³ - 6t² + 9t</div>
+                    <p><strong>Need to know:</strong></p>
+                    <ul>
+                        <li>When is drug eliminated? (zeros)</li>
+                        <li>Peak concentration? (local max)</li>
+                        <li>Safe therapeutic window? (intervals)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="key-point">
+                <strong>⚡ The Pattern:</strong> Polynomials model anything that grows, peaks, and falls—or oscillates through cycles. Understanding their behavior means predicting real-world outcomes without expensive experiments!
+            </div>
+        </div>
+        
+        <!-- SECTION 8: Quick Reference -->
+        <div class="section">
+            <h2>📋 Quick Reference Flowchart</h2>
+            
+            <div class="step">
+                <h3>To Sketch a Polynomial Graph:</h3>
+                <ol style="line-height: 2;">
+                    <li><strong>Factor</strong> → Find all zeros</li>
+                    <li><strong>Check exponents</strong> → Determine multiplicity (cross or touch?)</li>
+                    <li><strong>Calculate P(0)</strong> → Find y-intercept</li>
+                    <li><strong>Make sign chart</strong> → Test intervals between zeros</li>
+                    <li><strong>Check leading term</strong> → Determine end behavior</li>
+                    <li><strong>Plot & sketch</strong> → Connect the dots smoothly!</li>
+                </ol>
+            </div>
+            
+            <table class="behavior-table" style="margin-top: 20px;">
+                <tr>
+                    <th>If you need to...</th>
+                    <th>Look at...</th>
+                    <th>Why?</th>
+                </tr>
+                <tr>
+                    <td>Find x-intercepts</td>
+                    <td>Zeros (solve P(x) = 0)</td>
+                    <td>Where graph crosses/touches x-axis</td>
+                </tr>
+                <tr>
+                    <td>Know cross vs. touch</td>
+                    <td>Multiplicity</td>
+                    <td>Odd = cross, Even = touch</td>
+                </tr>
+                <tr>
+                    <td>Predict edges</td>
+                    <td>Leading term (degree & coefficient)</td>
+                    <td>Determines long-run behavior</td>
+                </tr>
+                <tr>
+                    <td>Count turning points</td>
+                    <td>Degree - 1</td>
+                    <td>Maximum possible extrema</td>
+                </tr>
+                <tr>
+                    <td>Prove a zero exists</td>
+                    <td>Intermediate Value Theorem</td>
+                    <td>Sign change = crossing</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+    <script>
+        // Global state for animations
+        let currentBehaviorType = 'evenPositive';
+        let currentMultiplicity = 1;
+        let sketchStep = 1;
+        
+        // SECTION 1: End Behavior
+        const endCanvas = document.getElementById('endBehaviorCanvas');
+        const endCtx = endCanvas.getContext('2d');
+        
+        function showEvenPositive() {
+            currentBehaviorType = 'evenPositive';
+            drawEndBehavior();
+        }
+        
+        function showEvenNegative() {
+            currentBehaviorType = 'evenNegative';
+            drawEndBehavior();
+        }
+        
+        function showOddPositive() {
+            currentBehaviorType = 'oddPositive';
+            drawEndBehavior();
+        }
+        
+        function showOddNegative() {
+            currentBehaviorType = 'oddNegative';
+            drawEndBehavior();
+        }
+        
+        function drawEndBehavior() {
+            const ctx = endCtx;
+            ctx.clearRect(0, 0, 800, 500);
+            
+            drawGrid(ctx, 800, 500);
+            
+            ctx.strokeStyle = '#8b9eff';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            
+            for (let x = 0; x <= 800; x += 1) {
+                const graphX = (x - 400) / 80;
+                let y;
+                
+                switch(currentBehaviorType) {
+                    case 'evenPositive':
+                        y = 0.2 * graphX * graphX * graphX * graphX - 2;
+                        ctx.fillStyle = '#e0e0e0';
+                        ctx.font = 'bold 18px Arial';
+                        ctx.fillText('f(x) = x⁴ (Even degree, positive leading)', 20, 30);
+                        ctx.fillText('Both ends UP ↑', 20, 55);
+                        break;
+                    case 'evenNegative':
+                        y = -0.2 * graphX * graphX * graphX * graphX + 2;
+                        ctx.fillStyle = '#e0e0e0';
+                        ctx.font = 'bold 18px Arial';
+                        ctx.fillText('f(x) = -x⁴ (Even degree, negative leading)', 20, 30);
+                        ctx.fillText('Both ends DOWN ↓', 20, 55);
+                        break;
+                    case 'oddPositive':
+                        y = 0.05 * graphX * graphX * graphX;
+                        ctx.fillStyle = '#e0e0e0';
+                        ctx.font = 'bold 18px Arial';
+                        ctx.fillText('f(x) = x³ (Odd degree, positive leading)', 20, 30);
+                        ctx.fillText('Left DOWN ↓, Right UP ↑', 20, 55);
+                        break;
+                    case 'oddNegative':
+                        y = -0.05 * graphX * graphX * graphX;
+                        ctx.fillStyle = '#e0e0e0';
+                        ctx.font = 'bold 18px Arial';
+                        ctx.fillText('f(x) = -x³ (Odd degree, negative leading)', 20, 30);
+                        ctx.fillText('Left UP ↑, Right DOWN ↓', 20, 55);
+                        break;
+                }
+                
+                const canvasY = 250 - y * 40;
+                
+                if (x === 0) {
+                    ctx.moveTo(x, canvasY);
+                } else {
+                    ctx.lineTo(x, canvasY);
+                }
+            }
+            ctx.stroke();
+            
+            // Draw arrows at ends
+            drawArrow(ctx, 50, currentBehaviorType.includes('Positive') ? 
+                     (currentBehaviorType === 'evenPositive' ? 100 : 400) : 
+                     (currentBehaviorType === 'evenNegative' ? 400 : 100), '#4caf50');
+            drawArrow(ctx, 750, currentBehaviorType.includes('Positive') ? 
+                     (currentBehaviorType === 'oddPositive' ? 100 : 400) : 
+                     (currentBehaviorType === 'oddNegative' ? 400 : 100), '#4caf50');
+        }
+        
+        // SECTION 2: Zeros
+        const zerosCanvas = document.getElementById('zerosCanvas');
+        const zerosCtx = zerosCanvas.getContext('2d');
+        
+        function drawZeros() {
+            const ctx = zerosCtx;
+            ctx.clearRect(0, 0, 800, 500);
+            
+            drawGrid(ctx, 800, 500);
+            
+            // Draw P(x) = x(x-3)(x+1)
+            ctx.strokeStyle = '#8b9eff';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            
+            for (let x = 0; x <= 800; x += 1) {
+                const graphX = (x - 400) / 80;
+                const y = graphX * (graphX - 3) * (graphX + 1);
+                const canvasY = 250 - y * 20;
+                
+                if (x === 0) {
+                    ctx.moveTo(x, canvasY);
+                } else {
+                    ctx.lineTo(x, canvasY);
+                }
+            }
+            ctx.stroke();
+            
+            // Mark zeros
+            drawPoint(ctx, 400 + (-1) * 80, 250, '#f44336', 10);
+            drawLabel(ctx, 400 + (-1) * 80 - 20, 280, 'x = -1', '#f44336');
+            
+            drawPoint(ctx, 400, 250, '#f44336', 10);
+            drawLabel(ctx, 390, 280, 'x = 0', '#f44336');
+            
+            drawPoint(ctx, 400 + 3 * 80, 250, '#f44336', 10);
+            drawLabel(ctx, 400 + 3 * 80 - 20, 280, 'x = 3', '#f44336');
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('P(x) = x(x - 3)(x + 1)', 20, 30);
+            ctx.fillText('Zeros: x = -1, 0, 3', 20, 55);
+        }
+        
+        // SECTION 3: Multiplicity
+        const multCanvas = document.getElementById('multiplicityCanvas');
+        const multCtx = multCanvas.getContext('2d');
+        
+        function showMultiplicity(m) {
+            currentMultiplicity = m;
+            drawMultiplicity();
+        }
+        
+        function drawMultiplicity() {
+            const ctx = multCtx;
+            ctx.clearRect(0, 0, 800, 500);
+            
+            drawGrid(ctx, 800, 500);
+            
+            ctx.strokeStyle = '#8b9eff';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            
+            for (let x = 0; x <= 800; x += 1) {
+                const graphX = (x - 400) / 80;
+                const y = Math.pow(graphX, currentMultiplicity) * 0.5;
+                const canvasY = 250 - y * 40;
+                
+                if (x === 0) {
+                    ctx.moveTo(x, canvasY);
+                } else {
+                    ctx.lineTo(x, canvasY);
+                }
+            }
+            ctx.stroke();
+            
+            // Mark zero at origin
+            drawPoint(ctx, 400, 250, '#f44336', 10);
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText(`f(x) = x^${currentMultiplicity} (Multiplicity ${currentMultiplicity})`, 20, 30);
+            
+            if (currentMultiplicity % 2 === 1) {
+                ctx.fillText('ODD multiplicity → Graph CROSSES x-axis', 20, 55);
+            } else {
+                ctx.fillText('EVEN multiplicity → Graph TOUCHES x-axis', 20, 55);
+            }
+        }
+        
+        // SECTION 4: Complete Sketch
+        const signCanvas = document.getElementById('signChartCanvas');
+        const signCtx = signCanvas.getContext('2d');
+        
+        const sketchCanvas = document.getElementById('completeSketchCanvas');
+        const sketchCtx = sketchCanvas.getContext('2d');
+        
+        function drawSignChart() {
+            const ctx = signCtx;
+            ctx.clearRect(0, 0, 800, 200);
+            
+            // Draw number line
+            ctx.strokeStyle = '#e0e0e0';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(50, 100);
+            ctx.lineTo(750, 100);
+            ctx.stroke();
+            
+            // Mark zeros
+            const zeros = [-1, 0, 3];
+            const positions = [200, 400, 600];
+            
+            for (let i = 0; i < 3; i++) {
+                ctx.beginPath();
+                ctx.arc(positions[i], 100, 8, 0, 2 * Math.PI);
+                ctx.fillStyle = '#f44336';
+                ctx.fill();
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = 'bold 16px Arial';
+                ctx.fillText(`${zeros[i]}`, positions[i] - 8, 130);
+            }
+            
+            // Sign labels
+            ctx.font = 'bold 20px Arial';
+            ctx.fillText('−', 120, 95);
+            ctx.fillText('+', 300, 95);
+            ctx.fillText('−', 500, 95);
+            ctx.fillText('+', 680, 95);
+            
+            ctx.font = '14px Arial';
+            ctx.fillStyle = '#b0b0b0';
+            ctx.fillText('Below x-axis', 100, 150);
+            ctx.fillText('Above x-axis', 280, 150);
+            ctx.fillText('Below x-axis', 480, 150);
+            ctx.fillText('Above x-axis', 660, 150);
+        }
+        
+        function drawCompleteSketch(step = 5) {
+            const ctx = sketchCtx;
+            ctx.clearRect(0, 0, 800, 500);
+            
+            drawGrid(ctx, 800, 500);
+            
+            // Step 1: Draw zeros
+            if (step >= 1) {
+                drawPoint(ctx, 400 + (-1) * 80, 250, '#f44336', 10);
+                drawPoint(ctx, 400, 250, '#f44336', 10);
+                drawPoint(ctx, 400 + 3 * 80, 250, '#f44336', 10);
+            }
+            
+            // Step 2: Show multiplicity behavior
+            if (step >= 2) {
+                ctx.fillStyle = '#4caf50';
+                ctx.font = '14px Arial';
+                ctx.fillText('All cross (multiplicity 1)', 400 + (-1) * 80 - 40, 270);
+                ctx.fillText('Cross', 380, 270);
+                ctx.fillText('Cross', 400 + 3 * 80 - 20, 270);
+            }
+            
+            // Step 3: Show sign regions
+            if (step >= 3) {
+                ctx.fillStyle = 'rgba(244, 67, 54, 0.15)';
+                ctx.fillRect(0, 250, 400 + (-1) * 80, 250);
+                ctx.fillRect(400, 250, 3 * 80, 250);
+                
+                ctx.fillStyle = 'rgba(76, 175, 80, 0.15)';
+                ctx.fillRect(400 + (-1) * 80, 0, 80, 250);
+                ctx.fillRect(400 + 3 * 80, 0, 200, 250);
+            }
+            
+            // Step 4: Show end behavior arrows
+            if (step >= 4) {
+                // Left end going down
+                ctx.strokeStyle = '#ff9800';
+                ctx.lineWidth = 3;
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.moveTo(50, 400);
+                ctx.lineTo(100, 450);
+                ctx.stroke();
+                
+                // Right end going up
+                ctx.beginPath();
+                ctx.moveTo(700, 450);
+                ctx.lineTo(750, 100);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                ctx.fillStyle = '#ff9800';
+                ctx.font = 'bold 14px Arial';
+                ctx.fillText('Left ↓', 30, 420);
+                ctx.fillText('Right ↑', 720, 120);
+            }
+            
+            // Step 5: Draw the complete curve
+            if (step >= 5) {
+                ctx.strokeStyle = '#8b9eff';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                
+                for (let x = 0; x <= 800; x += 1) {
+                    const graphX = (x - 400) / 80;
+                    const y = graphX * (graphX - 3) * (graphX + 1);
+                    const canvasY = 250 - y * 20;
+                    
+                    if (x === 0) {
+                        ctx.moveTo(x, canvasY);
+                    } else {
+                        ctx.lineTo(x, canvasY);
+                    }
+                }
+                ctx.stroke();
+                
+                // Redraw zeros on top
+                drawPoint(ctx, 400 + (-1) * 80, 250, '#f44336', 10);
+                drawPoint(ctx, 400, 250, '#f44336', 10);
+                drawPoint(ctx, 400 + 3 * 80, 250, '#f44336', 10);
+                
+                ctx.fillStyle = '#e0e0e0';
+                ctx.font = 'bold 18px Arial';
+                ctx.fillText('Complete Sketch: P(x) = x(x - 3)(x + 1)', 20, 30);
+            }
+            
+            // Display ONLY the current step text at the bottom
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 16px Arial';
+            
+            if (step === 1) {
+                ctx.fillText('Step 1: Mark the zeros at x = -1, 0, 3', 20, 480);
+            } else if (step === 2) {
+                ctx.fillText('Step 2: All have odd multiplicity → all CROSS', 20, 480);
+            } else if (step === 3) {
+                ctx.fillText('Step 3: Sign chart → Red = below, Green = above', 20, 480);
+            } else if (step === 4) {
+                ctx.fillText('Step 4: End behavior (degree 3, positive → left down, right up)', 20, 480);
+            } else if (step === 5) {
+                ctx.fillText('Step 5: Connect smoothly following all the rules!', 20, 480);
+            }
+        }
+        
+        function nextStep() {
+            if (sketchStep < 5) {
+                sketchStep++;
+                drawCompleteSketch(sketchStep);
+                updateStepIndicator();
+            }
+        }
+        
+        function previousStep() {
+            if (sketchStep > 1) {
+                sketchStep--;
+                drawCompleteSketch(sketchStep);
+                updateStepIndicator();
+            }
+        }
+        
+        function resetSketch() {
+            sketchStep = 5;
+            drawCompleteSketch(5);
+            updateStepIndicator();
+        }
+        
+        function updateStepIndicator() {
+            const indicator = document.getElementById('stepIndicator');
+            indicator.textContent = `Step ${sketchStep} of 5`;
+        }
+        
+        // SECTION 5: Extrema
+        const extremaCanvas = document.getElementById('extremaCanvas');
+        const extremaCtx = extremaCanvas.getContext('2d');
+        
+        function drawExtrema() {
+            const ctx = extremaCtx;
+            ctx.clearRect(0, 0, 800, 500);
+            
+            drawGrid(ctx, 800, 500);
+            
+            // Draw f(x) = x^4 - 5x^2 + 4
+            ctx.strokeStyle = '#8b9eff';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            
+            for (let x = 0; x <= 800; x += 1) {
+                const graphX = (x - 400) / 100;
+                const y = Math.pow(graphX, 4) - 5 * Math.pow(graphX, 2) + 4;
+                const canvasY = 250 - y * 30;
+                
+                if (x === 0) {
+                    ctx.moveTo(x, canvasY);
+                } else {
+                    ctx.lineTo(x, canvasY);
+                }
+            }
+            ctx.stroke();
+            
+            // Mark local max at (0, 4)
+            drawPoint(ctx, 400, 250 - 4 * 30, '#4caf50', 10);
+            drawLabel(ctx, 410, 250 - 4 * 30, 'Local MAX', '#4caf50');
+            
+            // Mark local mins at approximately (±1.58, -2.25)
+            const minY = -2.25;
+            drawPoint(ctx, 400 - 158, 250 - minY * 30, '#ff9800', 10);
+            drawLabel(ctx, 230, 250 - minY * 30 + 20, 'Local MIN', '#ff9800');
+            
+            drawPoint(ctx, 400 + 158, 250 - minY * 30, '#ff9800', 10);
+            drawLabel(ctx, 570, 250 - minY * 30 + 20, 'Local MIN', '#ff9800');
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('f(x) = x⁴ - 5x² + 4', 20, 30);
+            ctx.fillText('Degree 4 → Max extrema: 3 (has 3: 1 max, 2 mins)', 20, 55);
+        }
+        
+        // SECTION 6: IVT
+        const ivtCanvas = document.getElementById('ivtCanvas');
+        const ivtCtx = ivtCanvas.getContext('2d');
+        
+        function drawIVT() {
+            const ctx = ivtCtx;
+            ctx.clearRect(0, 0, 800, 500);
+            
+            drawGrid(ctx, 800, 500);
+            
+            // Draw P(x) = x^3 - 2x - 5
+            ctx.strokeStyle = '#8b9eff';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            
+            for (let x = 0; x <= 800; x += 1) {
+                const graphX = (x - 400) / 80;
+                const y = Math.pow(graphX, 3) - 2 * graphX - 5;
+                const canvasY = 250 - y * 5;
+                
+                if (x === 0) {
+                    ctx.moveTo(x, canvasY);
+                } else {
+                    ctx.lineTo(x, canvasY);
+                }
+            }
+            ctx.stroke();
+            
+            // Mark P(2) and P(3)
+            const x2 = 400 + 2 * 80;
+            const y2 = 250 - (-1) * 5;
+            drawPoint(ctx, x2, y2, '#f44336', 10);
+            drawLabel(ctx, x2 + 10, y2, 'P(2) = -1', '#f44336');
+            
+            const x3 = 400 + 3 * 80;
+            const y3 = 250 - 16 * 5;
+            drawPoint(ctx, x3, y3, '#4caf50', 10);
+            drawLabel(ctx, x3 + 10, y3, 'P(3) = 16', '#4caf50');
+            
+            // Draw shaded region between 2 and 3
+            ctx.fillStyle = 'rgba(139, 158, 255, 0.2)';
+            ctx.fillRect(x2, 0, x3 - x2, 500);
+            
+            ctx.fillStyle = '#e0e0e0';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText('P(x) = x³ - 2x - 5', 20, 30);
+            ctx.fillText('Signs opposite → Zero exists between x = 2 and x = 3', 20, 55);
+        }
+        
+        // Helper functions
+        function drawGrid(ctx, width, height) {
+            ctx.strokeStyle = '#2a3a5a';
+            ctx.lineWidth = 1;
+            
+            for (let x = 0; x <= width; x += 50) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, height);
+                ctx.stroke();
+            }
+            
+            for (let y = 0; y <= height; y += 50) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(width, y);
+                ctx.stroke();
+            }
+            
+            ctx.strokeStyle = '#e0e0e0';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(0, height / 2);
+            ctx.lineTo(width, height / 2);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(width / 2, 0);
+            ctx.lineTo(width / 2, height);
+            ctx.stroke();
+        }
+        
+        function drawPoint(ctx, x, y, color, size) {
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.arc(x, y, size, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.strokeStyle = '#0a0a15';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
+        
+        function drawLabel(ctx, x, y, text, color) {
+            ctx.fillStyle = color;
+            ctx.font = 'bold 14px Arial';
+            ctx.fillText(text, x, y);
+        }
+        
+        function drawArrow(ctx, x, y, color) {
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.moveTo(x, y - 20);
+            ctx.lineTo(x - 10, y - 5);
+            ctx.lineTo(x + 10, y - 5);
+            ctx.closePath();
+            ctx.fill();
+        }
+        
+        // Initialize all canvases
+        drawEndBehavior();
+        drawZeros();
+        drawMultiplicity();
+        drawSignChart();
+        drawCompleteSketch(1);
+        drawExtrema();
+        drawIVT();
+        updateStepIndicator();
+    </script>
+</body>
+</html>
